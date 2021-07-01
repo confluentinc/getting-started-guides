@@ -1,0 +1,17 @@
+{
+  "name": "getting-started-sketch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Kris Jenkins <kjenkins@confluent.io>",
+  "license": "MIT",
+  "scripts": {
+    "java": "remark --use remark-code-import --use html java/README.md --output java/README.html",
+    "python": "remark --use remark-code-import --use html python/README.md --output python/README.html"
+  },
+  "dependencies": {
+    "remark": "^13.0.0",
+    "remark-cli": "^9.0.0",
+    "remark-code-import": "^0.3.0",
+    "remark-html": "^13.0.1"
+  }
+}
