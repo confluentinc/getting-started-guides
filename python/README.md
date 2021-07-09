@@ -72,6 +72,15 @@ operate with. This dialog can help you configure your Confluent Cloud
 cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
 
+<p>
+<select data-context="true" name="kafka.broker">
+  <option value="">Select a fruit</option>
+  <option value="apple">Apple</option>
+  <option value="orange">Orange</option>
+  <option value="blueberry">Blueberry</option>
+</select>
+</p>
+
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
 ![](media/image1.png)
