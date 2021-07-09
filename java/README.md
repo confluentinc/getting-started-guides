@@ -59,7 +59,7 @@ operate with. This dialog can help you configure your Confluent Cloud
 cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
 
-<section class="choice-cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud">
 
 ![](media/image3.png)
 
@@ -67,7 +67,7 @@ Paste your Confluent Cloud bootstrap server setting here and the
 tutorial will fill it into the appropriate configuration for you
 </section>
 
-<section class="choice-local">
+<section data-context-key="kafka.broker" data-context-value="local">
 
 ![](media/image2.png)
 
@@ -80,7 +80,7 @@ Now start the Kafka broker with: `docker compose up -d`
 </section>
 
 
-<section class="choice-other">
+<section data-context-key="kafka.broker" data-context-value="other">
 
 ![](media/image1.png)
 
@@ -95,7 +95,7 @@ fill it into the appropriate configuration for you.
 Paste the following configuration data into a file at:
 `getting-started.properties`
 
-<section class="choice-cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud">
 
 The below configuration file includes the required settings for a
 connection to Confluent Cloud including the bootstrap servers
@@ -106,14 +106,14 @@ in the sasl.jaas.config setting after pasting the file.
 ```
 </section>
 
-<section class="choice-local">
+<section data-context-key="kafka.broker" data-context-value="local">
 
 ```java file=getting-started-local.properties
 ```
 </section>
 
 
-<section class="choice-other">
+<section data-context-key="kafka.broker" data-context-value="other">
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
@@ -133,7 +133,7 @@ of the events that flow through them.
 
 Create a topic which we will use to produce and consume events.
 
-<section class="choice-cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud">
 
 When using Confluent Cloud, you can use the [Cloud
 UI](https://confluent.cloud/) to create a topic. Access your
@@ -151,7 +151,7 @@ topic](https://docs.confluent.io/ccloud-cli/current/command-reference/kafka/topi
 
 </section>
 
-<section class="choice-local">
+<section data-context-key="kafka.broker" data-context-value="local">
 
 We'll use the `kafka-topics` command located inside the local running
 Kafka broker:
@@ -161,7 +161,7 @@ Kafka broker:
 
 </section>
 
-<section class="choice-other">
+<section data-context-key="kafka.broker" data-context-value="other">
 
 Depending on your available Kafka cluster, you have multiple options for
 creating a topic. You may have access to [Confluent Control
