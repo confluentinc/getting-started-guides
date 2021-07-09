@@ -9,7 +9,7 @@ do not already have access to one.
 
 *Continue*: I'm ready to start
 
-#### Prerequisites
+## Prerequisites
 
 This guide assumes that you already have:
 
@@ -27,7 +27,7 @@ information](https://docs.docker.com/compose/cli-command/#new-docker-compose-com
 
 *Continue*: I have the required software
 
-#### Create Project
+## Create Project
 
 Create a new directory anywhere you'd like for this project:
 
@@ -43,7 +43,7 @@ Create the following Gradle build file for the project, named
 
 *Continue*: My project is setup
 
-#### Kafka Setup
+## Kafka Setup
 
 We are going to need a Kafka Cluster for our client application to
 operate with. This dialog can help you configure your Confluent Cloud
@@ -81,7 +81,7 @@ fill it into the appropriate configuration for you.
 
 *Continue*: My Kafka cluster is ready
 
-#### Configuration
+## Configuration
 
 Paste the following configuration data into a file at:
 `getting-started.properties`
@@ -116,7 +116,7 @@ settings](https://kafka.apache.org/documentation/#security).
 
 *Continue*: My configuration is ready
 
-#### Create Topic
+## Create Topic
 
 Events in Kafka are organized and durably stored in named topics. Topics
 have parameters that determine the performance and durability guarantees
@@ -164,7 +164,7 @@ Kafka distribution, in which case you can use the kafka-topics
 
 *Continue*: My topic is created
 
-#### Build Producer
+## Build Producer
 
 Create a directory for the Java files in this project:
 
@@ -193,7 +193,7 @@ BUILD SUCCESSFUL
 
 ####  
 
-#### Build Consumer
+## Build Consumer
 
 Paste the following Java code into a file located at `src/main/java/examples/ConsumerExample.java`
 
@@ -214,7 +214,7 @@ BUILD SUCCESSFUL
 
 *Continue*: My Consumer is ready
 
-#### Produce Events
+## Produce Events
 
 To build a JAR that we can run from the command line, first run:
 
@@ -263,7 +263,7 @@ Produced record to topic my-topic partition [0] @ offset 9
 
 *Continue*: My events were produced
 
-#### Consume Events
+## Consume Events
 
 From another terminal, run the following command to run the consumer
 application which will read the events from the my-topic topic and write
@@ -295,7 +295,7 @@ Consumed record with key 4 and value UMPee
 Consumed record with key 7 and value LSkgY
 ```
 
-#### Where next?
+## Where next?
 
 - For information on testing in the Kafka ecosystem, check out the testing page.
 - If you're interested in stream processing, check out the ksqlDB
