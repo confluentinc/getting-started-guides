@@ -1,3 +1,12 @@
+---
+seo:
+  title: Getting Started with Apache Kafka and Java
+  description: SEO description
+hero:
+  title: Getting Started with Apache Kafka and Java
+  description: Hero description
+---
+
 # Getting Started with Apache Kafka and Java
 
 ## Introduction
