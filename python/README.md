@@ -72,7 +72,7 @@ operate with. This dialog can help you configure your Confluent Cloud
 cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
 
-<section class="choice-cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud">
 
 ![](media/image1.png)
 
@@ -87,7 +87,7 @@ configuration using the [Confluent Cloud UI](https://confluent.cloud/).
 
 </section>
 
-<section class="choice-local">
+<section data-context-key="kafka.broker" data-context-value="local">
 
 ![](media/image3.png)
 
@@ -101,7 +101,7 @@ Now start the Kafka broker with: `docker compose up -d`
 
 </section>
 
-<section class="choice-other">
+<section data-context-key="kafka.broker" data-context-value="other">
 
 ![](media/image2.png)
 
@@ -116,7 +116,7 @@ fill it into the appropriate configuration for you.
 
 Paste the following configuration data into a file at `getting_started.ini`
 
-<section class="choice-cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud">
 
 The below configuration includes the required settings for a connection
 to Confluent Cloud including the bootstrap servers configuration you
@@ -137,14 +137,14 @@ appropriate location in the configuration file.
 
 </section>
 
-<section class="choice-local">
+<section data-context-key="kafka.broker" data-context-value="local">
 
 ```ini file=getting_started_local.ini
 ```
 
 </section>
 
-<section class="choice-other">
+<section data-context-key="kafka.broker" data-context-value="other">
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
@@ -167,7 +167,7 @@ of the events that flow through them.
 Create a new topic, purchases, which we will use to produce and consume
 events.
 
-<section class="choice-cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud">
 
 ![](media/image4.png)
 
@@ -178,7 +178,7 @@ with 1 partition and defaults for the remaining settings.
 </section>
 
 
-<section class="choice-local">
+<section data-context-key="kafka.broker" data-context-value="local">
 
 We'll use the `kafka-topics` command located inside the local running
 Kafka broker:
@@ -189,7 +189,7 @@ Kafka broker:
 </section>
 
 
-<section class="choice-other">
+<section data-context-key="kafka.broker" data-context-value="other">
 
 Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
