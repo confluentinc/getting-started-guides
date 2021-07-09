@@ -1,3 +1,12 @@
+---
+seo:
+  title: Getting Started with Apache Kafka and Python
+  description: SEO description
+hero:
+  title: Getting Started with Apache Kafka and Python
+  description: Hero description
+---
+
 # Getting Started with Apache Kafka and Python
 
 ## Introduction
@@ -9,7 +18,7 @@ already have access to one.
 
 *Continue*: I'm ready to start
 
-### Prerequisites
+## Prerequisites
 
 This guide assumes that you already have
 [Python](https://www.python.org/downloads/) installed.
@@ -20,7 +29,7 @@ This guide assumes that you already have
 
 *Continue*: I have the required software
 
-### Create Project
+## Create Project
 
 Create a new directory anywhere you'd like for this project:
 
@@ -56,7 +65,7 @@ pip install configparser\
 pip install confluent-kafka
 ```
 
-### Kafka Setup
+## Kafka Setup
 
 We are going to need a Kafka Cluster for our client application to
 operate with. This dialog can help you configure your Confluent Cloud
@@ -103,7 +112,7 @@ fill it into the appropriate configuration for you.
 
 *Continue*: My Kafka cluster is ready
 
-### Configuration
+## Configuration
 
 Paste the following configuration data into a file at `getting_started.ini`
 
@@ -149,7 +158,7 @@ settings](https://kafka.apache.org/documentation/#security).
 
 *Continue*: My configuration is ready
 
-### Create Topic
+## Create Topic
 
 Events in Kafka are organized and durably stored in named topics. Topics
 have parameters that determine the performance and durability guarantees
@@ -196,21 +205,21 @@ request the creation of a topic from your operations team.
 
 *Continue*: My topic is created
 
-### Build Producer
+## Build Producer
 
 Paste the following Python code into a file located at `producer.py`:
 
 ```python file=producer.py
 ```
 
-### Build Consumer
+## Build Consumer
 
 Paste the following Python code into a file located at `consumer.py`:
 
 ```python file=consumer.py
 ```
 
-### Produce Events
+## Produce Events
 
 Make the producer script executable, and run it:
 
@@ -236,7 +245,7 @@ Produced event to topic purchases: key = htanaka value = batteries
 10 events were produced to topic purchases.
 ```
 
-### Consume Events
+## Consume Events
 
 Make the consumer script executable and run it:
 
@@ -268,7 +277,7 @@ The consumer will wait indefinitely for new events. You can kill the
 process off (with `ctrl+C`), or experiment by starting a separate terminal
 window and re-running the producer.
 
-### Where next?
+## Where next?
 
 - For information on testing in the Kafka ecosystem, check out the
   testing page.
