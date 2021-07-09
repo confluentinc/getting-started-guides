@@ -61,7 +61,7 @@ cluster bootstrap server to connect to.
 
 <p>
 <select data-context="true" name="kafka.broker">
-  <option value="">Select a fruit</option>
+  <option value="">Select Kafka Broker</option>
   <option value="cloud">Confluent Cloud</option>
   <option value="local">Local</option>
   <option value="other">Other</option>
