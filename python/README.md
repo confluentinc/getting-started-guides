@@ -83,6 +83,10 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
+<p>
+<input data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
+</p>
+
 ![](media/image1.png)
 
 Paste your Confluent Cloud bootstrap server setting here and the
@@ -97,6 +101,11 @@ configuration using the [Confluent Cloud UI](https://confluent.cloud/).
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
+  
+<p>
+<input data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
+</p>
+
 
 ![](media/image3.png)
 
