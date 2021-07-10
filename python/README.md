@@ -297,6 +297,12 @@ window and re-running the producer.
 
 ## Where next?
 
+```yaml
+---
+Choice: {{ kafka.broker }}
+Server: {{ kafka.broker.server }}
+```
+
 - For information on testing in the Kafka ecosystem, check out the
   testing page.
 - If you're interested in using streaming SQL for data creation,
