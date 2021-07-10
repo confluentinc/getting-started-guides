@@ -102,11 +102,6 @@ configuration using the [Confluent Cloud UI](https://confluent.cloud/).
 
 <section data-context-key="kafka.broker" data-context-value="local">
   
-<p>
-<input data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
-</p>
-
-
 ![](media/image3.png)
 
 Paste the following file into a `docker-compose.yml` file:
@@ -120,6 +115,10 @@ Now start the Kafka broker with: `docker compose up -d`
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
+  
+<p>
+<input data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
+</p>
 
 ![](media/image2.png)
 
@@ -296,6 +295,8 @@ process off (with `ctrl+C`), or experiment by starting a separate terminal
 window and re-running the producer.
 
 ## Where next?
+
+<span data-context-key="kafka.broker"></span>
 
 ```yaml
 ---
