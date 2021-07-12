@@ -60,15 +60,22 @@ cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
 
 <p>
-<select data-context="true" name="kafka.broker">
-  <option value="">Select Kafka Broker</option>
-  <option value="cloud">Confluent Cloud</option>
-  <option value="local">Local</option>
-  <option value="other">Other</option>
-</select>
+  <div class="select-wrapper">
+    <select data-context="true" name="kafka.broker">
+      <option value="">Select Kafka Broker</option>
+      <option value="cloud">Confluent Cloud</option>
+      <option value="local">Local</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
 </p>
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
+  
+<p>
+  <label for="kafka-broker-server">Bootstrap Server</label>
+  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
+</p>
 
 ![](media/image3.png)
 
@@ -90,6 +97,11 @@ Now start the Kafka broker with: `docker compose up -d`
 
 
 <section data-context-key="kafka.broker" data-context-value="other">
+  
+<p>
+  <label for="kafka-broker-server">Bootstrap Server</label>
+  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
+</p>
 
 ![](media/image1.png)
 
