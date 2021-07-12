@@ -120,7 +120,8 @@ Now start the Kafka broker with: `docker compose up -d`
 <section data-context-key="kafka.broker" data-context-value="other">
   
 <p>
-<input data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
+  <label for="kafka-broker-server">Bootstrap Server</label>
+  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
 </p>
 
 ![](media/image2.png)
