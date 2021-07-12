@@ -1,5 +1,7 @@
 basePath: /getting-started
 languages:
-  - java
-  - python
+  - path: java
+    name: Java
+  - path: python
+    name: Python
 
