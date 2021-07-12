@@ -1,4 +1,5 @@
 ---
+language: Java
 seo:
   title: Getting Started with Apache Kafka and Java
   description: SEO description
