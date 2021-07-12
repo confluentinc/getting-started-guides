@@ -1,5 +1,4 @@
 ---
-language: Python
 seo:
   title: Getting Started with Apache Kafka and Python
   description: SEO description
