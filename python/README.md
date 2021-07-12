@@ -84,7 +84,8 @@ cluster bootstrap server to connect to.
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
 <p>
-<input data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
+  <label for="kafka-broker-server">Bootstrap Server</label>
+  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
 </p>
 
 ![](media/image1.png)
