@@ -16,8 +16,6 @@ produce and consume messages from an Apache Kafka® cluster. The tutorial
 will walk you through setting up a local Kafka cluster if you do not
 already have access to one.
 
-*Continue*: I'm ready to start
-
 ## Prerequisites
 
 This guide assumes that you already have
@@ -26,8 +24,6 @@ This guide assumes that you already have
 (If you're using Python 2.7, you'll also need to install
 [Pip](https://pypi.org/project/pip/) and
 [VirtualEnv](https://pypi.org/project/virtualenv/) separately.)
-
-*Continue*: I have the required software
 
 ## Create Project
 
@@ -90,28 +86,23 @@ cluster bootstrap server to connect to.
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
 </p>
 
-![](media/image1.png)
-
-Paste your Confluent Cloud bootstrap server setting here and the
-tutorial will fill it into the appropriate configuration for
+Paste your Confluent Cloud bootstrap server setting above and the
+tutorial will fill in the appropriate configuration for
 you.
-
-![](media/image6.png)
 
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
 configuration using the [Confluent Cloud UI](https://confluent.cloud/).
+
+![](media/cc-cluster-settings.png)
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
   
-![](media/image3.png)
-
 Paste the following file into a `docker-compose.yml` file:
 
 ```yaml file=../docker-compose.yml
 ```
-
 
 Now start the Kafka broker with: `docker compose up -d`
 
@@ -124,14 +115,10 @@ Now start the Kafka broker with: `docker compose up -d`
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
 </p>
 
-![](media/image2.png)
-
-Paste your Kafka cluster bootstrap server URL here and the tutorial will
+Paste your Kafka cluster bootstrap server URL above and the tutorial will
 fill it into the appropriate configuration for you.
 
 </section>
-
-*Continue*: My Kafka cluster is ready
 
 ## Configuration
 
@@ -177,8 +164,6 @@ settings](https://kafka.apache.org/documentation/#security).
 
 </section>
 
-*Continue*: My configuration is ready
-
 ## Create Topic
 
 Events in Kafka are organized and durably stored in named topics. Topics
@@ -223,8 +208,6 @@ Note that, if your cluster is centrally managed, you may need to
 request the creation of a topic from your operations team.
 
 </section>
-
-*Continue*: My topic is created
 
 ## Build Producer
 
@@ -299,14 +282,6 @@ process off (with `ctrl+C`), or experiment by starting a separate terminal
 window and re-running the producer.
 
 ## Where next?
-
-<span data-context-key="kafka.broker"></span>
-
-```yaml
----
-Choice: {{ kafka.broker }}
-Server: {{ kafka.broker.server }}
-```
 
 - For information on testing in the Kafka ecosystem, check out the
   testing page.
