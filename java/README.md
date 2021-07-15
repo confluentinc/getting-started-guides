@@ -16,8 +16,6 @@ messages to and consumes messages from an Apache Kafka® cluster. The
 tutorial will walk you through setting up a local Kafka cluster if you
 do not already have access to one.
 
-*Continue*: I'm ready to start
-
 ## Prerequisites
 
 This guide assumes that you already have:
@@ -34,8 +32,6 @@ also need [Docker](https://docs.docker.com/get-docker/) installed
 documentation for more
 information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
 
-*Continue*: I have the required software
-
 ## Create Project
 
 Create a new directory anywhere you'd like for this project:
@@ -49,8 +45,6 @@ Create the following Gradle build file for the project, named
 
 ```gradle file=build.gradle
 ```
-
-*Continue*: My project is setup
 
 ## Kafka Setup
 
@@ -77,15 +71,11 @@ cluster bootstrap server to connect to.
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
 </p>
 
-![](media/image3.png)
-
-Paste your Confluent Cloud bootstrap server setting here and the
-tutorial will fill it into the appropriate configuration for you
+Paste your Confluent Cloud bootstrap server setting above and the
+tutorial will fill it into the appropriate configuration for you.
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
-
-![](media/image2.png)
 
 Paste the following file into a `docker-compose.yml` file:
 
@@ -103,13 +93,9 @@ Now start the Kafka broker with: `docker compose up -d`
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
 </p>
 
-![](media/image1.png)
-
 Paste your Kafka cluster bootstrap server URL here and the tutorial will
 fill it into the appropriate configuration for you.
 </section>
-
-*Continue*: My Kafka cluster is ready
 
 ## Configuration
 
@@ -143,8 +129,6 @@ settings](https://kafka.apache.org/documentation/#security).
 ```java file=getting-started-other.properties
 ```
 </section>
-
-*Continue*: My configuration is ready
 
 ## Create Topic
 
@@ -192,8 +176,6 @@ Kafka distribution, in which case you can use the kafka-topics
 [command](https://kafka.apache.org/documentation/#basic_ops_add_topic).
 </section>
 
-*Continue*: My topic is created
-
 ## Build Producer
 
 Create a directory for the Java files in this project:
@@ -219,10 +201,6 @@ And you should see:
 BUILD SUCCESSFUL
 ```
 
-#### *Continue*: My Producer is ready
-
-####  
-
 ## Build Consumer
 
 Paste the following Java code into a file located at `src/main/java/examples/ConsumerExample.java`
@@ -241,8 +219,6 @@ And you should see:
 ```
 BUILD SUCCESSFUL
 ```
-
-*Continue*: My Consumer is ready
 
 ## Produce Events
 
@@ -290,8 +266,6 @@ Produced record to topic my-topic partition [0] @ offset 8
 Produced record to topic my-topic partition [0] @ offset 9
 10 messages were produced to topic my-topic
 ```
-
-*Continue*: My events were produced
 
 ## Consume Events
 
