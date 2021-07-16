@@ -93,7 +93,7 @@ you.
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
 configuration using the [Confluent Cloud UI](https://confluent.cloud/).
 
-![](media/cc-cluster-settings.png)
+![](../media/cc-cluster-settings.png)
 
 </section>
 
@@ -130,7 +130,7 @@ The below configuration includes the required settings for a connection
 to Confluent Cloud including the bootstrap servers configuration you
 provided. 
 
-![](media/image5.png)
+![](../media/cc-create-key.png)
 
 When using Confluent Cloud you will be required to provide an API key
 and secret authorizing your application to produce and consume. You can
@@ -175,7 +175,7 @@ events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-![](media/image4.png)
+![](../media/cc-create-topic.png)
 
 When using Confluent Cloud, you can use the [Cloud
 UI](https://confluent.cloud/) to create a topic. Create a topic
