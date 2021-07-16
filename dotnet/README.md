@@ -4,7 +4,7 @@ seo:
   description: SEO description
 hero:
   title: Getting Started with Apache Kafka and .NET
-  description: Hero description
+  description: Step-by-step guide to building a .NET client application for Kafka
 ---
 
 # Getting Started with Apache Kafka and .NET
