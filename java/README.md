@@ -250,49 +250,39 @@ BUILD SUCCESSFUL
 ```
 
 Run the following command to build and execute the producer application,
-which will produce some random data events to the `my-topic` topic.
+which will produce some random data events to the `purchases` topic.
 
 ```sh
-java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ProducerExample getting-started.properties my-topic
+java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ProducerExample getting-started.properties
 ```
 
 You should see output that resembles:
 
 ```
-Producing random data string with Key: 10 JQUgQ
-Producing random data string with Key: 4 bapQe
-Producing random data string with Key: 4 teKAJ
-Producing random data string with Key: 10 DMLhy
-Producing random data string with Key: 2 msXas
-Producing random data string with Key: 10 jlcuN
-Producing random data string with Key: 4 iiXLK
-Producing random data string with Key: 1 goftH
-Producing random data string with Key: 4 UMPee
-Producing random data string with Key: 7 LSkgY
-Produced record to topic my-topic partition [0] @ offset 0
-Produced record to topic my-topic partition [0] @ offset 1
-Produced record to topic my-topic partition [0] @ offset 2
-Produced record to topic my-topic partition [0] @ offset 3
-Produced record to topic my-topic partition [0] @ offset 4
-Produced record to topic my-topic partition [0] @ offset 5
-Produced record to topic my-topic partition [0] @ offset 6
-Produced record to topic my-topic partition [0] @ offset 7
-Produced record to topic my-topic partition [0] @ offset 8
-Produced record to topic my-topic partition [0] @ offset 9
-10 messages were produced to topic my-topic
+Produced event to topic purchases: key = awalther   value = t-shirts
+Produced event to topic purchases: key = htanaka    value = t-shirts
+Produced event to topic purchases: key = htanaka    value = batteries
+Produced event to topic purchases: key = eabara     value = t-shirts
+Produced event to topic purchases: key = htanaka    value = t-shirts
+Produced event to topic purchases: key = jsmith     value = book
+Produced event to topic purchases: key = awalther   value = t-shirts
+Produced event to topic purchases: key = jsmith     value = batteries
+Produced event to topic purchases: key = jsmith     value = gift card
+Produced event to topic purchases: key = eabara     value = t-shirts
+10 events were produced to topic purchases
 ```
 
 ## Consume Events
 
 From another terminal, run the following command to run the consumer
-application which will read the events from the my-topic topic and write
+application which will read the events from the `purchases` topic and write
 the information to the terminal.
 
 Re-run the producer to see more events, or feel free to modify the code
 as necessary to create more or different events.
 
 ```sh
-java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ConsumerExample getting-started.properties my-topic
+java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ConsumerExample getting-started.properties
 ```
 
 The consumer application will start and print any events it has not
@@ -302,16 +292,16 @@ are done with the consumer, press `ctrl-c` to terminate the consumer
 application.
 
 ```
-Consumed record with key 10 and value JQUgQ
-Consumed record with key 4 and value bapQe
-Consumed record with key 4 and value teKAJ
-Consumed record with key 10 and value DMLhy
-Consumed record with key 2 and value msXas
-Consumed record with key 10 and value jlcuN
-Consumed record with key 4 and value iiXLK
-Consumed record with key 1 and value goftH
-Consumed record with key 4 and value UMPee
-Consumed record with key 7 and value LSkgY
+Consumed event from topic purchases: key = awalther   value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = batteries
+Consumed event from topic purchases: key = eabara     value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = t-shirts
+Consumed event from topic purchases: key = jsmith     value = book
+Consumed event from topic purchases: key = awalther   value = t-shirts
+Consumed event from topic purchases: key = jsmith     value = batteries
+Consumed event from topic purchases: key = jsmith     value = gift card
+Consumed event from topic purchases: key = eabara     value = t-shirts
 ```
 
 ## Where next?
