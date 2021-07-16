@@ -107,7 +107,7 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
-Paste the following configuration data into a file at `getting_started.ini`
+Paste the following configuration data into a file at `getting-started.properties`
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
@@ -126,14 +126,14 @@ Take note of the API key and secret and add them to the configuraiton file.
 The `sasl.username` value should contain the API key, 
 and the `sasl.password` value should contain the API secret.
 
-```ini file=getting_started_cloud.ini
+```ini file=getting-started-cloud.properties
 ```
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```ini file=getting_started_local.ini
+```ini file=getting-started-local.properties
 ```
 
 </section>
@@ -145,7 +145,7 @@ configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```ini file=getting_started_other.ini
+```ini file=getting-started-other.properties
 ```
 
 </section>
