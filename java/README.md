@@ -107,35 +107,47 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
-Paste the following configuration data into a file at:
-`getting-started.properties`
+Paste the following configuration data into a file at `getting_started.ini`
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-The below configuration file includes the required settings for a
-connection to Confluent Cloud including the bootstrap servers
-configuration you provided. Include your Kafka cluster key and password
-in the sasl.jaas.config setting after pasting the file.
+The below configuration includes the required settings for a connection
+to Confluent Cloud including the bootstrap servers configuration you
+provided. 
 
-```java file=getting-started-cloud.properties
+![](../media/cc-create-key.png)
+
+When using Confluent Cloud you will be required to provide an API key
+and secret authorizing your application to produce and consume. You can
+use the [Cloud UI](https://confluent.cloud/) to create a key for
+you.
+
+Take note of the API key and secret and add them to the configuraiton file.
+The `sasl.username` value should contain the API key, 
+and the `sasl.password` value should contain the API secret.
+
+```ini file=getting_started_cloud.ini
 ```
+
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```java file=getting-started-local.properties
+```ini file=getting_started_local.ini
 ```
+
 </section>
 
-
 <section data-context-key="kafka.broker" data-context-value="other">
+
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```java file=getting-started-other.properties
+```ini file=getting_started_other.ini
 ```
+
 </section>
 
 ## Create Topic

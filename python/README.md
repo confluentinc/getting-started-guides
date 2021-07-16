@@ -137,8 +137,9 @@ and secret authorizing your application to produce and consume. You can
 use the [Cloud UI](https://confluent.cloud/) to create a key for
 you.
 
-Take note of the API Key and secret and insert the values in the
-appropriate location in the configuration file.
+Take note of the API key and secret and add them to the configuraiton file.
+The `sasl.username` value should contain the API key, 
+and the `sasl.password` value should contain the API secret.
 
 ```ini file=getting_started_cloud.ini
 ```
