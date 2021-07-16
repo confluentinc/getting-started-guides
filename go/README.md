@@ -53,26 +53,33 @@ cluster bootstrap server to connect to.
 </p>
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
-  
+
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
 </p>
 
 Paste your Confluent Cloud bootstrap server setting above and the
-tutorial will fill it into the appropriate configuration for you.
+tutorial will fill in the appropriate configuration for
+you.
+
+You can obtain your Confluent Cloud Kafka cluster bootstrap server
+configuration using the [Confluent Cloud UI](https://confluent.cloud/).
+
+![](../media/cc-cluster-settings.png)
+
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
-
+  
 Paste the following file into a `docker-compose.yml` file:
 
 ```yaml file=../docker-compose.yml
 ```
 
 Now start the Kafka broker with: `docker compose up -d`
-</section>
 
+</section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
   
@@ -81,8 +88,9 @@ Now start the Kafka broker with: `docker compose up -d`
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
 </p>
 
-Paste your Kafka cluster bootstrap server URL here and the tutorial will
+Paste your Kafka cluster bootstrap server URL above and the tutorial will
 fill it into the appropriate configuration for you.
+
 </section>
 
 ## Configuration
@@ -124,25 +132,19 @@ Events in Kafka are organized and durably stored in named topics. Topics
 have parameters that determine the performance and durability guarantees
 of the events that flow through them.
 
-Create a topic which we will use to produce and consume events.
+Create a new topic, purchases, which we will use to produce and consume
+events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-When using Confluent Cloud, you can use the [Cloud
-UI](https://confluent.cloud/) to create a topic. Access your
-running cluster and choose the menu items: Cluster -\> Topics -\> Add
-Topic. Create a topic named my-topic with 1 partition and defaults for
-the remaining settings.
+![](../media/cc-create-topic.png)
 
-You can also use the Confluent Cloud CLI to create topics, first
-[install the
-CLI](https://docs.confluent.io/ccloud-cli/current/install.html)
-and then follow the instructions for [logging
-in](https://docs.confluent.io/ccloud-cli/current/command-reference/ccloud_login.html)
-and [creating a
-topic](https://docs.confluent.io/ccloud-cli/current/command-reference/kafka/topic/ccloud_kafka_topic_create.html).
+When using Confluent Cloud, you can use the [Cloud
+UI](https://confluent.cloud/) to create a topic. Create a topic
+with 1 partition and defaults for the remaining settings.
 
 </section>
+
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
@@ -156,12 +158,16 @@ Kafka broker:
 
 <section data-context-key="kafka.broker" data-context-value="other">
 
-Depending on your available Kafka cluster, you have multiple options for
-creating a topic. You may have access to [Confluent Control
-Center](https://docs.confluent.io/platform/current/control-center/index.html)
-where you can create a topic with a UI. You may have already installed a
-Kafka distribution, in which case you can use the kafka-topics
-[command](https://kafka.apache.org/documentation/#basic_ops_add_topic).
+Depending on your available Kafka cluster, you have multiple options
+for creating a topic. You may have access to [Confluent Control
+Center](https://docs.confluent.io/platform/current/control-center/index.html),
+where you can [create a topic with a
+UI](https://docs.confluent.io/platform/current/control-center/topics/create.html). You
+may have already installed a Kafka distribution, in which case you can
+use the [kafka-topics command](https://kafka.apache.org/documentation/#basic_ops_add_topic).
+Note that, if your cluster is centrally managed, you may need to
+request the creation of a topic from your operations team.
+
 </section>
 
 ## Build Producer
