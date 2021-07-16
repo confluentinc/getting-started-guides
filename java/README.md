@@ -156,7 +156,7 @@ Events in Kafka are organized and durably stored in named topics. Topics
 have parameters that determine the performance and durability guarantees
 of the events that flow through them.
 
-Create a new topic, purchases, which we will use to produce and consume
+Create a new topic, `purchases`, which we will use to produce and consume
 events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">

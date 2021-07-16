@@ -6,4 +6,6 @@ languages:
     name: Python
   - path: go
     name: go
+  - path: dotnet
+    name: .NET
 

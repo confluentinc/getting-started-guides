@@ -1,23 +1,23 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Go
+  title: Getting Started with Apache Kafka and .NET
   description: SEO description
 hero:
-  title: Getting Started with Apache Kafka and Go
+  title: Getting Started with Apache Kafka and .NET
   description: Hero description
 ---
 
-# Getting Started with Apache Kafka and Go
+# Getting Started with Apache Kafka and .NET
 
 ## Introduction
 
-In this tutorial, you will build Go client applications which produce and 
+In this tutorial, you will build C# client applications which produce and 
 consume messages from an Apache Kafka® cluster. The tutorial will walk you 
-through setting up a local Kafka cluster if you do not already have access to one.
+through setting up a Kafka cluster if you do not already have access to one.
 
 ## Prerequisites
 
-This guide assumes that you already have the [Go language tools](https://golang.org/doc/install) installed.
+This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 3.1) installed.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. If you wish to run a local Kafka cluster, you will
@@ -31,7 +31,43 @@ information](https://docs.docker.com/compose/cli-command/#new-docker-compose-com
 Create a new directory anywhere you’d like for this project:
 
 ```sh
-mkdir kafka-go-getting-started && cd kafka-go-getting-started
+mkdir kafka-dotnet-getting-started && cd kafka-dotnet-getting-started
+```
+
+Next we’ll create two different C# project files, one for the producer and one for the consumer.
+
+Copy the following into a file named `producer.csproj`:
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>Producer</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="1.6.3" />
+  </ItemGroup>
+
+</Project>
+```
+
+Copy the following into a file named `consumer.csproj`:
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>Consumer</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="1.6.3" />
+  </ItemGroup>
+
+</Project>
 ```
 
 ## Kafka Setup
@@ -95,35 +131,47 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
-Paste the following configuration data into a file at:
-`getting-started.properties`
+Paste the following configuration data into a file at `getting-started.properties`
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-The below configuration file includes the required settings for a
-connection to Confluent Cloud including the bootstrap servers
-configuration you provided. Include your Kafka cluster key and password
-in the sasl.jaas.config setting after pasting the file.
+The below configuration includes the required settings for a connection
+to Confluent Cloud including the bootstrap servers configuration you
+provided. 
 
-```go file=getting-started-cloud.properties
+![](../media/cc-create-key.png)
+
+When using Confluent Cloud you will be required to provide an API key
+and secret authorizing your application to produce and consume. You can
+use the [Cloud UI](https://confluent.cloud/) to create a key for
+you.
+
+Take note of the API key and secret and add them to the configuraiton file.
+The `sasl.username` value should contain the API key, 
+and the `sasl.password` value should contain the API secret.
+
+```ini file=getting-started-cloud.properties
 ```
+
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```go file=getting-started-local.properties
+```ini file=getting-started-local.properties
 ```
+
 </section>
 
-
 <section data-context-key="kafka.broker" data-context-value="other">
+
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```go file=getting-started-other.properties
+```ini file=getting-started-other.properties
 ```
+
 </section>
 
 ## Create Topic
@@ -145,7 +193,6 @@ with 1 partition and defaults for the remaining settings.
 
 </section>
 
-
 <section data-context-key="kafka.broker" data-context-value="local">
 
 We'll use the `kafka-topics` command located inside the local running
@@ -153,7 +200,6 @@ Kafka broker:
 
 ```sh file=../create-topic.sh
 ```
-
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
@@ -171,75 +217,65 @@ request the creation of a topic from your operations team.
 </section>
 
 ## Build Producer
-First we are going to create a shared code file which contains a helper function we will use to load configuration files for our applications. Paste the following Go code into a file named `util.go`.
 
-```go file=util.go
+First, we are going to create the producer application by pasting the following code into a file named `producer.cs`:
+
+```c# file=producer.cs
 ```
 
-Next we are going to create the producer application by pasting the following Go code into a file named `producer.go`.
-
-```go file=producer.go
-```
-
-Before building the code, you may need to download the Confluent Go Kafka dependency with:
+You can test the syntax before preceding by compiling with:
 ```sh
-go get github.com/confluentinc/confluent-kafka-go/kafka
-```
-
-You can test the syntax before proceeding by compiling with:
-```sh
-go build -o out/producer util.go producer.go
+dotnet build producer.csproj
 ```
 
 ## Build Consumer
-Paste the following Go code into a file named consumer.go
 
-```go file=consumer.go
+To create the consumer application, paste the following C# code into a file named `consumer.cs`:
+```c# file=consumer.cs
 ```
 
-You can test the consumer syntax by compiling with:
-
+You can test the syntax before preceding by compiling with:
 ```sh
-go build -o out/consumer util.go consumer.go
+dotnet build consumer.csproj
 ```
 
 ## Produce Events
-First be sure you have successfully compiled the producer code with:
+The `dotnet` command line tool gives us a handy `run` command we can use to execute the programs we just built.
+
+In order to run the producer, use the `dotnet run` command passing in the configuration file created above:
 
 ```sh
-go build -o out/producer util.go producer.go
-```
-
-In order to run the producer, execute the compiled binary passing in the configuration file created above:
-
-```sh
-./out/producer getting-started.properties
+dotnet run --project producer.csproj getting-started.properties
 ```
 
 You should see output that resembles:
-
 ```sh
-Produced event to topic purchases: key = awalther   value = t-shirts
-Produced event to topic purchases: key = awalther   value = batteries
-Produced event to topic purchases: key = jsmith     value = gift card
-Produced event to topic purchases: key = jsmith     value = book
-Produced event to topic purchases: key = htanaka    value = book
-Produced event to topic purchases: key = sgarcia    value = alarm clock
-Produced event to topic purchases: key = eabara     value = batteries
-Produced event to topic purchases: key = htanaka    value = batteries
-Produced event to topic purchases: key = jbernard   value = book
+Produced event to topic purchases: key = jsmith        value = alarm clock
+Produced event to topic purchases: key = htanaka       value = book
+Produced event to topic purchases: key = eabara        value = batteries
+Produced event to topic purchases: key = htanaka       value = t-shirts
+Produced event to topic purchases: key = htanaka       value = t-shirts
+Produced event to topic purchases: key = htanaka       value = gift card
+Produced event to topic purchases: key = sgarcia       value = gift card
+Produced event to topic purchases: key = jbernard   value = gift card
 Produced event to topic purchases: key = awalther   value = alarm clock
+Produced event to topic purchases: key = htanaka       value = book
+10 events were produced to topic purchases
 ```
 
 ## Consume Events
-From another terminal, run the following command to run the consumer application which will read the events from the purchases topic and write the information to the terminal.
+
+From another terminal, run the following command to run the consumer application which will 
+read the events from the `purchases` topic and write the information to the terminal.
 
 ```sh
-./out/consumer getting-started.properties 
+dotnet run --project consumer.csproj getting-started.properties 
 ```
 
-The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output that resembles the below. Once you are done with the consumer, press `ctrl-c` to terminate the consumer application.
+The consumer application will start and print any events it has not yet consumed and then wait 
+for more events to arrive. On startup of the consumer, you should see output that resembles what's below. 
 
+Once you are done with the consumer, press `ctrl-c` to terminate the consumer application.
 ```sh
 Consumed event from topic purchases: key = jsmith     value = alarm clock
 Consumed event from topic purchases: key = htanaka    value = book
@@ -253,11 +289,12 @@ Consumed event from topic purchases: key = awalther   value = alarm clock
 Consumed event from topic purchases: key = htanaka    value = book
 ```
 
-Re-run the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+Re-run the producer to see more events, or feel free to modify the code as 
+necessary to create more or different events.
 
 ## Where next?
+
 - For information on testing in the Kafka ecosystem, check out the testing page.
 - If you're interested in stream processing, check out the ksqlDB
   course.
-- Interested in taking event streaming applications to production? Check out the monitoring page.
-
+- Interested in taking Java applications to production? Check out the monitoring page.
