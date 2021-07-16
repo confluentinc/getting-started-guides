@@ -4,4 +4,6 @@ languages:
     name: Java
   - path: python
     name: Python
+  - path: go
+    name: go
 
