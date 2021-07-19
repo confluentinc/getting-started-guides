@@ -8,4 +8,6 @@ languages:
     name: Go
   - path: dotnet
     name: .NET
+  - path: nodejs
+    name: Node.js
 
