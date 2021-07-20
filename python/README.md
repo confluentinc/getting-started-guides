@@ -247,7 +247,6 @@ Produced event to topic purchases: key = jbernard value = book
 Produced event to topic purchases: key = awalther value = batteries
 Produced event to topic purchases: key = eabara value = alarm clock
 Produced event to topic purchases: key = htanaka value = batteries
-10 events were produced to topic purchases.
 ```
 
 ## Consume Events
@@ -257,7 +256,7 @@ Make the consumer script executable and run it:
 ```sh
 chmod u+x consumer.py
 
-./consumer.py getting-started.ini
+./consumer.py getting_started.ini
 ```
 
 You should see output that resembles:
@@ -279,7 +278,7 @@ Waiting...
 ```
 
 The consumer will wait indefinitely for new events. You can kill the
-process off (with `ctrl+C`), or experiment by starting a separate terminal
+process off (with `Ctrl+C`), or experiment by starting a separate terminal
 window and re-running the producer.
 
 ## Where next?
