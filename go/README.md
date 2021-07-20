@@ -102,8 +102,8 @@ Paste the following configuration data into a file at:
 
 The below configuration file includes the required settings for a
 connection to Confluent Cloud including the bootstrap servers
-configuration you provided. Include your Kafka cluster key and password
-in the sasl.jaas.config setting after pasting the file.
+configuration you provided. Include your Kafka cluster key and secret
+in the sasl.username and sasl.password settings after pasting the file.
 
 ```go file=getting-started-cloud.properties
 ```
