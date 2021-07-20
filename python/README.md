@@ -283,10 +283,10 @@ window and re-running the producer.
 
 ## Where next?
 
-- For information on testing in the Kafka ecosystem, check out the
-  testing page.
+- For information on testing in the Kafka ecosystem, check out
+  [Testing Event Streaming Apps](/learn/testing-kafka)
 - If you're interested in using streaming SQL for data creation,
   processing, and querying in your applications, check out the
-  ksqlDB course.
-- Interested in taking event streaming applications to production?
-  Check out the monitoring page.
+  [ksqlDB 101 course](/learn-kafka/ksqldb/intro/).
+- Interested in performance tuning of your event streaming applications?
+  Check out the [Kafka Performance resources](/learn/kafka-performance/).
