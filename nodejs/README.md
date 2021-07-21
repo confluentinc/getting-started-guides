@@ -18,7 +18,7 @@ do not already have access to one.
 
 ## Prerequisites
 
-This guide assumes that you already have [node.js](https://nodejs.org/) installed.
+This guide assumes that you have [node.js](https://nodejs.org/en/download/) installed (tested with LTS version 14.17.3).
 
 ## Create Project
 
