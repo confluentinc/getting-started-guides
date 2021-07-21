@@ -38,9 +38,10 @@ mkdir kafka-c-getting-started && cd kafka-c-getting-started
 
 Create the following Makefile for the project:
 
-ALL: producer consumer
 
 ```sh
+ALL: producer consumer
+
 CFLAGS=-Wall $(shell pkg-config --cflags --libs rdkafka glib-2.0)
 ```
 
