@@ -268,7 +268,12 @@ necessary to create more or different events.
 
 ## Where next?
 
-- For information on testing in the Kafka ecosystem, check out the testing page.
-- If you're interested in stream processing, check out the ksqlDB
-  course.
-- Interested in taking Java applications to production? Check out the monitoring page.
+- For the C# client API, check out the
+  [.NET documentation](https://docs.confluent.io/platform/current/clients/confluent-kafka-dotnet/_site/api/Confluent.Kafka.html).
+- For information on testing in the Kafka ecosystem, check out
+  [Testing Event Streaming Apps](/learn/testing-kafka).
+- If you're interested in using streaming SQL for data creation,
+  processing, and querying in your applications, check out the
+  [ksqlDB 101 course](/learn-kafka/ksqldb/intro/).
+- Interested in performance tuning of your event streaming applications?
+  Check out the [Kafka Performance resources](/learn/kafka-performance/).

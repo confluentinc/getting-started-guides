@@ -256,8 +256,13 @@ Consumed event from topic purchases: key = htanaka    value = book
 Re-run the producer to see more events, or feel free to modify the code as necessary to create more or different events.
 
 ## Where next?
-- For information on testing in the Kafka ecosystem, check out the testing page.
-- If you're interested in stream processing, check out the ksqlDB
-  course.
-- Interested in taking event streaming applications to production? Check out the monitoring page.
 
+- For the Go client API, check out the
+  [Go documentation](https://pkg.go.dev/github.com/confluentinc/confluent-kafka-go/kafka).
+- For information on testing in the Kafka ecosystem, check out
+  [Testing Event Streaming Apps](/learn/testing-kafka).
+- If you're interested in using streaming SQL for data creation,
+  processing, and querying in your applications, check out the
+  [ksqlDB 101 course](/learn-kafka/ksqldb/intro/).
+- Interested in performance tuning of your event streaming applications?
+  Check out the [Kafka Performance resources](/learn/kafka-performance/).
