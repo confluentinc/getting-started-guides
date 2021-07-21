@@ -184,178 +184,19 @@ request the creation of a topic from your operations team.
 
 First, we are going to create a utility script which we will use from the Producer and Consumer applications we build next. This utility script will contain functions to help parse the configuration file we created previously. Copy the following code into a file named `util.js`:
 
-```javascript
-const fs = require('fs');
-const readline = require('readline');
-
-function readAllLines(path) {    
-  return new Promise((resolve, reject) => {
-    // Test file access directly, so that we can fail fast.
-    // Otherwise, an ENOENT is thrown in the global scope by the readline internals.
-    try {
-      fs.accessSync(path, fs.constants.R_OK);
-    } catch (err) {
-      reject(err);
-    }
-    
-    let lines = [];
-    
-    const reader = readline.createInterface({
-      input: fs.createReadStream(path),
-      crlfDelay: Infinity
-    });
-    
-    reader
-      .on('line', (line) => lines.push(line))
-      .on('close', () => resolve(lines));
-  });
-}
-
-exports.configFromPath = async function configFromPath(path) {
-  const lines = await readAllLines(path);
-
-  return lines
-    .filter((line) => !/^\s*?#/.test(line))
-    .map((line) => line
-      .split('=')
-      .map((s) => s.trim()))
-    .reduce((config, [k, v]) => {
-      config[k] = v;
-      return config;
-    }, {});
-};
+```javascript file=util.js
 ```
 
 Next, we are going to create the producer application by pasting the following code into a file named `producer.js`:
 
-```javascript
-const Kafka = require('node-rdkafka');
-const { configFromPath } = require('./util');
-
-function createProducer(config, onDeliveryReport) {
-  const producer = new Kafka.Producer({
-    'bootstrap.servers': config['bootstrap.servers'],
-    'sasl.username': config['sasl.username'],
-    'sasl.password': config['sasl.password'],
-    'security.protocol': config['security.protocol'],
-    'sasl.mechanisms': config['sasl.mechanisms'],
-    'dr_msg_cb': true
-  });
-
-  return new Promise((resolve, reject) => {
-    producer
-      .on('ready', () => resolve(producer))
-      .on('delivery-report', onDeliveryReport)
-      .on('event.error', (err) => {
-        console.warn('event.error', err);
-        reject(err);
-      });
-    producer.connect();
-  });
-}
-
-async function produceExample() {
-  if (process.argv.length < 3) {
-    console.log("Please provide the configuration file path as the command line argument");
-    process.exit(1);
-  }
-  let configPath = process.argv.slice(2)[0];
-  const config = await configFromPath(configPath);
-
-  let topic = "purchases";
-
-  let users = [ "eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther" ];
-  let items = [ "book", "alarm clock", "t-shirts", "gift card", "batteries" ];
-
-  const producer = await createProducer(config, (err, report) => {
-    if (err) {
-      console.warn('Error producing', err)
-    } else {
-      const {topic, key, value} = report;
-      let k = key.toString().padEnd(10, ' ');
-      console.log(`Produced event to topic ${topic}: key = ${k} value = ${value}`);
-    }
-  });
-
-  let numEvents = 10;
-  for (let idx = 0; idx < numEvents; ++idx) {
-
-    const key = users[Math.floor(Math.random() * users.length)];
-    const value = Buffer.from(items[Math.floor(Math.random() * items.length)]);
-
-    producer.produce(topic, -1, value, key);
-  }
-
-  producer.flush(10000, () => {
-    producer.disconnect();
-  });
-}
-
-produceExample()
-  .catch((err) => {
-    console.error(`Something went wrong:\n${err}`);
-    process.exit(1);
-  });
-
+```javascript file=producer.js
 ```
 
 ## Build Consumer
 
 To create the consumer application, paste the following JavaScript code into a file named `consumer.js`:
 
-```javascript
-const Kafka = require('node-rdkafka');
-const { configFromPath } = require('./util');
-
-function createConsumer(config, onData) {
-  const consumer = new Kafka.KafkaConsumer({
-    'bootstrap.servers': config['bootstrap.servers'],
-    'sasl.username': config['sasl.username'],
-    'sasl.password': config['sasl.password'],
-    'security.protocol': config['security.protocol'],
-    'sasl.mechanisms': config['sasl.mechanisms'],
-    'group.id': 'kafka-nodejs-getting-started',
-    'auto.offset.reset': 'earliest'
-  });
-
-  return new Promise((resolve, reject) => {
-    consumer
-     .on('ready', () => resolve(consumer))
-     .on('data', onData);
-
-    consumer.connect();
-  });
-};
-
-
-async function consumerExample() {
-  if (process.argv.length < 3) {
-    console.log("Please provide the configuration file path as the command line argument");
-    process.exit(1);
-  }
-  let configPath = process.argv.slice(2)[0];
-  const config = await configFromPath(configPath);
-  let topic = "purchases";
-
-  const consumer = await createConsumer(config, ({key, value}) => {
-    let k = key.toString().padEnd(10, ' ');
-    console.log(`Consumed event from topic ${topic}: key = ${k} value = ${value}`);
-  });
-
-  consumer.subscribe([topic]);
-  consumer.consume();
-
-  process.on('SIGINT', () => {
-    console.log('\nDisconnecting consumer ...');
-    consumer.disconnect();
-  });
-}
-
-consumerExample()
-  .catch((err) => {
-    console.error(`Something went wrong:\n${err}`);
-    process.exit(1);
-  });
+```javascript file=consumer.js
 ```
 
 ## Produce Events
