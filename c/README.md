@@ -19,7 +19,7 @@ if you do not already have access to one.
 
 This guide assumes that you already have a C compiler installed. The code in this guide has been tested with GCC and Clang/LLVM.
 
-You’ll also need to install [librdkafka](https://github.com/edenhill/librdkafka), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). All three libraries are widely available - search your package manager for librdkafka, pkg-config and glib.
+You’ll also need to install [librdkafka](https://github.com/edenhill/librdkafka), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. If you wish to run a local Kafka cluster, you will
@@ -36,7 +36,7 @@ Create a new directory anywhere you’d like for this project:
 mkdir kafka-c-getting-started && cd kafka-c-getting-started
 ```
 
-Create the following Makefile for the project:
+Create the following `Makefile` for the project:
 
 
 ```sh
