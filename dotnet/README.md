@@ -219,7 +219,7 @@ The `dotnet` command line tool gives us a handy `run` command we can use to exec
 In order to run the producer, use the `dotnet run` command passing in the configuration file created above:
 
 ```sh
-dotnet run --project producer.csproj getting-started.properties
+dotnet run --project producer.csproj $(pwd)/getting-started.properties
 ```
 
 You should see output that resembles:
@@ -243,7 +243,7 @@ From another terminal, run the following command to run the consumer application
 read the events from the `purchases` topic and write the information to the terminal.
 
 ```sh
-dotnet run --project consumer.csproj getting-started.properties 
+dotnet run --project consumer.csproj $(pwd)/getting-started.properties 
 ```
 
 The consumer application will start and print any events it has not yet consumed and then wait 
