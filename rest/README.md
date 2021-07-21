@@ -183,6 +183,7 @@ First you need to start the Confluent REST Proxy locally, which you will run in 
 
 Paste the following REST proxy configuration into a new file called `rest-proxy.yml`:
 
+<section data-context-key="kafka.broker" data-context-value="cloud">
 ```yaml
 ---
 version: '2'
@@ -206,6 +207,49 @@ services:
       KAFKA_REST_CLIENT_SASL_JAAS_CONFIG: $SASL_JAAS_CONFIG
       KAFKA_REST_CLIENT_SASL_MECHANISM: "PLAIN"
 ```
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="local">
+```yaml
+---
+version: '2'
+services:
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest:6.1.1
+    ports:
+      - 8082:8082
+    hostname: rest-proxy
+    container_name: rest-proxy
+    environment:
+      KAFKA_REST_HOST_NAME: rest-proxy
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+      KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
+```
+</section>
+<section data-context-key="kafka.broker" data-context-value="other">
+```yaml
+---
+version: '2'
+services:
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest:6.1.1
+    ports:
+      - 8082:8082
+    hostname: rest-proxy
+    container_name: rest-proxy
+    environment:
+      KAFKA_REST_HOST_NAME: rest-proxy
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+      KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
+```
+The above docker compose file refers to the bootstrap servers
+configuration you provided. If your Kafka Cluster requires different
+client security configuration, you may require [additional
+settings](https://kafka.apache.org/documentation/#security).
+
+</section>
 
 Source the Kafka cluster properties file into your environment:
 
