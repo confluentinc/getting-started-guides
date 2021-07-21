@@ -1,15 +1,26 @@
 const Kafka = require('node-rdkafka');
 const { configFromPath } = require('./util');
 
+function createConfigMap(config) {
+  if (config.hasOwnProperty('security.protocol')) {
+    return {
+      'bootstrap.servers': config['bootstrap.servers'],
+      'sasl.username': config['sasl.username'],
+      'sasl.password': config['sasl.password'],
+      'security.protocol': config['security.protocol'],
+      'sasl.mechanisms': config['sasl.mechanisms'],
+      'dr_msg_cb': true }
+  } else {
+    return {
+      'bootstrap.servers': config['bootstrap.servers'],
+      'dr_msg_cb': true
+    }
+  }
+}
+
 function createProducer(config, onDeliveryReport) {
-  const producer = new Kafka.Producer({
-    'bootstrap.servers': config['bootstrap.servers'],
-    'sasl.username': config['sasl.username'],
-    'sasl.password': config['sasl.password'],
-    'security.protocol': config['security.protocol'],
-    'sasl.mechanisms': config['sasl.mechanisms'],
-    'dr_msg_cb': true
-  });
+
+  const producer = new Kafka.Producer(createConfigMap(config));
 
   return new Promise((resolve, reject) => {
     producer
