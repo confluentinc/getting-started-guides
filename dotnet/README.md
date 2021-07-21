@@ -37,37 +37,11 @@ mkdir kafka-dotnet-getting-started && cd kafka-dotnet-getting-started
 Next we’ll create two different C# project files, one for the producer and one for the consumer.
 
 Copy the following into a file named `producer.csproj`:
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <StartupObject>Producer</StartupObject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="1.6.3" />
-  </ItemGroup>
-
-</Project>
+```xml file=producer.csproj
 ```
 
 Copy the following into a file named `consumer.csproj`:
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <StartupObject>Consumer</StartupObject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="1.6.3" />
-  </ItemGroup>
-
-</Project>
+```xml file=consumer.csproj
 ```
 
 ## Kafka Setup
