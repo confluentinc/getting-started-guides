@@ -18,7 +18,9 @@ In this tutorial, you will use the Confluent REST Proxy to produce and consume m
 This guide assumes that you already have:
 
 [Docker](https://docs.docker.com/get-docker/) installed
+
 [Docker Compose](https://docs.docker.com/compose/install/) installed
+
 [curl](https://curl.se/) installed
 
 
@@ -106,9 +108,8 @@ and secret authorizing your application to produce and consume. You can
 use the [Cloud UI](https://confluent.cloud/) to create a key for
 you.
 
-Take note of the API key and secret and add them to the configuraiton file.
-The `sasl.username` value should contain the API key, 
-and the `sasl.password` value should contain the API secret.
+Take note of the API key and secret and add them to the configuraiton file 
+in the `username` and `password` fields of the `SASL_JAAS_CONFIG` value.
 
 ```ini file=getting-started-cloud.properties
 ```
