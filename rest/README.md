@@ -181,9 +181,11 @@ request the creation of a topic from your operations team.
 
 First you need to start the Confluent REST Proxy locally, which you will run in Docker.
 
-Paste the following REST proxy configuration into a new file called `rest-proxy.yml`:
+Paste the following REST proxy configuration into a new file called `rest-proxy.yml`: 
+
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
+
 ```yaml
 ---
 version: '2'
@@ -207,9 +209,11 @@ services:
       KAFKA_REST_CLIENT_SASL_JAAS_CONFIG: $SASL_JAAS_CONFIG
       KAFKA_REST_CLIENT_SASL_MECHANISM: "PLAIN"
 ```
+
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
+
 ```yaml
 ---
 version: '2'
@@ -226,8 +230,10 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
 ```
+
 </section>
 <section data-context-key="kafka.broker" data-context-value="other">
+
 ```yaml
 ---
 version: '2'
