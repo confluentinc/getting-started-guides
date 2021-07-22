@@ -252,4 +252,10 @@ Re-run the producer to see more events, or feel free to modify the code as neces
 - [Get started with KafkaJS](https://www.confluent.io/blog/getting-started-with-kafkajs)
 - [Learn more about KafkaJS on the Streaming Audio podcast](https://developer.confluent.io/podcast/powering-microservices-using-apache-kafka-on-nodejs-with-kafkajs-at-klarna-ft-tommy-brunn/)
 - [Try the Node.js code example for Apache Kafka](https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/nodejs.html)
-
+- For information on testing in the Kafka ecosystem, check out
+  [Testing Event Streaming Apps](/learn/testing-kafka).
+- If you're interested in using streaming SQL for data creation,
+  processing, and querying in your applications, check out the
+  [ksqlDB 101 course](/learn-kafka/ksqldb/intro/).
+- Interested in performance tuning of your event streaming applications?
+  Check out the [Kafka Performance resources](/learn/kafka-performance/).

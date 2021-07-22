@@ -283,8 +283,10 @@ window and re-running the producer.
 
 ## Where next?
 
+- For the Python client API, check out the
+  [confluent_kafka documentation](https://docs.confluent.io/platform/current/clients/confluent-kafka-python/html/index.html).
 - For information on testing in the Kafka ecosystem, check out
-  [Testing Event Streaming Apps](/learn/testing-kafka)
+  [Testing Event Streaming Apps](/learn/testing-kafka).
 - If you're interested in using streaming SQL for data creation,
   processing, and querying in your applications, check out the
   [ksqlDB 101 course](/learn-kafka/ksqldb/intro/).
