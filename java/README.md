@@ -313,7 +313,7 @@ Consumed event from topic purchases: key = eabara     value = t-shirts
 
 - For the Java client API, check out the
   [Java documentation](https://docs.confluent.io/platform/current/clients/javadocs/javadoc/index.html).
-- If you want to build more complex applications and microservices—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the [Kafka Streams course](/learn-kafka/kafka-streams/get-started/)
+- If you want to build more complex applications and microservices—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/)
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
 - Interested in performance tuning of your event streaming applications?
