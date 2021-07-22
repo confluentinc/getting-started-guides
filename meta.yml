@@ -11,7 +11,7 @@ languages:
   - path: nodejs
     name: Node.js
   - path: c
-    name: C
+    name: C/C++
   - path: rest
     name: REST
 
