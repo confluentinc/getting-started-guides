@@ -210,7 +210,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Pro
 ```java file=src/main/java/examples/ProducerExample.java
 ```
 
-#### You can test the code before preceding by compiling with:
+You can test the code before preceding by compiling with:
 
 ```sh
 gradle build
@@ -228,7 +228,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Con
 ```java file=src/main/java/examples/ConsumerExample.java
 ```
 
-#### Once again, you can compile the code before preceding by with:
+Once again, you can compile the code before preceding by with:
 
 ```sh
 gradle build
