@@ -14,4 +14,6 @@ languages:
     name: C/C++
   - path: rest
     name: REST
-
+  - path: more
+    name: ...and more
+    url: /kafka-languages-and-tools
