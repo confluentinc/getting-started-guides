@@ -18,7 +18,7 @@ do not already have access to one.
 
 Note: Although it's beyond the scope of this tutorial, you can also
 use the Java-based [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html)
-client library for building stream processing applications.
+for building real-time applications and microservices for data in motion.
 
 
 ## Prerequisites
