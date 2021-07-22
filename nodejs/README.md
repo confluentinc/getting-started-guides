@@ -20,6 +20,12 @@ do not already have access to one.
 
 This guide assumes that you have [node.js](https://nodejs.org/en/download/) installed (tested with LTS version `14.17.3`).
 
+Later in this tutorial you will set up a new Kafka cluster or connect
+to an existing one. If you wish to run a local Kafka cluster, you will
+also need [Docker](https://docs.docker.com/get-docker/) installed
+(this tutorial uses the new `docker compose` command, see the [Docker
+documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+
 ## Create Project
 
 Create a new directory anywhere you’d like for this project:
