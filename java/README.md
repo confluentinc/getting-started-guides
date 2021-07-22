@@ -16,6 +16,11 @@ messages to and consumes messages from an Apache Kafka® cluster. The
 tutorial will walk you through setting up a local Kafka cluster if you
 do not already have access to one.
 
+Note: Although it's beyond the scope of this tutorial, you can also
+use the Java-based [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html)
+for building real-time applications and microservices for data in motion.
+
+
 ## Prerequisites
 
 This guide assumes that you already have:
@@ -308,6 +313,7 @@ Consumed event from topic purchases: key = eabara     value = t-shirts
 
 - For the Java client API, check out the
   [Java documentation](https://docs.confluent.io/platform/current/clients/javadocs/javadoc/index.html).
+- If you want to build more complex applications and microservices—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—take a look at the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html).
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
 - If you're interested in using streaming SQL for data creation,
