@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will run a Node.js client application that produces
 messages to and consumes messages from an Apache Kafka® cluster. The
-tutorial will walk you through setting up a local Kafka cluster if you
+tutorial will walk you through setting up a Kafka cluster if you
 do not already have access to one.
 
 ## Prerequisites

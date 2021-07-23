@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will build Go client applications which produce and 
 consume messages from an Apache Kafka® cluster. The tutorial will walk you 
-through setting up a local Kafka cluster if you do not already have access to one.
+through setting up a Kafka cluster if you do not already have access to one.
 
 ## Prerequisites
 
@@ -102,7 +102,7 @@ Paste the following configuration data into a file at:
 The below configuration file includes the required settings for a
 connection to Confluent Cloud including the bootstrap servers
 configuration you provided. Include your Kafka cluster key and secret
-in the sasl.username and sasl.password settings after pasting the file.
+in the `sasl.username` and `sasl.password` settings after pasting the file.
 
 ```go file=getting-started-cloud.properties
 ```
@@ -191,7 +191,7 @@ go build -o out/producer util.go producer.go
 ```
 
 ## Build Consumer
-Paste the following Go code into a file named consumer.go
+Paste the following Go code into a file named `consumer.go`.
 
 ```go file=consumer.go
 ```
