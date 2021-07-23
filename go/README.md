@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will build Go client applications which produce and 
 consume messages from an Apache Kafka® cluster. The tutorial will walk you 
-through setting up a local Kafka cluster if you do not already have access to one.
+through setting up a Kafka cluster if you do not already have access to one.
 
 ## Prerequisites
 
