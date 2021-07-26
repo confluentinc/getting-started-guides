@@ -1,13 +1,13 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and C
-  description: Getting Started with Apache Kafka and C 
+  title: Getting Started with Apache Kafka and C/C++
+  description: Getting Started with Apache Kafka and C/C++
 hero:
-  title: Getting Started with Apache Kafka and C
+  title: Getting Started with Apache Kafka and C/C++
   description: Step-by-step guide to building a C client application for Kafka 
 ---
 
-# Getting Started with Apache Kafka and C
+# Getting Started with Apache Kafka and C/C++
 
 ## Introduction
 
