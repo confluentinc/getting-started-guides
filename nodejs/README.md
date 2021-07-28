@@ -225,7 +225,6 @@ Produced event to topic purchases: key = sgarcia       value = gift card
 Produced event to topic purchases: key = jbernard   value = gift card
 Produced event to topic purchases: key = awalther   value = alarm clock
 Produced event to topic purchases: key = htanaka       value = book
-10 events were produced to topic purchases
 ```
 
 ## Consume Events
