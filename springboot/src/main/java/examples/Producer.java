@@ -18,11 +18,6 @@ public class Producer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    //public void sendMessage(String message) {
-     //   logger.info(String.format("#### -> Producing message -> %s", message));
-      //  this.kafkaTemplate.send(TOPIC, message);
-    //}
-
     public void sendMessage(String key, String value) {
             ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(TOPIC, key, value);
              future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {

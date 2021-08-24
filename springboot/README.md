@@ -220,7 +220,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Pro
 You can test the code before preceding by compiling with:
 
 ```sh
-mvn clean package
+mvn clean compile
 ```
 And you should see:
 
@@ -261,42 +261,55 @@ And you should see:
 BUILD SUCCESSFUL
 ```
 
-Run the following command to build and execute the producer application,
-which will produce some random data events to the `purchases` topic.
+Run the following command to run the Spring Boot application and all
+its components.
 
 ```sh
 mvn spring-boot:run
-curl -X POST -F "key=alice" -F "value=foobar2" http://localhost:9000/produce
 ```
 
-You should see output that resembles:
+In a new window, produce some data events to the `purchases` topic.
+
+```sh
+curl -X POST -F "key=awalther" -F "value=t-shirts" http://localhost:9000/produce
+curl -X POST -F "key=htanaka" -F "value=t-shirts" http://localhost:9000/produce
+curl -X POST -F "key=htanaka" -F "value=batteries" http://localhost:9000/produce
+curl -X POST -F "key=eabara" -F "value=t-shirts" http://localhost:9000/produce
+curl -X POST -F "key=htanaka" -F "value=t-shirts" http://localhost:9000/produce
+curl -X POST -F "key=jsmith" -F "value=book" http://localhost:9000/produce
+curl -X POST -F "key=awalther" -F "value=t-shirts" http://localhost:9000/produce
+curl -X POST -F "key=jsmith" -F "value=batteries" http://localhost:9000/produce
+curl -X POST -F "key=jsmith" -F "value=gift card" http://localhost:9000/produce
+curl -X POST -F "key=eabara" -F "value=t-shirts" http://localhost:9000/produce
+```
+
+In the Spring Boot application window, you should see output that resembles:
 
 ```
-Produced event to topic purchases: key = awalther   value = t-shirts
-Produced event to topic purchases: key = htanaka    value = t-shirts
-Produced event to topic purchases: key = htanaka    value = batteries
-Produced event to topic purchases: key = eabara     value = t-shirts
-Produced event to topic purchases: key = htanaka    value = t-shirts
-Produced event to topic purchases: key = jsmith     value = book
-Produced event to topic purchases: key = awalther   value = t-shirts
-Produced event to topic purchases: key = jsmith     value = batteries
-Produced event to topic purchases: key = jsmith     value = gift card
-Produced event to topic purchases: key = eabara     value = t-shirts
-10 events were produced to topic purchases
+2021-08-24 18:26:09.530  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
+
+2021-08-24 18:26:09.580  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = htanaka    value = t-shirts
+
+2021-08-24 18:26:09.623  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = htanaka    value = batteries
+
+2021-08-24 18:26:09.665  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = eabara     value = t-shirts
+
+2021-08-24 18:26:09.711  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = htanaka    value = t-shirts
+
+2021-08-24 18:26:09.754  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = jsmith     value = book
+
+2021-08-24 18:26:09.799  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
+
+2021-08-24 18:26:09.843  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = jsmith     value = batteries
+
+2021-08-24 18:26:09.887  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = jsmith     value = gift card
+
+2021-08-24 18:26:09.930  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = eabara     value = t-shirts
 ```
 
 ## Consume Events
 
-From another terminal, run the following command to run the consumer
-application which will read the events from the `purchases` topic and write
-the information to the terminal.
-
-Re-run the producer to see more events, or feel free to modify the code
-as necessary to create more or different events.
-
-```sh
-java -cp build/libs/springboot-getting-started-0.0.1.jar examples.springboot.kafka.ConsumerExample
-```
+In the same output, you should see the consumed events.
 
 The consumer application will start and print any events it has not
 yet consumed and then wait for more events to arrive. On startup of
@@ -305,16 +318,25 @@ are done with the consumer, press `ctrl-c` to terminate the consumer
 application.
 
 ```
-Consumed event from topic purchases: key = awalther   value = t-shirts
-Consumed event from topic purchases: key = htanaka    value = t-shirts
-Consumed event from topic purchases: key = htanaka    value = batteries
-Consumed event from topic purchases: key = eabara     value = t-shirts
-Consumed event from topic purchases: key = htanaka    value = t-shirts
-Consumed event from topic purchases: key = jsmith     value = book
-Consumed event from topic purchases: key = awalther   value = t-shirts
-Consumed event from topic purchases: key = jsmith     value = batteries
-Consumed event from topic purchases: key = jsmith     value = gift card
-Consumed event from topic purchases: key = eabara     value = t-shirts
+2021-08-24 18:26:09.535  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
+
+2021-08-24 18:26:09.581  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = htanaka    value = t-shirts
+
+2021-08-24 18:26:09.624  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = htanaka    value = batteries
+
+2021-08-24 18:26:09.666  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = eabara     value = t-shirts
+
+2021-08-24 18:26:09.711  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = htanaka    value = t-shirts
+
+2021-08-24 18:26:09.755  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = jsmith     value = book
+
+2021-08-24 18:26:09.800  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
+
+2021-08-24 18:26:09.844  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = jsmith     value = batteries
+
+2021-08-24 18:26:09.887  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = jsmith     value = gift card
+
+2021-08-24 18:26:09.931  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = eabara     value = t-shirts
 ```
 
 ## Where next?
