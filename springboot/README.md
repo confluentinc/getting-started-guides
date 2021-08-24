@@ -27,7 +27,7 @@ If you want to build more complex applications and microservices for data in mot
 
 This guide assumes that you already have:
 
-[Gradle](https://gradle.org/install/) installed
+[Maven](https://maven.apache.org) installed
 
 [Java 11](https://www.oracle.com/java/technologies/javase-downloads.html)
 installed and configured as the current java version for the environment
@@ -47,9 +47,9 @@ mkdir kafka-springboot-getting-started && cd kafka-springboot-getting-started
 ```
 
 Create the following Gradle build file for the project, named
-`build.gradle`:
+`pom.xml`:
 
-```gradle file=build.gradle
+```xml file=pom.xml
 ```
 
 ## Kafka Setup
@@ -220,12 +220,12 @@ Paste the following Java code into a file located at `src/main/java/examples/Pro
 You can test the code before preceding by compiling with:
 
 ```sh
-gradle build
+mvn clean package
 ```
 And you should see:
 
 ```
-BUILD SUCCESSFUL
+BUILD SUCCESS
 ```
 
 ## Build Consumer
@@ -238,7 +238,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Con
 Once again, you can compile the code before preceding by with:
 
 ```sh
-gradle build
+mvn compile
 ```
 
 And you should see:
@@ -252,7 +252,7 @@ BUILD SUCCESSFUL
 To build a JAR that we can run from the command line, first run:
 
 ```sh
-gradle shadowJar
+mvn package
 ```
 
 And you should see:
@@ -265,7 +265,7 @@ Run the following command to build and execute the producer application,
 which will produce some random data events to the `purchases` topic.
 
 ```sh
-java -cp build/libs/springboot-getting-started-0.0.1.jar examples.springboot.kafka.SpringBootKafkaApplication
+mvn spring-boot:run
 ```
 
 You should see output that resembles:
