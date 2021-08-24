@@ -212,6 +212,19 @@ Create a directory for the Java files in this project:
 mkdir -p src/main/java/examples
 ```
 
+We will use the `SpringBootApplication` annotation for ease of use, since it provides auto-configuration and component scan.
+Paste the following Java code into a file located at `src/main/java/examples/SpringBootWithKafkaApplication.java`
+
+```java file=src/main/java/examples/SpringBootWithKafkaApplication.java
+```
+
+Create a service to listen for produce commands.
+Paste the following Java code into a file located at `src/main/java/examples/controllers/KafkaController.java `
+
+```java file=src/main/java/examples/controllers/KafkaController.java
+```
+
+Finally, the Kafka Producer.
 Paste the following Java code into a file located at `src/main/java/examples/Producer.java`
 
 ```java file=src/main/java/examples/Producer.java
@@ -268,7 +281,7 @@ its components.
 mvn spring-boot:run
 ```
 
-In a new window, produce some data events to the `purchases` topic.
+In a separate terminal window, produce some data events to the `purchases` topic.
 
 ```sh
 curl -X POST -F "key=awalther" -F "value=t-shirts" http://localhost:9000/produce
@@ -283,7 +296,7 @@ curl -X POST -F "key=jsmith" -F "value=gift card" http://localhost:9000/produce
 curl -X POST -F "key=eabara" -F "value=t-shirts" http://localhost:9000/produce
 ```
 
-In the Spring Boot application window, you should see output that resembles:
+In the Spring Boot application window, you should see output that includes:
 
 ```
 2021-08-24 18:26:09.530  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
@@ -309,13 +322,9 @@ In the Spring Boot application window, you should see output that resembles:
 
 ## Consume Events
 
-In the same output, you should see the consumed events.
-
-The consumer application will start and print any events it has not
-yet consumed and then wait for more events to arrive. On startup of
-the consumer, you should see output that resembles the below. Once you
-are done with the consumer, press `ctrl-c` to terminate the consumer
-application.
+Since the consumer was started automatically with the application,
+the output from the Spring Boot application will include the consume events interspersed with the produce events.
+In the same output as the previous section, you should see the consumed events.
 
 ```
 2021-08-24 18:26:09.535  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
