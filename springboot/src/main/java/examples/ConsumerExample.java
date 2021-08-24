@@ -1,4 +1,4 @@
-package examples;
+package examples.springboot.kafka;
 
 import org.apache.kafka.clients.consumer.*;
 

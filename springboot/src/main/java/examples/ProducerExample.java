@@ -1,4 +1,4 @@
-package examples;
+package examples.springboot.kafka;
 
 import org.apache.kafka.clients.producer.*;
 import java.io.*;
@@ -12,6 +12,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,9 +20,18 @@ import lombok.extern.log4j.Log4j2;
 @Component
 public class ProducerExample {
 
-    private final KafkaTemplate<String, String> producer;
+    //private final KafkaTemplate<String, String> producer;
     private final String topic = "purchases";
 
+    //Autowired
+    //ProducerExample(KafkaTemplate<String, String> template) {
+    //    this.producer = template;
+    //
+
+    @Autowired
+    KafkaTemplate<String, String> producer;
+
+    @EventListener(ApplicationStartedEvent.class)
     public void produce() {
         String[] users = { "eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther" };
         String[] items = { "book", "alarm clock", "t-shirts", "gift card", "batteries" };
