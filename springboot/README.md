@@ -27,7 +27,7 @@ If you want to build more complex applications and microservices for data in mot
 
 This guide assumes that you already have:
 
-[Maven](https://maven.apache.org) installed
+[Gradle](https://gradle.org/install/) installed
 
 [Java 11](https://www.oracle.com/java/technologies/javase-downloads.html)
 installed and configured as the current java version for the environment
@@ -218,13 +218,13 @@ Paste the following Java code into a file located at `src/main/java/examples/Spr
 ```java file=src/main/java/examples/SpringBootWithKafkaApplication.java
 ```
 
-Create a service to listen for produce commands.
+Create a service to listen on port 9000.
 Paste the following Java code into a file located at `src/main/java/examples/controllers/KafkaController.java `
 
 ```java file=src/main/java/examples/controllers/KafkaController.java
 ```
 
-Finally, the Kafka Producer.
+Create the Kafka Producer.
 Paste the following Java code into a file located at `src/main/java/examples/Producer.java`
 
 ```java file=src/main/java/examples/Producer.java
@@ -233,12 +233,12 @@ Paste the following Java code into a file located at `src/main/java/examples/Pro
 You can test the code before preceding by compiling with:
 
 ```sh
-mvn clean compile
+gradle build
 ```
 And you should see:
 
 ```
-BUILD SUCCESS
+BUILD SUCCESSFUL
 ```
 
 ## Build Consumer
@@ -251,7 +251,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Con
 Once again, you can compile the code before preceding by with:
 
 ```sh
-mvn compile
+gradle build
 ```
 
 And you should see:
@@ -265,7 +265,7 @@ BUILD SUCCESSFUL
 To build a JAR that we can run from the command line, first run:
 
 ```sh
-mvn package
+gradle shadowJar
 ```
 
 And you should see:
@@ -274,11 +274,16 @@ And you should see:
 BUILD SUCCESSFUL
 ```
 
-Run the following command to run the Spring Boot application and all
-its components.
+Run the following command to run the Spring Boot application and all its components.
 
 ```sh
-mvn spring-boot:run
+gradle bootRun
+```
+
+You should see it waiting at:
+
+```
+> :bootRun
 ```
 
 In a separate terminal window, produce some data events to the `purchases` topic.
@@ -296,7 +301,7 @@ curl -X POST -F "key=jsmith" -F "value=gift card" http://localhost:9000/produce
 curl -X POST -F "key=eabara" -F "value=t-shirts" http://localhost:9000/produce
 ```
 
-In the Spring Boot application window, you should see output that includes:
+In the Spring Boot application window, you should see output that includes the lines:
 
 ```
 2021-08-24 18:26:09.530  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
@@ -323,8 +328,8 @@ In the Spring Boot application window, you should see output that includes:
 ## Consume Events
 
 Since the consumer was started automatically with the application,
-the output from the Spring Boot application will include the consume events interspersed with the produce events.
-In the same output as the previous section, you should see the consumed events.
+the output from the Spring Boot application will include the consumed events.
+In the same output as the previous section, you should see the consumed events, interspersed with the produced events.
 
 ```
 2021-08-24 18:26:09.535  INFO 21133 --- [ntainer#0-0-C-1] examples.Producer                        : Consumed event from topic purchases: key = awalther   value = t-shirts

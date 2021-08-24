@@ -40,7 +40,7 @@ repositories {
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE'
   implementation 'org.apache.kafka:kafka-clients'
-  implementation 'org.springframework.kafka:spring-kafka:2.2.4.RELEASE'
+  implementation 'org.springframework.kafka:spring-kafka'
 
   //compileOnly 'org.projectlombok:lombok'
   //annotationProcessor 'org.projectlombok:lombok'
