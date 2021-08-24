@@ -280,7 +280,7 @@ int main (int argc, char **argv) {
     conf = rd_kafka_conf_new();
     load_config_group(conf, key_file, "default");
 
-    // Install a devlivery-error callback.
+    // Install a delivery-error callback.
     rd_kafka_conf_set_dr_msg_cb(conf, dr_msg_cb);
 
     // Create the Producer instance.
