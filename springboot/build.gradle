@@ -28,7 +28,7 @@ version = "getting-started-0.0.1"
 sourceCompatibility = '8'
 
 bootJar {
-  mainClassName = "examples.kafka.SpringbootKafkaApplication"
+  mainClassName = "examples.springboot.kafka.SpringBootKafkaApplication"
 }
 
 repositories {

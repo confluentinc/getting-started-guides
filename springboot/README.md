@@ -265,7 +265,7 @@ Run the following command to build and execute the producer application,
 which will produce some random data events to the `purchases` topic.
 
 ```sh
-java -cp build/libs/springboot-getting-started-0.0.1.jar examples.springboot.kafka.ProducerExample
+java -cp build/libs/springboot-getting-started-0.0.1.jar examples.springboot.kafka.SpringBootKafkaApplication
 ```
 
 You should see output that resembles:
