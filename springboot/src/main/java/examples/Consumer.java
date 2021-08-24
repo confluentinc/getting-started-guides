@@ -18,8 +18,9 @@ public class Consumer {
     @KafkaListener(topics = "purchases", groupId = "spring-boot")
     //public void listener(ConsumerRecord<String, String> record) {
     public void listen(String value,
-        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+        @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         //logger.info(String.format("Consumed event from topic %s: key = %-10s value = %s", record.topic(), record.key(), record.value()));
-        logger.info(String.format("Consumed event from topic %s: value = %s", topic, value));
+        logger.info(String.format("Consumed event from topic %s: key = %-10s value = %s%n", topic, key, value));
     }
 }

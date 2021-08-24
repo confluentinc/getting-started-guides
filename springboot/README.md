@@ -119,7 +119,7 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Paste the following configuration data into a file located at `src/main/resources/application.properties`
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
@@ -212,9 +212,9 @@ Create a directory for the Java files in this project:
 mkdir -p src/main/java/examples
 ```
 
-Paste the following Java code into a file located at `src/main/java/examples/ProducerExample.java`
+Paste the following Java code into a file located at `src/main/java/examples/Producer.java`
 
-```java file=src/main/java/examples/ProducerExample.java
+```java file=src/main/java/examples/Producer.java
 ```
 
 You can test the code before preceding by compiling with:
@@ -230,9 +230,9 @@ BUILD SUCCESS
 
 ## Build Consumer
 
-Paste the following Java code into a file located at `src/main/java/examples/ConsumerExample.java`
+Paste the following Java code into a file located at `src/main/java/examples/Consumer.java`
 
-```java file=src/main/java/examples/ConsumerExample.java
+```java file=src/main/java/examples/Consumer.java
 ```
 
 Once again, you can compile the code before preceding by with:
@@ -266,10 +266,7 @@ which will produce some random data events to the `purchases` topic.
 
 ```sh
 mvn spring-boot:run
-curl -X POST -F 'message=test4' http://localhost:9000/produce      
-curl -X POST -F 'message=test4' http://localhost:9000/produce      
-curl -X POST -F 'message=test4' http://localhost:9000/produce      
-curl -X POST -F 'message=test4' http://localhost:9000/produce      
+curl -X POST -F "key=alice" -F "value=foobar2" http://localhost:9000/produce
 ```
 
 You should see output that resembles:
