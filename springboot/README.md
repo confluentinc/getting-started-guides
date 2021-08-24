@@ -286,19 +286,19 @@ You should see it waiting at:
 > :bootRun
 ```
 
-In a separate terminal window, produce some data events to the `purchases` topic.
+In a separate terminal window, produce some events to the `purchases` topic, by posting data to the service running on port 9000.
 
 ```sh
-curl -X POST -F "key=awalther" -F "value=t-shirts" http://localhost:9000/produce
-curl -X POST -F "key=htanaka" -F "value=t-shirts" http://localhost:9000/produce
-curl -X POST -F "key=htanaka" -F "value=batteries" http://localhost:9000/produce
-curl -X POST -F "key=eabara" -F "value=t-shirts" http://localhost:9000/produce
-curl -X POST -F "key=htanaka" -F "value=t-shirts" http://localhost:9000/produce
-curl -X POST -F "key=jsmith" -F "value=book" http://localhost:9000/produce
-curl -X POST -F "key=awalther" -F "value=t-shirts" http://localhost:9000/produce
-curl -X POST -F "key=jsmith" -F "value=batteries" http://localhost:9000/produce
-curl -X POST -F "key=jsmith" -F "value=gift card" http://localhost:9000/produce
-curl -X POST -F "key=eabara" -F "value=t-shirts" http://localhost:9000/produce
+curl -X POST -F "key=awalther" -F "value=t-shirts"  http://localhost:9000/produce
+curl -X POST -F "key=htanaka"  -F "value=t-shirts"  http://localhost:9000/produce
+curl -X POST -F "key=htanaka"  -F "value=batteries" http://localhost:9000/produce
+curl -X POST -F "key=eabara"   -F "value=t-shirts"  http://localhost:9000/produce
+curl -X POST -F "key=htanaka"  -F "value=t-shirts"  http://localhost:9000/produce
+curl -X POST -F "key=jsmith"   -F "value=book"      http://localhost:9000/produce
+curl -X POST -F "key=awalther" -F "value=t-shirts"  http://localhost:9000/produce
+curl -X POST -F "key=jsmith"   -F "value=batteries" http://localhost:9000/produce
+curl -X POST -F "key=jsmith"   -F "value=gift card" http://localhost:9000/produce
+curl -X POST -F "key=eabara"   -F "value=t-shirts"  http://localhost:9000/produce
 ```
 
 In the Spring Boot application window, you should see output that includes the lines:
