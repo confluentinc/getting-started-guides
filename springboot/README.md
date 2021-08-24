@@ -113,7 +113,13 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
-Paste the following configuration data into a file at `getting-started.properties`
+Create a directory for the application resource file:
+
+```sh
+mkdir -p src/main/resources
+```
+
+Paste the following configuration data into a file located at `src/main/resources/application.properties`
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
