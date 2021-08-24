@@ -266,6 +266,10 @@ which will produce some random data events to the `purchases` topic.
 
 ```sh
 mvn spring-boot:run
+curl -X POST -F 'message=test4' http://localhost:9000/produce      
+curl -X POST -F 'message=test4' http://localhost:9000/produce      
+curl -X POST -F 'message=test4' http://localhost:9000/produce      
+curl -X POST -F 'message=test4' http://localhost:9000/produce      
 ```
 
 You should see output that resembles:

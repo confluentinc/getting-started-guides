@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/kafka")
 public class KafkaController {
 
     private final Producer producer;
@@ -18,7 +17,7 @@ public class KafkaController {
         this.producer = producer;
     }
 
-    @PostMapping(value = "/publish")
+    @PostMapping(value = "/produce")
     public void sendMessageToKafkaTopic(@RequestParam("message") String message) {
         this.producer.sendMessage(message);
     }
