@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 public class ProducerExample {
 
     private final KafkaTemplate<String, String> producer;
-    private final String topic = "purchase";
+    private final String topic = "purchases";
 
     public void produce() {
         String[] users = { "eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther" };
