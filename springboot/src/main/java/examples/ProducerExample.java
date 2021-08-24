@@ -6,7 +6,6 @@ import java.nio.file.*;
 import java.util.*;
 
 import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.kafka.support.SendResult;
@@ -20,19 +19,12 @@ import lombok.extern.log4j.Log4j2;
 @Component
 public class ProducerExample {
 
-    //private final KafkaTemplate<String, String> producer;
-    private final String topic = "purchases";
-
-    //Autowired
-    //ProducerExample(KafkaTemplate<String, String> template) {
-    //    this.producer = template;
-    //
+    private final static String topic = "purchases";
 
     @Autowired
-    KafkaTemplate<String, String> producer;
+    static KafkaTemplate<String, String> producer;
 
-    @EventListener(ApplicationStartedEvent.class)
-    public void produce() {
+    public static void main(String[] args) {
         String[] users = { "eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther" };
         String[] items = { "book", "alarm clock", "t-shirts", "gift card", "batteries" };
 
@@ -59,18 +51,4 @@ public class ProducerExample {
         log.info("%s events were produced to topic %s%n", numMessages, topic);
     }
 
-
-    /**
-     * We'll reuse this function to load properties from the Consumer as well
-     */
-    public static Properties loadConfig(final String configFile) throws IOException {
-        if (!Files.exists(Paths.get(configFile))) {
-            throw new IOException(configFile + " not found.");
-        }
-        final Properties cfg = new Properties();
-        try (InputStream inputStream = new FileInputStream(configFile)) {
-            cfg.load(inputStream);
-        }
-        return cfg;
-    }
 }

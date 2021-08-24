@@ -20,5 +20,4 @@ public class ConsumerExample {
     public void consume(final ConsumerRecord<String, String> consumerRecord) {
       log.info("received {} {}", consumerRecord.key(), consumerRecord.value());
     }
-
 }

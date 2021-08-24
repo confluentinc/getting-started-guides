@@ -1,7 +1,10 @@
 buildscript {
-  repositories {
-    jcenter()
-  }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
+    }
 }
 
 plugins {
@@ -11,17 +14,17 @@ plugins {
 }
 
 repositories {
-  jcenter()
+    mavenCentral()
 
-  maven {
-    url 'https://packages.confluent.io/maven'
-  }
+    maven {
+        url "https://packages.confluent.io/maven"
+    }
 }
 
-apply plugin: 'idea'
+apply plugin: "com.github.johnrengelman.shadow"
 
 group = 'examples'
-version = '0.0.1-SNAPSHOT'
+version = "getting-started-0.0.1"
 sourceCompatibility = '8'
 
 bootJar {
