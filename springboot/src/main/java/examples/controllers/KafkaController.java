@@ -1,6 +1,6 @@
-package com.demo.controllers;
+package examples.controllers;
 
-import com.demo.engine.Producer;
+import examples.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
