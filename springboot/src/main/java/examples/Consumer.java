@@ -13,7 +13,7 @@ import java.io.IOException;
 @Service
 public class Consumer {
 
-    private final Logger logger = LoggerFactory.getLogger(Producer.class);
+    private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
     @KafkaListener(topics = "purchases", groupId = "spring-boot")
     public void listen(String value,
