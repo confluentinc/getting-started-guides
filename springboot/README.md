@@ -47,9 +47,9 @@ mkdir kafka-springboot-getting-started && cd kafka-springboot-getting-started
 ```
 
 Create the following Gradle build file for the project, named
-`pom.xml`:
+`build.gradle`:
 
-```xml file=pom.xml
+```xml file=build.gradle
 ```
 
 ## Kafka Setup
