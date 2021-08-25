@@ -212,16 +212,11 @@ Create a directory for the Java files in this project:
 mkdir -p src/main/java/examples
 ```
 
-We will use the `SpringBootApplication` annotation for ease of use, since it provides auto-configuration and component scan.
+We will use `SpringBootApplication` annotation for ease of use, auto-configuration and component scanning.
+This class also creates a service that listens for commands on a port.
 Paste the following Java code into a file located at `src/main/java/examples/SpringBootWithKafkaApplication.java`
 
 ```java file=src/main/java/examples/SpringBootWithKafkaApplication.java
-```
-
-Create a service to listen on port 9000.
-Paste the following Java code into a file located at `src/main/java/examples/controllers/KafkaController.java `
-
-```java file=src/main/java/examples/controllers/KafkaController.java
 ```
 
 Create the Kafka Producer.
