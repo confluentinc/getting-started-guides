@@ -332,9 +332,9 @@ In the same output as the previous section, you should see the consumed events, 
 
 ## Where next?
 
-- For a Spring Boot example using Schema Registry and Avro, check out the
-  [Spring Boot example](https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/java-springboot.html).
-- Complete the free, online [Introduction to Spring Boot for Confluent Cloud](https://developer.confluent.io/learn-kafka/spring/confluent-cloud/) course.
+- For a Spring Boot example using Schema Registry and Avro, check out 
+  [this example](https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/java-springboot.html).
+- Learn more in the [Introduction to Spring Boot for Confluent Cloud](https://developer.confluent.io/learn-kafka/spring/confluent-cloud/) course.
 - If you want to build more complex applications and microservices—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/).
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
