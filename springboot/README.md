@@ -300,23 +300,14 @@ In the Spring Boot application window, you should see output that includes the l
 
 ```
 2021-08-24 18:26:09.530  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
-
 2021-08-24 18:26:09.580  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = htanaka    value = t-shirts
-
 2021-08-24 18:26:09.623  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = htanaka    value = batteries
-
 2021-08-24 18:26:09.665  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = eabara     value = t-shirts
-
 2021-08-24 18:26:09.711  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = htanaka    value = t-shirts
-
 2021-08-24 18:26:09.754  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = jsmith     value = book
-
 2021-08-24 18:26:09.799  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
-
 2021-08-24 18:26:09.843  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = jsmith     value = batteries
-
 2021-08-24 18:26:09.887  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = jsmith     value = gift card
-
 2021-08-24 18:26:09.930  INFO 21133 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = eabara     value = t-shirts
 ```
 
@@ -328,23 +319,14 @@ In the same output as the previous section, you should see the consumed events, 
 
 ```
 2021-08-24 18:26:09.535  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
-
 2021-08-24 18:26:09.581  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = htanaka    value = t-shirts
-
 2021-08-24 18:26:09.624  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = htanaka    value = batteries
-
 2021-08-24 18:26:09.666  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = eabara     value = t-shirts
-
 2021-08-24 18:26:09.711  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = htanaka    value = t-shirts
-
 2021-08-24 18:26:09.755  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = jsmith     value = book
-
 2021-08-24 18:26:09.800  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
-
 2021-08-24 18:26:09.844  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = jsmith     value = batteries
-
 2021-08-24 18:26:09.887  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = jsmith     value = gift card
-
 2021-08-24 18:26:09.931  INFO 21133 --- [ntainer#0-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = eabara     value = t-shirts
 ```
 

@@ -23,8 +23,7 @@ public class Producer {
              future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
                  @Override
                  public void onSuccess(SendResult<String, String> result) {
-                     logger.info(String.format("Produced event to topic %s: key = %-10s value = %s%n", TOPIC, key, value));
-
+                     logger.info(String.format("Produced event to topic %s: key = %-10s value = %s", TOPIC, key, value));
                  }
                  @Override
                  public void onFailure(Throwable ex) {

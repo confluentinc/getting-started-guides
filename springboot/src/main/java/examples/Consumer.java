@@ -20,6 +20,6 @@ public class Consumer {
         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         //logger.info(String.format("Consumed event from topic %s: key = %-10s value = %s", record.topic(), record.key(), record.value()));
-        logger.info(String.format("Consumed event from topic %s: key = %-10s value = %s%n", topic, key, value));
+        logger.info(String.format("Consumed event from topic %s: key = %-10s value = %s", topic, key, value));
     }
 }
