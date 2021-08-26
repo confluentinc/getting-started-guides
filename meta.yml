@@ -14,7 +14,7 @@ languages:
     name: C/C++
   - path: rest
     name: REST
-  - path: spring
+  - path: springboot
     name: Spring Boot
   - path: more
     name: ...and more
