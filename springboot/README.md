@@ -292,7 +292,7 @@ You should see output that includes the lines showing produced records:
 
 ## Consume Events
 
-Run the following command to run the Spring Boot application for the Producer.
+Run the following command to run the Spring Boot application for the Consumer.
 
 ```sh
 gradle bootRun --args='--consumer'
