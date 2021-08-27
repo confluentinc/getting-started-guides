@@ -238,6 +238,7 @@ BUILD SUCCESSFUL
 
 ## Build Consumer
 
+Create the Kafka Consumer.
 Paste the following Java code into a file located at `src/main/java/examples/Consumer.java`
 
 ```java file=src/main/java/examples/Consumer.java
