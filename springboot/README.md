@@ -213,7 +213,6 @@ mkdir -p src/main/java/examples
 ```
 
 We will use `SpringBootApplication` annotation for ease of use, auto-configuration and component scanning.
-This class also creates a service that listens for commands on a port.
 Paste the following Java code into a file located at `src/main/java/examples/SpringBootWithKafkaApplication.java`
 
 ```java file=src/main/java/examples/SpringBootWithKafkaApplication.java
@@ -270,34 +269,13 @@ And you should see:
 BUILD SUCCESSFUL
 ```
 
-Run the following command to run the Spring Boot application and all its components.
+Run the following command to run the Spring Boot application for the Producer.
 
 ```sh
-gradle bootRun
+gradle bootRun --args='--producer'
 ```
 
-You should see it waiting at:
-
-```
-> :bootRun
-```
-
-In a separate terminal window, produce some events to the `purchases` topic, by posting data to the service running on port 9000.
-
-```sh
-curl -X POST -F "key=awalther" -F "value=t-shirts"  http://localhost:9000/produce
-curl -X POST -F "key=htanaka"  -F "value=t-shirts"  http://localhost:9000/produce
-curl -X POST -F "key=htanaka"  -F "value=batteries" http://localhost:9000/produce
-curl -X POST -F "key=eabara"   -F "value=t-shirts"  http://localhost:9000/produce
-curl -X POST -F "key=htanaka"  -F "value=t-shirts"  http://localhost:9000/produce
-curl -X POST -F "key=jsmith"   -F "value=book"      http://localhost:9000/produce
-curl -X POST -F "key=awalther" -F "value=t-shirts"  http://localhost:9000/produce
-curl -X POST -F "key=jsmith"   -F "value=batteries" http://localhost:9000/produce
-curl -X POST -F "key=jsmith"   -F "value=gift card" http://localhost:9000/produce
-curl -X POST -F "key=eabara"   -F "value=t-shirts"  http://localhost:9000/produce
-```
-
-In the Spring Boot application window, you should see output that includes the lines showing produced records:
+You should see output that includes the lines showing produced records:
 
 ```
 2021-08-27 13:09:50.287  INFO 73259 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
@@ -314,13 +292,13 @@ In the Spring Boot application window, you should see output that includes the l
 
 ## Consume Events
 
-In a separate terminal window, start the Consumer application.
+Run the following command to run the Spring Boot application for the Producer.
 
 ```sh
-curl -X GET http://localhost:9000/start-consume
+gradle bootRun --args='--consumer'
 ```
 
-In the Spring Boot application window, you should see output that includes the lines showing consumed records:
+You should see output that includes the lines showing consumed records:
 
 ```
 2021-08-27 13:09:54.129  INFO 73259 --- [yConsumer-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = awalther   value = t-shirts

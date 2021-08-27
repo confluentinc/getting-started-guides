@@ -1,17 +1,15 @@
 package examples;
 
+import examples.Producer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import examples.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 
-@RestController
+
 @SpringBootApplication
 public class SpringBootWithKafkaApplication {
 
@@ -21,6 +19,35 @@ public class SpringBootWithKafkaApplication {
         SpringApplication.run(SpringBootWithKafkaApplication.class, args);
     }
 
+    @Bean
+    public CommandLineRunner CommandLineRunnerBean() {
+        return (args) -> {
+            for (String arg : args) {
+                System.out.println(arg);
+                switch (arg) {
+                  case "--producer": 
+                        this.producer.sendMessage ("awalther", "t-shirts");
+                        this.producer.sendMessage ("htanaka", "t-shirts");
+                        this.producer.sendMessage ("htanaka", "batteries");
+                        this.producer.sendMessage ("eabara", "t-shirts");
+                        this.producer.sendMessage ("htanaka", "t-shirts");
+                        this.producer.sendMessage ("jsmith", "book");
+                        this.producer.sendMessage ("awalther", "t-shirts");
+                        this.producer.sendMessage ("jsmith", "batteries");
+                        this.producer.sendMessage ("jsmith", "gift card");
+                        this.producer.sendMessage ("eabara", "t-shirts");
+                        break;
+                  case "--consumer": 
+                        MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
+                        listenerContainer.start();
+                        break;
+                  default:
+                        break;
+                }
+            }
+        };
+    }
+
     @Autowired
     SpringBootWithKafkaApplication(Producer producer) {
         this.producer = producer;
@@ -28,24 +55,5 @@ public class SpringBootWithKafkaApplication {
 
     @Autowired
     private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-
-    @PostMapping(value = "/produce")
-    public void sendMessageToKafkaTopic(@RequestParam("key") String key, @RequestParam("value") String value) {
-        this.producer.sendMessage(key, value);
-    }
-
-    @GetMapping(path = "/start-consume")
-    public String start() {
-        MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
-        listenerContainer.start();
-        return "Started consumer";
-    }
-
-    @GetMapping(path = "/stop-consume")
-    public String stop() {
-        MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
-        listenerContainer.stop();
-        return "Stopped consumer";
-    }
 
 }
