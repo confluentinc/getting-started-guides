@@ -257,18 +257,6 @@ BUILD SUCCESSFUL
 
 ## Produce Events
 
-To build a JAR that we can run from the command line, first run:
-
-```sh
-gradle shadowJar
-```
-
-And you should see:
-
-```
-BUILD SUCCESSFUL
-```
-
 Run the following command to run the Spring Boot application for the Producer.
 
 ```sh
