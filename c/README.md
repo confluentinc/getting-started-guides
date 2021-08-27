@@ -1,7 +1,7 @@
 ---
 seo:
   title: Apache Kafka and C/C++ - Getting Started Tutorial 
-  description: Getting Started with Apache Kafka and C/C++
+  description: How to develop your first Kafka client application in C/C++, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
 hero:
   title: Getting Started with Apache Kafka and C/C++
   description: Step-by-step guide to building a C client application for Kafka 

@@ -1,7 +1,7 @@
 ---
 seo:
   title: Apache Kafka and .NET - Getting Started Tutorial 
-  description: Step-by-step guide to building a .NET client application for Kafka
+  description: How to develop your first Kafka client application in .NET, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
 hero:
   title: Getting Started with Apache Kafka and .NET
   description: Step-by-step guide to building a .NET client application for Kafka
