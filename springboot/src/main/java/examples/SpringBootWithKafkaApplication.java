@@ -23,7 +23,6 @@ public class SpringBootWithKafkaApplication {
     public CommandLineRunner CommandLineRunnerBean() {
         return (args) -> {
             for (String arg : args) {
-                System.out.println(arg);
                 switch (arg) {
                   case "--producer": 
                         this.producer.sendMessage ("awalther", "t-shirts");
