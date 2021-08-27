@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Spring Boot
+  title: Apache Kafka and Spring Boot - Getting Started Tutorial
   description: Step-by-step guide to building a Spring Boot client application for Kafka 
 hero:
   title: Getting Started with Apache Kafka and Spring Boot
