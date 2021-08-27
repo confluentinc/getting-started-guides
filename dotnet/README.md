@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and .NET
+  title: Apache Kafka and .NET - Getting Started Tutorial 
   description: Step-by-step guide to building a .NET client application for Kafka
 hero:
   title: Getting Started with Apache Kafka and .NET

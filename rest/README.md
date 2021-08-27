@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Confluent REST Proxy
+  title: Apache Kafka and REST - Getting Started Tutorial 
   description: Getting Started with Apache Kafka and Confluent REST Proxy 
 hero:
   title: Getting Started with Apache Kafka and Confluent REST Proxy

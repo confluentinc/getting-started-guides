@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Node.js
+  title: Apache Kafka and Node.js - Getting Started Tutorial 
   description: Getting Started with Apache Kafka and Node.js 
 hero:
   title: Getting Started with Apache Kafka and Node.js

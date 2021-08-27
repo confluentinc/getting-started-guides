@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Go
+  title: Apache Kafka and Go - Getting Started Tutorial 
   description: Step-by-step guide to building a Go client application for Kafka 
 hero:
   title: Getting Started with Apache Kafka and Go

@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Python
+  title: Apache Kafka and Python - Getting Started Tutorial 
   description: Step-by-step guide to building a Python client application for Kafka 
 hero:
   title: Getting Started with Apache Kafka and Python

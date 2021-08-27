@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and C/C++
+  title: Apache Kafka and C/C++ - Getting Started Tutorial 
   description: Getting Started with Apache Kafka and C/C++
 hero:
   title: Getting Started with Apache Kafka and C/C++
