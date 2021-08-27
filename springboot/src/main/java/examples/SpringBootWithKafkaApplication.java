@@ -34,14 +34,14 @@ public class SpringBootWithKafkaApplication {
         this.producer.sendMessage(key, value);
     }
 
-    @GetMapping(path = "/start")
+    @GetMapping(path = "/start-consume")
     public String start() {
         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
         listenerContainer.start();
         return "Started consumer";
     }
 
-    @GetMapping(path = "/stop")
+    @GetMapping(path = "/stop-consume")
     public String stop() {
         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
         listenerContainer.stop();

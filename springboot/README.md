@@ -316,7 +316,7 @@ In the Spring Boot application window, you should see output that includes the l
 In a separate terminal window, start the Consumer application.
 
 ```sh
-curl -X GET http://localhost:9000/start
+curl -X GET http://localhost:9000/start-consume
 ```
 
 In the Spring Boot application window, you should see output that includes the lines showing consumed records:
