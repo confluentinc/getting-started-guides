@@ -38,7 +38,6 @@ public class SpringBootWithKafkaApplication {
                         this.producer.sendMessage("jsmith", "batteries");
                         this.producer.sendMessage("jsmith", "gift card");
                         this.producer.sendMessage("eabara", "t-shirts");
-                        System.exit(0);
                         break;
                   case "--consumer": 
                         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
