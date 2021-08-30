@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.context.annotation.Bean;
 
 
@@ -16,7 +17,9 @@ public class SpringBootWithKafkaApplication {
     private final Producer producer;
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootWithKafkaApplication.class, args);
+        SpringApplication application = new SpringApplication(SpringBootWithKafkaApplication.class);
+        application.setWebApplicationType(WebApplicationType.NONE);
+        application.run(args);
     }
 
     @Bean
