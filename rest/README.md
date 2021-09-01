@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Confluent REST Proxy
-  description: Getting Started with Apache Kafka and Confluent REST Proxy 
+  title: Apache Kafka and REST - Getting Started Tutorial 
+  description: How to develop your first Kafka client application against the Confluent REST Proxy, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
 hero:
   title: Getting Started with Apache Kafka and Confluent REST Proxy
   description: Step-by-step guide to building a client application for Kafka using the Confluent REST Proxy

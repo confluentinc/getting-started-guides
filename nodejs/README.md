@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Node.js
-  description: Getting Started with Apache Kafka and Node.js 
+  title: Apache Kafka and Node.js - Getting Started Tutorial 
+  description: How to develop your first Kafka client application in Node.js, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
 hero:
   title: Getting Started with Apache Kafka and Node.js
   description: Step-by-step guide to building a Node.js client application for Kafka 

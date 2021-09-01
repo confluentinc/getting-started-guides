@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Python
-  description: Step-by-step guide to building a Python client application for Kafka 
+  title: Apache Kafka and Python - Getting Started Tutorial 
+  description: How to run a Kafka client application written in Python that produces to and consumes messages from a Kafka cluster, complete with step-by-step instructions and examples. 
 hero:
   title: Getting Started with Apache Kafka and Python
   description: Step-by-step guide to building a Python client application for Kafka 

@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Java
-  description: Step-by-step guide to building a Java client application for Kafka 
+  title: Apache Kafka and Java - Getting Started Tutorial 
+  description: How to run a Kafka client application written in Java that produces to and consumes messages from a Kafka cluster, with step-by-step setup instructions and examples. 
 hero:
   title: Getting Started with Apache Kafka and Java
   description: Step-by-step guide to building a Java client application for Kafka 

@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Getting Started with Apache Kafka and Go
-  description: Step-by-step guide to building a Go client application for Kafka 
+  title: Apache Kafka and Go - Getting Started Tutorial 
+  description: How to develop your first Kafka client application in Golang, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
 hero:
   title: Getting Started with Apache Kafka and Go
   description: Step-by-step guide to building a Go client application for Kafka 
