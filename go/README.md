@@ -20,10 +20,10 @@ through setting up a Kafka cluster if you do not already have access to one.
 This guide assumes that you already have the [Go language tools](https://golang.org/doc/install) installed.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
-to an existing one. If you wish to run a local Kafka cluster, you will
-also need [Docker](https://docs.docker.com/get-docker/) installed
-(this tutorial uses the new `docker compose` command, see the [Docker
-documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+to an existing one. The simplest way to get started is to create
+your cluster in [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/).
+If you wish instead to run a local Kafka cluster, you will
+also need [Docker](https://docs.docker.com/get-docker/) installed.
 
 ## Create Project
 
@@ -58,12 +58,14 @@ cluster bootstrap server to connect to.
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
 </p>
 
-Paste your Confluent Cloud bootstrap server setting above and the
+After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
+and provision your Kafka cluster,
+paste your Confluent Cloud bootstrap server setting above and the
 tutorial will fill in the appropriate configuration for
 you.
 
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud UI](https://confluent.cloud/).
+configuration using the [Confluent Cloud Console](https://confluent.cloud/).
 
 ![](../media/cc-cluster-settings.png)
 
@@ -76,7 +78,11 @@ Paste the following file into a `docker-compose.yml` file:
 ```yaml file=../docker-compose.yml
 ```
 
-Now start the Kafka broker with: `docker compose up -d`
+Now start the Kafka broker with the new `docker compose` command (see the [Docker
+documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+
+```docker compose up -d
+```
 
 </section>
 
@@ -139,7 +145,7 @@ events.
 ![](../media/cc-create-topic.png)
 
 When using Confluent Cloud, you can use the [Cloud
-UI](https://confluent.cloud/) to create a topic. Create a topic
+Console](https://confluent.cloud/) to create a topic. Create a topic
 with 1 partition and defaults for the remaining settings.
 
 </section>
@@ -161,7 +167,7 @@ Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
 Center](https://docs.confluent.io/platform/current/control-center/index.html),
 where you can [create a topic with a
-UI](https://docs.confluent.io/platform/current/control-center/topics/create.html). You
+Console](https://docs.confluent.io/platform/current/control-center/topics/create.html). You
 may have already installed a Kafka distribution, in which case you can
 use the [kafka-topics command](https://kafka.apache.org/documentation/#basic_ops_add_topic).
 Note that, if your cluster is centrally managed, you may need to
