@@ -198,7 +198,7 @@ Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
 Center](https://docs.confluent.io/platform/current/control-center/index.html),
 where you can [create a topic with a
-Console](https://docs.confluent.io/platform/current/control-center/topics/create.html). You
+UI](https://docs.confluent.io/platform/current/control-center/topics/create.html). You
 may have already installed a Kafka distribution, in which case you can
 use the [kafka-topics command](https://kafka.apache.org/documentation/#basic_ops_add_topic).
 Note that, if your cluster is centrally managed, you may need to
