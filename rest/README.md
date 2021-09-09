@@ -23,6 +23,11 @@ This guide assumes that you already have:
 
 [curl](https://curl.se/) installed
 
+Later in this tutorial you will set up a new Kafka cluster or connect
+to an existing one. The simplest way to get started is to create
+your cluster in [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/).
+If you wish instead to run a local Kafka cluster, you will
+use Docker.
 
 ## Create Project
 
@@ -57,12 +62,14 @@ cluster bootstrap server to connect to.
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
 </p>
 
-Paste your Confluent Cloud bootstrap server setting above and the
+After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
+and provision your Kafka cluster,
+paste your Confluent Cloud bootstrap server setting above and the
 tutorial will fill in the appropriate configuration for
 you.
 
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud UI](https://confluent.cloud/).
+configuration using the [Confluent Cloud Console](https://confluent.cloud/).
 
 ![](../media/cc-cluster-settings.png)
 
@@ -75,7 +82,11 @@ Paste the following file into a `docker-compose.yml` file:
 ```yaml file=../docker-compose.yml
 ```
 
-Now start the Kafka broker with: `docker compose up -d`
+Now start the Kafka broker with the new `docker compose` command (see the [Docker
+documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+
+```docker compose up -d
+```
 
 </section>
 
@@ -105,7 +116,7 @@ provided.
 
 When using Confluent Cloud you will be required to provide an API key
 and secret authorizing your application to produce and consume. You can
-use the [Cloud UI](https://confluent.cloud/) to create a key for
+use the [Cloud Console](https://confluent.cloud/) to create a key for
 you.
 
 Take note of the API key and secret and add them to the configuraiton file 
@@ -149,7 +160,7 @@ events.
 ![](../media/cc-create-topic.png)
 
 When using Confluent Cloud, you can use the [Cloud
-UI](https://confluent.cloud/) to create a topic. Create a topic
+Console](https://confluent.cloud/) to create a topic. Create a topic
 with 1 partition and defaults for the remaining settings.
 
 </section>
