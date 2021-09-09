@@ -63,8 +63,7 @@ First install [librdkafka](https://github.com/edenhill/librdkafka#installation).
 Then install the python libraries:
 
 ```sh
-pip install configparser\
-pip install confluent-kafka
+pip install confluent-kafka configparser
 ```
 
 ## Kafka Setup
