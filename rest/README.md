@@ -59,7 +59,7 @@ cluster bootstrap server to connect to.
 
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloiud:9092" />
+  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
 </p>
 
 After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
