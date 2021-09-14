@@ -91,7 +91,8 @@ Paste the following file into a `docker-compose.yml` file:
 Now start the Kafka broker with the new `docker compose` command (see the [Docker
 documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
 
-```docker compose up -d
+```sh
+docker compose up -d
 ```
 
 </section>
