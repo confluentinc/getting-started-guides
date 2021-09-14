@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # Create Consumer instance
     consumer = Consumer(config)
 
-    # Set up a callback to handle the '---reset' flag.
+    # Set up a callback to handle the '--reset' flag.
     def reset_offset(consumer, partitions):
         if args.reset:
             for p in partitions:
