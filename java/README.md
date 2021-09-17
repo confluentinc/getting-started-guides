@@ -76,7 +76,7 @@ cluster bootstrap server to connect to.
   Default content with value
 </section>
 
-<section data-context-key="kafka.broker" data-context-default>
+<section data-context-key="kafka.broker" data-context-value="" data-context-default>
   Default content without value
 </section>
 
