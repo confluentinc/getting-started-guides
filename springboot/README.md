@@ -122,6 +122,12 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
+<section data-context-key="kafka.broker" data-context-default>
+  Please go back to the Kafka Setup section and select a broker type.
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="cloud">
+
 Create a directory for the application resource file:
 
 ```sh
@@ -129,8 +135,6 @@ mkdir -p src/main/resources
 ```
 
 Paste the following configuration data into a file located at `src/main/resources/application.yaml`
-
-<section data-context-key="kafka.broker" data-context-value="cloud">
 
 The below configuration includes the required settings for a connection
 to Confluent Cloud including the bootstrap servers configuration you
@@ -154,12 +158,28 @@ and the `sasl.password` value should contain the API secret.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
+Create a directory for the application resource file:
+
+```sh
+mkdir -p src/main/resources
+```
+
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`
+
 ```ini file=getting-started-local.properties
 ```
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
+
+Create a directory for the application resource file:
+
+```sh
+mkdir -p src/main/resources
+```
+
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different

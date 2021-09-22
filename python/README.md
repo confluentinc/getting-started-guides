@@ -134,9 +134,13 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
-Paste the following configuration data into a file at `getting_started.ini`
+<section data-context-key="kafka.broker" data-context-default>
+  Please go back to the Kafka Setup section and select a broker type.
+</section>
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
+
+Paste the following configuration data into a file at `getting_started.ini`
 
 The below configuration includes the required settings for a connection
 to Confluent Cloud including the bootstrap servers configuration you
@@ -160,12 +164,16 @@ and the `sasl.password` value should contain the API secret.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
+Paste the following configuration data into a file at `getting_started.ini`
+
 ```ini file=getting_started_local.ini
 ```
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
+
+Paste the following configuration data into a file at `getting_started.ini`
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different

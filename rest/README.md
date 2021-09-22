@@ -105,9 +105,13 @@ fill it into the appropriate configuration for you.
 
 ## Configuration
 
-Paste the following configuration data into a file at `getting-started.properties`
+<section data-context-key="kafka.broker" data-context-default>
+  Please go back to the Kafka Setup section and select a broker type.
+</section>
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
+
+Paste the following configuration data into a file at `getting-started.properties`
 
 The below configuration includes the required settings for a connection
 to Confluent Cloud including the bootstrap servers configuration you
@@ -130,12 +134,16 @@ in the `username` and `password` fields of the `SASL_JAAS_CONFIG` value.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
+Paste the following configuration data into a file at `getting-started.properties`
+
 ```ini file=getting-started-local.properties
 ```
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
+
+Paste the following configuration data into a file at `getting-started.properties`
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
