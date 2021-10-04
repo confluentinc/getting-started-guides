@@ -1,7 +1,7 @@
 ---
 seo:
   title: Apache Kafka and Spring Boot - Getting Started Tutorial
-  description: Step-by-step guide to building a Spring Boot client application for Kafka 
+  description: A quick guide to getting started with Apache Kafka and Spring Boot. Learn how to produce and consume messages from a Kafka cluster and configure your setup with examples.
 hero:
   title: Getting Started with Apache Kafka and Spring Boot
   description: Step-by-step guide to building a Spring Boot client application for Kafka 
@@ -45,7 +45,7 @@ also need [Docker](https://docs.docker.com/get-docker/) installed.
 Create a new directory anywhere you'd like for this project:
 
 ```sh
-mkdir kafka-springboot-getting-started && cd kafka-springboot-getting-started
+mkdir kafka-spring-boot-getting-started && cd kafka-spring-boot-getting-started
 ```
 
 Create the following Gradle build file for the project, named
