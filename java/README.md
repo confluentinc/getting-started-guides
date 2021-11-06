@@ -331,7 +331,7 @@ Consumed event from topic purchases: key = eabara     value = t-shirts
 
 - For the Java client API, check out the
   [Java documentation](https://docs.confluent.io/platform/current/clients/javadocs/javadoc/index.html).
-- Kafka Streams allows you to build advanced Java applications that include powerful features such as real-time joins, aggregations, filters, exactly-once processing. The [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/) provides an in-depth approach including videos and exercises. For quick hands-on approach, see the [How to build your first Apache Kafka Streams application](https://kafka-tutorials.confluent.io/creating-first-apache-kafka-streams-application/confluent.html) tutorial.
+- Kafka Streams allows you to build advanced Java applications that include powerful features such as real-time joins, aggregations, filters, and exactly-once processing. The [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/) provides an in-depth approach including videos and exercises. For quick hands-on approach, see the [How to build your first Apache Kafka Streams application](https://kafka-tutorials.confluent.io/creating-first-apache-kafka-streams-application/confluent.html) tutorial.
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
 - Interested in performance tuning of your event streaming applications?
