@@ -18,7 +18,7 @@ do not already have access to one.
 
 ## Prerequisites
 
-This guide assumes that you have [node.js](https://nodejs.org/en/download/) installed (tested with LTS version `14.17.3`).
+This guide assumes that you have [node.js](https://nodejs.org/en/download/) installed (tested with `16.3.1`).
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. The simplest way to get started is to create
