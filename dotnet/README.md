@@ -17,7 +17,7 @@ through setting up a Kafka cluster if you do not already have access to one.
 
 ## Prerequisites
 
-This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 3.1) installed.
+This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 6.0) installed.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. The simplest way to get started is to create
