@@ -2,14 +2,11 @@ buildscript {
   repositories {
     jcenter()
   }
-  dependencies {
-    classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
-  }
 }
 
 plugins {
-  id 'org.springframework.boot' version '2.2.4.RELEASE'
-  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  id 'org.springframework.boot' version "2.6.1"
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'java'
 }
 
@@ -23,22 +20,18 @@ repositories {
 
 apply plugin: 'idea'
 
-apply plugin: "com.github.johnrengelman.shadow"
-
 group = 'examples'
 version = '0.0.1'
-sourceCompatibility = '8'
-
-bootJar {
-  mainClassName = "examples.SpringbootKafkaApplication"
-}
+sourceCompatibility = 11
 
 repositories {
   jcenter()
 }
 
 dependencies {
-  implementation 'org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE'
+  implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
   implementation 'org.apache.kafka:kafka-clients'
   implementation 'org.springframework.kafka:spring-kafka'
 }
+
+
