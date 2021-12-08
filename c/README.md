@@ -17,6 +17,14 @@ The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/
 
 The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
 
+<div class="alert-primary">
+<p>
+Note: This tutorial focuses on a simple application to get you started.
+If you want to build more complex applications and microservices for data in motion—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
+<a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>.
+</p>
+</div>
+
 ## Prerequisites
 
 This guide assumes that you already have a C compiler installed. The code in this guide has been tested with GCC and Clang/LLVM.
