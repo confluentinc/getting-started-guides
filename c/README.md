@@ -11,9 +11,11 @@ hero:
 
 ## Introduction
 
-In this tutorial, you will build C client applications which produce and consume messages 
-from an Apache Kafka® cluster. The tutorial will walk you through setting up a Kafka cluster 
-if you do not already have access to one.
+In this tutorial, you will build C client applications which produce and consume messages from an Apache Kafka® cluster. 
+
+The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, [signup here](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
+
+The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
 
 ## Prerequisites
 
