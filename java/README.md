@@ -72,7 +72,7 @@ cluster bootstrap server to connect to.
   </div>
 </p>
 
-<section data-context-key="kafka.broker" data-context-value="cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
