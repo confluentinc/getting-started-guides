@@ -36,10 +36,13 @@ This guide assumes that you already have:
 installed and configured as the current java version for the environment
 
 Later in this tutorial you will set up a new Kafka cluster or connect
-to an existing one. The simplest way to get started is to create
-your cluster in [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/).
-If you wish instead to run a local Kafka cluster, you will
-also need [Docker](https://docs.docker.com/get-docker/) installed.
+to an existing one. 
+
+The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, [signup here](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
+
+![](../media/create-cluster.gif)
+
+If you wish instead to run a local Kafka cluster, you will need [Docker](https://docs.docker.com/get-docker/) installed.
 
 ## Create Project
 
@@ -88,7 +91,7 @@ you.
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
 configuration using the [Confluent Cloud Console](https://confluent.cloud/).
 
-![](../media/cc-cluster-settings.png)
+![](../media/get-cluster-bootstrap.gif)
 
 </section>
 
