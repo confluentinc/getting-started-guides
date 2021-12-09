@@ -117,9 +117,11 @@ tutorial will fill in the appropriate configuration for
 you.
 
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud Console](https://confluent.cloud/).
-
-![](../media/cc-cluster-settings.png)
+configuration using the [Confluent Cloud Console](https://confluent.cloud/):
+<video autoplay muted>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/87f6d318b2caeca0fd9c07f734d98e2f/get-cluster-bootstrap-v2.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 </section>
 
