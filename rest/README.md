@@ -36,10 +36,21 @@ This guide assumes that you already have:
 [curl](https://curl.se/) installed
 
 Later in this tutorial you will set up a new Kafka cluster or connect
-to an existing one. The simplest way to get started is to create
-your cluster in [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/).
-If you wish instead to run a local Kafka cluster, you will
-use Docker.
+to an existing one. 
+
+If you do not have an existing cluster to use, the easiest way to run Kafka is 
+with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, 
+[signup here](https://www.confluent.io/confluent-cloud/tryfree/). 
+New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) 
+to spend within Confluent Cloud during their first 60 days.
+
+From within the Confluent Cloud console, creating a new cluster is just a few clicks:
+<video autoplay muted>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/4RJ9frRj03WGhgmPfyfhMB/e1f5e8c719a56d7dcc5c069abd2145da/create-cluster-v2.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+If you wish instead to run a local Kafka cluster, you will need [Docker](https://docs.docker.com/get-docker/) installed.
 
 ## Create Project
 
