@@ -40,7 +40,7 @@ to an existing one.
 
 The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, [signup here](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
 
-<video autoplay>
+<video autoplay muted>
 	<source src="https://videos.ctfassets.net/gt6dp23g0g38/4RJ9frRj03WGhgmPfyfhMB/2f66b0f0876736e507f43e0f503d6d7c/create-cluster.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
