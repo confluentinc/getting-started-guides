@@ -40,7 +40,7 @@ New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-ca
 to spend within Confluent Cloud during their first 60 days.
 
 From within the Confluent Cloud console, creating a new cluster is just a few clicks:
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/7429fd45b2b96d5ce922c990a6b1df77/create-cluster-v2-preview.png">
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/7429fd45b2b96d5ce922c990a6b1df77/create-cluster-v2-preview.png" loop>
 	<source src="https://videos.ctfassets.net/gt6dp23g0g38/4RJ9frRj03WGhgmPfyfhMB/e1f5e8c719a56d7dcc5c069abd2145da/create-cluster-v2.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
@@ -87,7 +87,7 @@ you.
 
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
 configuration using the [Confluent Cloud Console](https://confluent.cloud/):
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/91d8e302a87afdfea2ef0a4ffdcc52c4/get-cluster-bootstrap-v2-preview.png">
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/91d8e302a87afdfea2ef0a4ffdcc52c4/get-cluster-bootstrap-v2-preview.png" loop>
 	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/87f6d318b2caeca0fd9c07f734d98e2f/get-cluster-bootstrap-v2.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
