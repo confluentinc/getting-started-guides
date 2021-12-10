@@ -40,7 +40,7 @@ New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-ca
 to spend within Confluent Cloud during their first 60 days.
 
 From within the Confluent Cloud console, creating a new cluster is just a few clicks:
-<video autoplay muted>
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/7429fd45b2b96d5ce922c990a6b1df77/create-cluster-v2-preview.png">
 	<source src="https://videos.ctfassets.net/gt6dp23g0g38/4RJ9frRj03WGhgmPfyfhMB/e1f5e8c719a56d7dcc5c069abd2145da/create-cluster-v2.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
