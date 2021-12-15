@@ -75,6 +75,7 @@ cluster bootstrap server to connect to.
 
 <p>
   <div class="select-wrapper">
+  	<label>Kafka location</label>
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
