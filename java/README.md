@@ -45,12 +45,12 @@ New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-ca
 to spend within Confluent Cloud during their first 60 days.
 
 From within the Confluent Cloud console, creating a new cluster is just a few clicks:
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/7429fd45b2b96d5ce922c990a6b1df77/create-cluster-v2-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/4RJ9frRj03WGhgmPfyfhMB/e1f5e8c719a56d7dcc5c069abd2145da/create-cluster-v2.mp4" type="video/mp4">
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/943f93ab05337c9dad37094b520f19f0/create-cluster.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 
-If you wish instead to run a local Kafka cluster, you will need [Docker](https://docs.docker.com/get-docker/) installed.
+If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using [Docker](https://docs.docker.com/get-docker/).
 
 ## Create Project
 
