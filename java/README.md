@@ -86,16 +86,16 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
-</p>
-
 After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
 and provision your Kafka cluster,
 paste your Confluent Cloud bootstrap server setting above and the
 tutorial will fill in the appropriate configuration for
 you.
+
+<p>
+  <label for="kafka-broker-server">Bootstrap Server</label>
+  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
+</p>
 
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
 configuration using the [Confluent Cloud Console](https://confluent.cloud/):
