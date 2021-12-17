@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will build Python client applications which produce and consume messages from an Apache Kafka® cluster. 
 
-The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, [signup here](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
+The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
 
 The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
 
@@ -39,7 +39,7 @@ to an existing one.
 
 If you do not have an existing cluster to use, the easiest way to run Kafka is 
 with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, 
-[signup here](https://www.confluent.io/confluent-cloud/tryfree/). 
+be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). 
 New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) 
 to spend within Confluent Cloud during their first 60 days.
 
