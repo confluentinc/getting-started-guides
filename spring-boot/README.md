@@ -11,10 +11,11 @@ hero:
 
 ## Introduction
 
-In this tutorial, you will run a Spring Boot client application that produces
-messages to and consumes messages from an Apache Kafka® cluster. The
-tutorial will walk you through setting up a Kafka cluster if you
-do not already have access to one.
+In this tutorial, you will run a Spring Boot client application that produces messages to and consumes messages from an Apache Kafka® cluster.
+
+The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
+
+The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
 
 <div class="alert-primary">
 <p>
@@ -23,7 +24,6 @@ If you want to build more complex applications and microservices for data in mot
 <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>.
 </p>
 </div>
-
 
 ## Prerequisites
 
@@ -35,10 +35,21 @@ This guide assumes that you already have:
 installed and configured as the current java version for the environment
 
 Later in this tutorial you will set up a new Kafka cluster or connect
-to an existing one. The simplest way to get started is to create
-your cluster in [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/).
-If you wish instead to run a local Kafka cluster, you will
-also need [Docker](https://docs.docker.com/get-docker/) installed.
+to an existing one. 
+
+If you do not have an existing cluster to use, the easiest way to run Kafka is 
+with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, 
+be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). 
+New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) 
+to spend within Confluent Cloud during their first 60 days.
+
+From within the Confluent Cloud console, creating a new cluster is just a few clicks:
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using [Docker](https://docs.docker.com/get-docker/).
 
 ## Create Project
 
@@ -62,9 +73,9 @@ cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
 
 <p>
+  <label>Kafka location</label>
   <div class="select-wrapper">
     <select data-context="true" name="kafka.broker">
-      <option value="">Select Kafka Broker</option>
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
       <option value="other">Other</option>
@@ -72,23 +83,25 @@ cluster bootstrap server to connect to.
   </div>
 </p>
 
-<section data-context-key="kafka.broker" data-context-value="cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+
+After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
+and provision your Kafka cluster,
+paste your Confluent Cloud bootstrap server setting below and the
+tutorial will fill in the appropriate configuration for
+you.
 
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
   <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
 </p>
 
-After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
-and provision your Kafka cluster,
-paste your Confluent Cloud bootstrap server setting above and the
-tutorial will fill in the appropriate configuration for
-you.
-
 You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud Console](https://confluent.cloud/).
-
-![](../media/cc-cluster-settings.png)
+configuration using the [Confluent Cloud Console](https://confluent.cloud/):
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.pn://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/dd72c752e9ed2724edc30a7f9eb77ccb/get-cluster-bootstrap-preview.png" loop>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 </section>
 
