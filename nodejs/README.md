@@ -54,6 +54,12 @@ Create a new directory anywhere you’d like for this project:
 mkdir kafka-nodejs-getting-started && cd kafka-nodejs-getting-started
 ```
 
+<div class="alert-primary">
+<p>
+Note: Users of macOS 10.13 (High Sierra) and later should read <a href="https://github.com/Blizzard/node-rdkafka/blob/master/README.md#mac-os-high-sierra--mojave">node-rdkafka additional configuration instructions</a> related to OpenSSL before running `npm install`.
+</p>
+</div>
+
 Then install the required libraries:
 
 ```sh
