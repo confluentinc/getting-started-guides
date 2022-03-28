@@ -231,7 +231,7 @@ Next we are going to create the producer application by pasting the following Go
 
 Compile the producer with the following:
 ```sh
-go build -o out/producer kafka-go-getting-started
+go build -o out/producer util.go producer.go
 ```
 
 If you get any errors during the build make sure that you initialized the module correctly per the instructions in the [previous step](#create-project). If you're still stuck then head to the [Confluent Community Forum](https://forum.confluent.io/) for more help. 
@@ -244,7 +244,7 @@ Paste the following Go code into a file named `consumer.go`.
 
 Compile the consumer as follows: 
 ```sh
-go build -o out/consumer kafka-go-getting-started
+go build -o out/consumer util.go consumer.go
 ```
 
 ## Produce Events
