@@ -55,6 +55,13 @@ Create a new directory anywhere you’d like for this project:
 mkdir kafka-go-getting-started && cd kafka-go-getting-started
 ```
 
+Initialize the Go module and download the Confluent Go Kafka dependency:
+
+```sh
+go mod init kafka-go-getting-started
+go get github.com/confluentinc/confluent-kafka-go/kafka
+```
+
 ## Kafka Setup
 
 We are going to need a Kafka Cluster for our client application to
@@ -222,15 +229,12 @@ Next we are going to create the producer application by pasting the following Go
 ```go file=producer.go
 ```
 
-Before building the code, you may need to download the Confluent Go Kafka dependency with:
-```sh
-go get github.com/confluentinc/confluent-kafka-go/kafka
-```
-
-You can test the syntax before proceeding by compiling with:
+Compile the producer with the following:
 ```sh
 go build -o out/producer util.go producer.go
 ```
+
+If you get any errors during the build make sure that you initialized the module correctly per the instructions in the [previous step](#create-project). If you're still stuck then head to the [Confluent Community Forum](https://forum.confluent.io/) for more help. 
 
 ## Build Consumer
 Paste the following Go code into a file named `consumer.go`.
@@ -238,19 +242,12 @@ Paste the following Go code into a file named `consumer.go`.
 ```go file=consumer.go
 ```
 
-You can test the consumer syntax by compiling with:
-
+Compile the consumer as follows: 
 ```sh
 go build -o out/consumer util.go consumer.go
 ```
 
 ## Produce Events
-First be sure you have successfully compiled the producer code with:
-
-```sh
-go build -o out/producer util.go producer.go
-```
-
 In order to run the producer, execute the compiled binary passing in the configuration file created above:
 
 ```sh
