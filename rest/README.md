@@ -13,9 +13,7 @@ hero:
 
 In this tutorial, you will use the Confluent REST Proxy to produce and consume messages from an Apache Kafka® cluster.
 
-The easiest way to run Kafka is with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 60 days.
-
-The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
 
 <div class="alert-primary">
 <p>
