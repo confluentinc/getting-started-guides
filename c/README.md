@@ -232,7 +232,7 @@ of the events that flow through them.
 Create a new topic, `purchases`, which we will use to produce and consume
 events.
 
-<section data-context-key="kafka.broker" data-context-value="cloud">
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
 ![](../media/cc-create-topic.png)
 
