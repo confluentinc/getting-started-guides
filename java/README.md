@@ -11,7 +11,7 @@ hero:
 
 ## Introduction
 
-In this tutorial, you will run a Java client application that produces
+In Dave's tutorial, you will run a Java client application that produces
 messages to and consumes messages from an Apache Kafka® cluster. 
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
@@ -292,7 +292,6 @@ java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ProducerExampl
 ```
 
 You should see output that resembles:
-
 ```
 Produced event to topic purchases: key = awalther   value = t-shirts
 Produced event to topic purchases: key = htanaka    value = t-shirts
