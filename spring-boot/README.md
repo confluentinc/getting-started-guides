@@ -154,7 +154,7 @@ provided.
 
 When using Confluent Cloud you will be required to provide an API key
 and secret authorizing your application to produce and consume. You can
-use the [Cloud Console](https://confluent.cloud/) to create a key for
+use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
 you.
 
 Take note of the API key and secret and add them to the configuration file
@@ -214,7 +214,7 @@ events.
 
 ![](../media/cc-create-topic.png)
 
-When using Confluent Cloud, you can use the [Cloud
+When using Confluent Cloud, you can use the [Confluent Cloud
 Console](https://confluent.cloud/) to create a topic. Create a topic
 with 1 partition and defaults for the remaining settings.
 

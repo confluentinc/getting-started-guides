@@ -198,7 +198,7 @@ events.
 
 ![](../media/cc-create-topic.png)
 
-When using Confluent Cloud, you can use the [Cloud
+When using Confluent Cloud, you can use the [Confluent Cloud
 Console](https://confluent.cloud/) to create a topic. Create a topic
 with 1 partition and defaults for the remaining settings.
 
