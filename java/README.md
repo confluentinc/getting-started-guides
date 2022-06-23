@@ -28,9 +28,8 @@ If you want to build more complex applications and microservices for data in mot
 
 This guide assumes that you already have:
 
-[Gradle](https://gradle.org/install/) installed
-
-[Java 11](https://www.oracle.com/java/technologies/javase-downloads.html)
+- [Gradle](https://gradle.org/install/) installed
+- [Java 11](https://www.oracle.com/java/technologies/javase-downloads.html)
 installed and configured as the current java version for the environment
 
 Later in this tutorial you will set up a new Kafka cluster or connect

@@ -25,13 +25,8 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
-This guide assumes that you already have:
-
-[Docker](https://docs.docker.com/get-docker/) installed
-
-[Docker Compose](https://docs.docker.com/compose/install/) installed
-
-[curl](https://curl.se/) installed
+This guide assumes that you already have installed [Docker](https://docs.docker.com/get-docker/),
+[Docker Compose](https://docs.docker.com/compose/install/), and [curl](https://curl.se/).
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. 
