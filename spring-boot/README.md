@@ -28,9 +28,9 @@ If you want to build more complex applications and microservices for data in mot
 This guide assumes that you already have:
 
 - [Gradle](https://gradle.org/install/) installed
-- [Java 11](https://www.oracle.com/java/technologies/javase-downloads.html)
-  installed and configured as the current Java version for the environment. Verify that `java -version` outputs version
-  11 and ensure that the `JAVA_HOME` environment variable is set to the Java installation directory containing `bin`.
+- [Java 11](https://openjdk.org/install/) installed and configured as the current Java version for the environment.
+  Verify that `java -version` outputs version 11 and ensure that the `JAVA_HOME` environment variable is set to the Java
+  installation directory containing `bin`.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. 
