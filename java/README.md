@@ -28,10 +28,10 @@ If you want to build more complex applications and microservices for data in mot
 
 This guide assumes that you already have:
 
-[Gradle](https://gradle.org/install/) installed
-
-[Java 11](https://www.oracle.com/java/technologies/javase-downloads.html)
-installed and configured as the current java version for the environment
+- [Gradle](https://gradle.org/install/) installed
+- [Java 11](https://openjdk.org/install/) installed and configured as the current Java version for the environment.
+  Verify that `java -version` outputs version 11 and ensure that the `JAVA_HOME` environment variable is set to the Java
+  installation directory containing `bin`.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. 
@@ -42,7 +42,7 @@ be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/).
 New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) 
 to spend within Confluent Cloud during their first 60 days.
 
-From within the Confluent Cloud console, creating a new cluster is just a few clicks:
+From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
 	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
 Your browser does not support the video tag.
@@ -150,12 +150,11 @@ provided.
 
 When using Confluent Cloud you will be required to provide an API key
 and secret authorizing your application to produce and consume. You can
-use the [Cloud Console](https://confluent.cloud/) to create a key for
+use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
 you.
 
-Take note of the API key and secret and add them to the configuraiton file.
-The `sasl.username` value should contain the API key, 
-and the `sasl.password` value should contain the API secret.
+Take note of the API key and secret and add them to the configuration file
+in the `username` and `password` fields, respectively, of the `sasl.jaas.config` value.
 
 ```ini file=getting-started-cloud.properties
 ```
@@ -198,7 +197,7 @@ events.
 
 ![](../media/cc-create-topic.png)
 
-When using Confluent Cloud, you can use the [Cloud
+When using Confluent Cloud, you can use the [Confluent Cloud
 Console](https://confluent.cloud/) to create a topic. Create a topic
 with 1 partition and defaults for the remaining settings.
 
