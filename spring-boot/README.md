@@ -158,7 +158,7 @@ and secret authorizing your application to produce and consume. You can
 use the [Cloud Console](https://confluent.cloud/) to create a key for
 you.
 
-Take note of the API key and secret and add them to the configuraiton file.
+Take note of the API key and secret and add them to the configuration file.
 The `sasl.username` value should contain the API key, 
 and the `sasl.password` value should contain the API secret.
 

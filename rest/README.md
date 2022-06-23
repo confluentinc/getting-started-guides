@@ -147,7 +147,7 @@ and secret authorizing your application to produce and consume. You can
 use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
 you.
 
-Take note of the API key and secret and add them to the configuraiton file 
+Take note of the API key and secret and add them to the configuration file 
 in the `username` and `password` fields of the `SASL_JAAS_CONFIG` value.
 
 ```ini file=getting-started-cloud.properties
