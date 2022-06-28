@@ -22,10 +22,10 @@ class Producer {
             configuration.AsEnumerable()).Build())
         {
             var numProduced = 0;
+            readonly Random rnd = new Random();
             const int numMessages = 10;
             for (int i = 0; i < numMessages; ++i)
             {
-                Random rnd = new Random();
                 var user = users[rnd.Next(users.Length)];
                 var item = items[rnd.Next(items.Length)];
 
