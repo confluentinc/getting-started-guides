@@ -21,9 +21,9 @@ public class ProducerExample {
         String[] items = { "book", "alarm clock", "t-shirts", "gift card", "batteries" };
         Producer<String, String> producer = new KafkaProducer<>(props);
 
+        final Random rnd = new Random();
         final Long numMessages = 10L;
         for (Long i = 0L; i < numMessages; i++) {
-            Random rnd = new Random();
             String user = users[rnd.nextInt(users.length)];
             String item = items[rnd.nextInt(items.length)];
 
