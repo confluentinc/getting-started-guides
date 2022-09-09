@@ -59,7 +59,8 @@ Create the following `Makefile` for the project:
 ```sh
 ALL: producer consumer
 
-CFLAGS=-Wall $(shell pkg-config --cflags --libs rdkafka glib-2.0)
+CFLAGS=-Wall $(shell pkg-config --cflags glib-2.0 rdkafka)
+LDLIBS=$(shell pkg-config --libs glib-2.0 rdkafka)
 ```
 
 We’ll also set up a file for some code used in both the producer and consumer.
@@ -335,8 +336,8 @@ int main (int argc, char **argv) {
     const char *products[5] = {"book", "alarm clock", "t-shirts", "gift card", "batteries"};
 
     for (int i = 0; i < message_count; i++) {
-        const char *key =  user_ids[arc4random() % ARR_SIZE(user_ids)];
-        const char *value =  products[arc4random() % ARR_SIZE(products)];
+        const char *key =  user_ids[random() % ARR_SIZE(user_ids)];
+        const char *value =  products[random() % ARR_SIZE(products)];
         size_t key_len = strlen(key);
         size_t value_len = strlen(value);
 
