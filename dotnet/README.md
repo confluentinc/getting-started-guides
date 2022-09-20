@@ -58,11 +58,11 @@ mkdir consumer
 Next we’ll create two different C# project files, one for the producer and one for the consumer.
 
 Copy the following into a project file named `producer.csproj` in the `producer` subdirectory:
-```xml file=producer.csproj
+```xml file=producer/producer.csproj
 ```
 
 Copy the following into a project file named `consumer.csproj` in the `consumer` subdirectory:
-```xml file=consumer.csproj
+```xml file=consumer/consumer.csproj
 ```
 
 ## Kafka Setup
@@ -232,7 +232,7 @@ request the creation of a topic from your operations team.
 
 First, we are going to create the producer application by pasting the following code into a file named `producer.cs` in the `producer` subdirectory:
 
-```c# file=producer.cs
+```c# file=producer/producer.cs
 ```
 
 You can test the syntax before preceding by compiling with:
@@ -244,7 +244,7 @@ dotnet build producer.csproj
 ## Build Consumer
 
 To create the consumer application, paste the following C# code into a file named `consumer.cs` in the `consumer` subdirectory:
-```c# file=consumer.cs
+```c# file=consumer/consumer.cs
 ```
 
 You can test the syntax before preceding by compiling with:
