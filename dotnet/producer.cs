@@ -22,7 +22,7 @@ class Producer {
             configuration.AsEnumerable()).Build())
         {
             var numProduced = 0;
-            readonly Random rnd = new Random();
+            Random rnd = new Random();
             const int numMessages = 10;
             for (int i = 0; i < numMessages; ++i)
             {
