@@ -51,15 +51,17 @@ Create a new directory anywhere you’d like for this project:
 
 ```sh
 mkdir kafka-dotnet-getting-started && cd kafka-dotnet-getting-started
+mkdir producer
+mkdir consumer
 ```
 
 Next we’ll create two different C# project files, one for the producer and one for the consumer.
 
-Copy the following into a file named `producer.csproj`:
+Copy the following into a project file named `producer.csproj` in the `producer` subdirectory:
 ```xml file=producer.csproj
 ```
 
-Copy the following into a file named `consumer.csproj`:
+Copy the following into a project file named `consumer.csproj` in the `consumer` subdirectory:
 ```xml file=consumer.csproj
 ```
 
@@ -228,25 +230,28 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-First, we are going to create the producer application by pasting the following code into a file named `producer.cs`:
+First, we are going to create the producer application by pasting the following code into a file named `producer.cs` in the `producer` subdirectory:
 
 ```c# file=producer.cs
 ```
 
 You can test the syntax before preceding by compiling with:
 ```sh
+cd producer
 dotnet build producer.csproj
 ```
 
 ## Build Consumer
 
-To create the consumer application, paste the following C# code into a file named `consumer.cs`:
+To create the consumer application, paste the following C# code into a file named `consumer.cs` in the `consumer` subdirectory:
 ```c# file=consumer.cs
 ```
 
 You can test the syntax before preceding by compiling with:
 ```sh
+cd ../consumer
 dotnet build consumer.csproj
+cd ..
 ```
 
 ## Produce Events
@@ -255,7 +260,8 @@ The `dotnet` command line tool gives us a handy `run` command we can use to exec
 In order to run the producer, use the `dotnet run` command passing in the configuration file created above:
 
 ```sh
-dotnet run --project producer.csproj $(pwd)/getting-started.properties
+cd producer
+dotnet run $(pwd)/../getting-started.properties
 ```
 
 You should see output that resembles:
@@ -279,7 +285,8 @@ From another terminal, run the following command to run the consumer application
 read the events from the `purchases` topic and write the information to the terminal.
 
 ```sh
-dotnet run --project consumer.csproj $(pwd)/getting-started.properties 
+cd consumer
+dotnet run $(pwd)/../getting-started.properties
 ```
 
 The consumer application will start and print any events it has not yet consumed and then wait 
