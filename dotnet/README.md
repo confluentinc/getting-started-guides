@@ -57,11 +57,11 @@ mkdir consumer
 
 Next we’ll create two different C# project files, one for the producer and one for the consumer.
 
-Copy the following into a file named `producer/producer.csproj` (i.e. in the `producer` subdirectory)`:
+Copy the following into a project file named `producer.csproj` in the `producer` subdirectory:
 ```xml file=producer.csproj
 ```
 
-Copy the following into a file named `consumer/consumer.csproj` (i.e. in the `consumer` subdirectory)`:
+Copy the following into a project file named `consumer.csproj` in the `consumer` subdirectory:
 ```xml file=consumer.csproj
 ```
 
@@ -230,7 +230,7 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-First, we are going to create the producer application by pasting the following code into a file named `producer.cs` in the `producer` sub-directory:
+First, we are going to create the producer application by pasting the following code into a file named `producer.cs` in the `producer` subdirectory:
 
 ```c# file=producer.cs
 ```
@@ -243,7 +243,7 @@ dotnet build producer.csproj
 
 ## Build Consumer
 
-To create the consumer application, paste the following C# code into a file named `consumer.cs` in the `consumer` sub-directory:
+To create the consumer application, paste the following C# code into a file named `consumer.cs` in the `consumer` subdirectory:
 ```c# file=consumer.cs
 ```
 
