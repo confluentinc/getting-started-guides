@@ -24,7 +24,7 @@ public class ConsumerExample {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "kafka-java-getting-started");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-        try(final Consumer<String, String> consumer = new KafkaConsumer<>(props)) {
+        try (final Consumer<String, String> consumer = new KafkaConsumer<>(props)) {
             consumer.subscribe(Arrays.asList(topic));
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
@@ -32,7 +32,7 @@ public class ConsumerExample {
                     String key = record.key();
                     String value = record.value();
                     System.out.println(
-                        String.format("Consumed event from topic %s: key = %-10s value = %s", topic, key, value));
+                            String.format("Consumed event from topic %s: key = %-10s value = %s", topic, key, value));
                 }
             }
         }
