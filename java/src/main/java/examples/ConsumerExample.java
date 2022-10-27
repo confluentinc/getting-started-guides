@@ -17,17 +17,15 @@ public class ConsumerExample {
         final String topic = "purchases";
 
         // Load consumer configuration settings from a local file
+        // Reusing the loadConfig method from the ProducerExample class
         final Properties props = ProducerExample.loadConfig(args[0]);
 
         // Add additional properties.
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "kafka-java-getting-started");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-        // Add additional required properties for this consumer app
-        final Consumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Arrays.asList(topic));
-
-        try {
+        try(final Consumer<String, String> consumer = new KafkaConsumer<>(props)) {
+            consumer.subscribe(Arrays.asList(topic));
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
                 for (ConsumerRecord<String, String> record : records) {
@@ -37,8 +35,7 @@ public class ConsumerExample {
                         String.format("Consumed event from topic %s: key = %-10s value = %s", topic, key, value));
                 }
             }
-        } finally {
-            consumer.close();
         }
     }
+
 }
