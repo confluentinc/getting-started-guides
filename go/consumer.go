@@ -38,7 +38,7 @@ func main() {
 
     // Process messages
     run := true
-    for run == true {
+    for run {
         select {
         case sig := <-sigchan:
             fmt.Printf("Caught signal %v: terminating\n", sig)
