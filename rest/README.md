@@ -230,7 +230,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:6.1.1
+    image: confluentinc/cp-kafka-rest:7.3.0
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -258,7 +258,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:6.1.1
+    image: confluentinc/cp-kafka-rest:7.3.0
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -278,7 +278,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:6.1.1
+    image: confluentinc/cp-kafka-rest:7.3.0
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -304,13 +304,13 @@ source getting-started.properties
 Bring up the REST Proxy:
 
 ```sh
-docker-compose -f rest-proxy.yml up -d
+docker compose -f rest-proxy.yml up -d
 ```
 
 Wait a few seconds for REST Proxy to start and verify the Docker container logs show "Server started, listening for requests"
 
 ```sh
-docker-compose -f rest-proxy.yml logs rest-proxy | grep "Server started, listening for requests"
+docker compose -f rest-proxy.yml logs rest-proxy | grep "Server started, listening for requests"
 ```
 
 ## Produce Events
