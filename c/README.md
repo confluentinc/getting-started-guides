@@ -179,22 +179,16 @@ fill it into the appropriate configuration for you.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-Paste the following configuration data into a file at `getting-started.ini`:
-
-The below configuration includes the required settings for a connection
-to Confluent Cloud including the bootstrap servers configuration you
-provided. 
-
-![](../media/cc-create-key.png)
-
 When using Confluent Cloud you will be required to provide an API key
 and secret authorizing your application to produce and consume. You can
 use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you.
+you by navigating to the `API Keys` section under `Cluster Overview`.
 
-Take note of the API key and secret and add them to the configuration file.
-The `sasl.username` value should contain the API key, 
-and the `sasl.password` value should contain the API secret.
+![](../media/cc-create-key.png)
+
+Copy and paste the following configuration data into a file named `getting_started.ini`, substituting the API key and
+secret that you just created for the `sasl.username` and `sasl.password` values, respectively. Note that bootstrap
+server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `bootstrap.servers`.
 
 ```ini file=getting-started-cloud.ini
 ```
@@ -203,7 +197,7 @@ and the `sasl.password` value should contain the API secret.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-Paste the following configuration data into a file at `getting-started.ini`:
+Paste the following configuration data into a file named `getting-started.ini`:
 
 ```ini file=getting-started-local.ini
 ```
@@ -212,7 +206,7 @@ Paste the following configuration data into a file at `getting-started.ini`:
 
 <section data-context-key="kafka.broker" data-context-value="other">
 
-Paste the following configuration data into a file at `getting-started.ini`:
+Paste the following configuration data into a file named `getting-started.ini`.
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different

@@ -136,40 +136,43 @@ fill it into the appropriate configuration for you.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-Paste the following configuration data into a file at:
-`getting-started.properties`
+When using Confluent Cloud you will be required to provide an API key
+and secret authorizing your application to produce and consume. You can
+use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
+you by navigating to the `API Keys` section under `Cluster Overview`.
 
-The below configuration file includes the required settings for a
-connection to Confluent Cloud including the bootstrap servers
-configuration you provided. Include your Kafka cluster key and secret
-in the `sasl.username` and `sasl.password` settings after pasting the file.
+![](../media/cc-create-key.png)
 
-```go file=getting-started-cloud.properties
+Copy and paste the following configuration data into a file named `getting_started.properties`, substituting the API key and
+secret that you just created for the `sasl.username` and `sasl.password` values, respectively. Note that bootstrap
+server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `bootstrap.servers`.
+
+```properties file=getting-started-cloud.properties
 ```
+
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-Paste the following configuration data into a file at:
-`getting-started.properties`
+Paste the following configuration data into a file named `getting-started.properties`:
 
-```go file=getting-started-local.properties
+```properties file=getting-started-local.properties
 ```
-</section>
 
+</section>
 
 <section data-context-key="kafka.broker" data-context-value="other">
 
-Paste the following configuration data into a file at:
-`getting-started.properties`
+Paste the following configuration data into a file named `getting-started.properties`.
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```go file=getting-started-other.properties
+```properties file=getting-started-other.properties
 ```
+
 </section>
 
 ## Create Topic

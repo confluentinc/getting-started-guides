@@ -139,30 +139,24 @@ fill it into the appropriate configuration for you.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
+When using Confluent Cloud you will be required to provide an API key
+and secret authorizing your application to produce and consume. You can
+use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
+you by navigating to the `API Keys` section under `Cluster Overview`.
+
+![](../media/cc-create-key.png)
+
 Create a directory for the application resource file:
 
 ```sh
 mkdir -p src/main/resources
 ```
 
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`
+Copy and paste the following configuration data into a file located at `src/main/resources/application.yaml`, substituting the API key and
+secret that you just created for the `username` and `password` fields, respectively, of the `spring.kafka.properties.sasl.jaas.config` value. Note that bootstrap
+server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `spring.kafka.bootstrap-servers`.
 
-The below configuration includes the required settings for a connection
-to Confluent Cloud including the bootstrap servers configuration you
-provided. 
-
-![](../media/cc-create-key.png)
-
-When using Confluent Cloud you will be required to provide an API key
-and secret authorizing your application to produce and consume. You can
-use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you.
-
-Take note of the API key and secret and add them to the configuration file
-in the `username` and `password` fields, respectively, of the `sasl.jaas.config` value.
-
-
-```ini file=getting-started-cloud.properties
+```yaml file=getting-started-cloud.yaml
 ```
 
 </section>
@@ -175,9 +169,9 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`:
 
-```ini file=getting-started-local.properties
+```yaml file=getting-started-local.yaml
 ```
 
 </section>
@@ -190,14 +184,14 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`.
 
 The below configuration file includes the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```ini file=getting-started-other.properties
+```yaml file=getting-started-other.yaml
 ```
 
 </section>
