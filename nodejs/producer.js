@@ -35,7 +35,7 @@ function createProducer(config, onDeliveryReport) {
 }
 
 async function produceExample() {
-  if (process.argv.legth < 3) {
+  if (process.argv.length < 3) {
     console.log("Please provide the configuration file path as the command line argument");
     process.exit(1);
   }
