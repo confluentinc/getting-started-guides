@@ -289,12 +289,6 @@ settings](https://kafka.apache.org/documentation/#security).
 
 </section>
 
-Source the Kafka cluster properties file into your environment:
-
-```sh
-source getting-started.properties
-```
-
 Bring up the REST Proxy:
 
 ```sh
