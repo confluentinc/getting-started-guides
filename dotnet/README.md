@@ -20,7 +20,7 @@ As you're learning how to run your first Kafka application, we recommend using [
 <p>
 Note: This tutorial focuses on a simple application to get you started.
 If you want to build more complex applications and microservices for data in motion—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
-<a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>.
+<a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>. Or, learn more about building a simple streaming system using C# and ASP.NET in the <a href="https://developer.confluent.io/learn-kafka/apache-kafka-for-dotnet/overview/">Apache Kafka for .NET Developers course</a>.
 </p>
 </div>
 
