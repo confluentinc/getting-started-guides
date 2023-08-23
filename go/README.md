@@ -143,7 +143,7 @@ you by navigating to the `API Keys` section under `Cluster Overview`.
 
 ![](../media/cc-create-key.png)
 
-Copy and paste the following configuration data into a file named `getting_started.properties`, substituting the API key and
+Copy and paste the following configuration data into a file named `getting-started.properties`, substituting the API key and
 secret that you just created for the `sasl.username` and `sasl.password` values, respectively. Note that bootstrap
 server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `bootstrap.servers`.
 
