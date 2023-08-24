@@ -24,10 +24,12 @@ func ReadConfig(configFile string) kafka.ConfigMap {
     for scanner.Scan() {
         line := strings.TrimSpace(scanner.Text())
         if !strings.HasPrefix(line, "#") && len(line) != 0 {
-            kv := strings.Split(line, "=")
-            parameter := strings.TrimSpace(kv[0])
-            value := strings.TrimSpace(kv[1])
-            m[parameter] = value
+            before, after, found := strings.Cut(line, "=")
+            if found {
+                parameter := strings.TrimSpace(before)
+                value := strings.TrimSpace(after)
+                m[parameter] = value
+            }
         }
     }
 
