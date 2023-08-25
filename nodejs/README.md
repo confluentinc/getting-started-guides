@@ -25,6 +25,8 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
 This guide assumes that you have [node.js](https://nodejs.org/en/download/) installed (tested with `16.3.1`).
 
 Later in this tutorial you will set up a new Kafka cluster or connect

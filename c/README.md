@@ -25,6 +25,8 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
 This guide assumes that you already have a C compiler installed. The code in this guide has been tested with GCC and Clang/LLVM.
 
 You’ll also need to install [librdkafka](https://github.com/edenhill/librdkafka), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.

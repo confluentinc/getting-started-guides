@@ -26,6 +26,8 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
 This guide assumes that you already have the [Go language tools](https://golang.org/doc/install) installed.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
