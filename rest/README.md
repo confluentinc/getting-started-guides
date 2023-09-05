@@ -102,8 +102,16 @@ Paste the following file into a `docker-compose.yml` file:
 ```yaml file=../docker-compose.yml
 ```
 
-Now start the Kafka broker with the new `docker compose` command (see the [Docker
-documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+<div class="alert-primary">
+<p>
+Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
+Combined mode is only appropriate for local development and testing. Refer to the documentation 
+<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
+for production in isolated mode, meaning controllers run independently from brokers.
+</p>
+</div>
+
+Now start the Kafka broker:
 
 ```sh
 docker compose up -d
@@ -226,7 +234,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.3.0
+    image: confluentinc/cp-kafka-rest:7.5.0
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -254,7 +262,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.3.0
+    image: confluentinc/cp-kafka-rest:7.5.0
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -274,7 +282,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.3.0
+    image: confluentinc/cp-kafka-rest:7.5.0
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -284,7 +292,7 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
 ```
-The above docker compose file refers to the bootstrap servers
+The above Docker Compose file refers to the bootstrap servers
 configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [additional
 settings](https://kafka.apache.org/documentation/#security).
