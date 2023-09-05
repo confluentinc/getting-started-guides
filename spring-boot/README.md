@@ -69,10 +69,11 @@ Create the following Gradle build file for the project, named
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
+We are going to need a Kafka cluster for our client application to
 operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+cluster or create a Kafka cluster running locally. If you have an
+existing Kafka cluster that you'd like to use, select `Local` and proceed
+directly to the <a href="#configuration">next step</a>.
 
 <p>
   <label>Kafka location</label>
@@ -80,7 +81,6 @@ cluster bootstrap server to connect to.
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
-      <option value="other">Other</option>
     </select>
   </div>
 </p>
@@ -131,18 +131,6 @@ docker compose up -d
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
-  
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
-</p>
-
-Paste your Kafka cluster bootstrap server URL above and the tutorial will
-fill it into the appropriate configuration for you.
-
-</section>
-
 ## Configuration
 
 <section data-context-key="kafka.broker" data-context-default>
@@ -181,29 +169,12 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`:
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`.
+If you are using an existing Kafka cluster, substitute your cluster's `bootstrap-servers`
+endpoint. If your Kafka cluster requires different client security configuration,
+you may require [additional settings](https://kafka.apache.org/documentation/#security).
 
 ```yaml file=getting-started-local.yaml
-```
-
-</section>
-
-<section data-context-key="kafka.broker" data-context-value="other">
-
-Create a directory for the application resource file:
-
-```sh
-mkdir -p src/main/resources
-```
-
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`.
-
-The below configuration file includes the bootstrap servers
-configuration you provided. If your Kafka Cluster requires different
-client security configuration, you may require [different
-settings](https://kafka.apache.org/documentation/#security).
-
-```yaml file=getting-started-other.yaml
 ```
 
 </section>
@@ -234,11 +205,8 @@ Kafka broker:
 
 ```sh file=../create-topic.sh
 ```
-</section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
-
-Depending on your available Kafka cluster, you have multiple options
+If you're using an existing Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
 Center](https://docs.confluent.io/platform/current/control-center/index.html),
 where you can [create a topic with a
