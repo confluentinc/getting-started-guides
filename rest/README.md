@@ -57,7 +57,7 @@ mkdir kafka-restproxy-getting-started && cd kafka-restproxy-getting-started
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
+We are going to need a Kafka cluster for our client application to
 operate with. This dialog can help you configure your Confluent Cloud
 cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
@@ -68,7 +68,7 @@ cluster bootstrap server to connect to.
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
-      <option value="other">Other</option>
+      <option value="existing">I have a cluster already!</option>
     </select>
   </div>
 </p>
@@ -119,7 +119,7 @@ docker compose up -d
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
   
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
@@ -165,14 +165,14 @@ Run the following commands in your command line terminal:
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Run the following commands in your command line terminal:
 
-```sh file=getting-started-other.sh
+```sh file=getting-started-existing.sh
 ```
 
-This uses the bootstrap servers configuration you provided. If your Kafka Cluster requires different
+This uses the bootstrap servers configuration you provided. If your Kafka cluster requires different
 client security configuration, you may require [different settings](https://kafka.apache.org/documentation/#security).
 
 </section>
@@ -205,7 +205,7 @@ Kafka broker:
 ```
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
@@ -274,7 +274,7 @@ services:
 ```
 
 </section>
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 ```yaml
 ---
@@ -293,7 +293,7 @@ services:
       KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
 ```
 The above Docker Compose file refers to the bootstrap servers
-configuration you provided. If your Kafka Cluster requires different
+configuration you provided. If your Kafka cluster requires different
 client security configuration, you may require [additional
 settings](https://kafka.apache.org/documentation/#security).
 
