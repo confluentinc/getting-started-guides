@@ -79,7 +79,7 @@ cluster bootstrap server to connect to.
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
-      <option value="other">Other</option>
+      <option value="existing">I have a cluster already!</option>
     </select>
   </div>
 </p>
@@ -130,7 +130,7 @@ docker compose up -d
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
   
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
@@ -174,7 +174,7 @@ Paste the following configuration data into a file named `getting-started.proper
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Paste the following configuration data into a file named `getting-started.properties`.
 
@@ -183,7 +183,7 @@ configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```properties file=getting-started-other.properties
+```properties file=getting-started-existing.properties
 ```
 
 </section>
@@ -216,7 +216,7 @@ Kafka broker:
 ```
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
