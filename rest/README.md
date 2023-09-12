@@ -179,9 +179,7 @@ client security configuration, you may require [different settings](https://kafk
 
 ## Create Topic
 
-Events in Kafka are organized and durably stored in named topics. Topics
-have parameters that determine the performance and durability guarantees
-of the events that flow through them.
+A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
 Create a new topic, `purchases`, which we will use to produce and consume
 events.
