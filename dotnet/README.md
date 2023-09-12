@@ -305,6 +305,7 @@ necessary to create more or different events.
 
 ## Where next?
 
+- Learn more about building a simple streaming system using C# and ASP.NET in the <a href="https://developer.confluent.io/learn-kafka/apache-kafka-for-dotnet/overview/">Apache Kafka for .NET Developers course
 - For the C# client API, check out the
   [.NET documentation](https://docs.confluent.io/platform/current/clients/confluent-kafka-dotnet/_site/api/Confluent.Kafka.html).
 - The blog post [Implement a Cross-Platform Apache Kafka® Producer and Consumer with C# and .NET](https://www.confluent.io/blog/build-cross-platform-kafka-applications-using-c-and-dotnet-5/) provides step-by-step instructions for building an application that streams Wikipedia edit events to a Kafka topic in Confluent Cloud.

@@ -319,6 +319,8 @@ window and re-running the producer.
 
 ## Where next?
 
+- To delve deeper into producers, consumers, schema registry and cluster administration try our [Apache Kafka for Python Developers](https://developer.confluent.io/courses/kafka-python/intro/) course.
+- If you're interested in writing Apache Kafka microservices in Python, follow this step-by-step [blog post](https://www.confluent.io/en-gb/blog/event-driven-microservices-with-python-and-kafka/). 
 - For the Python client API, check out the
   [confluent_kafka documentation](https://docs.confluent.io/platform/current/clients/confluent-kafka-python/html/index.html).
 - For information on testing in the Kafka ecosystem, check out
