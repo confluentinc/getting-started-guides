@@ -166,9 +166,6 @@ Client applications access Confluent Cloud Kafka clusters using either [basic au
 or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
 Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
-If you would like to get started with Confluent Cloud OAuth but don't have an identity provider to use,
-[this](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/create-oauth-idp.html) quick start
-shows how to use Okta as an OAuth/OIDC identity provider for Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -201,9 +198,7 @@ server endpoint that you provided in the `Kafka Setup` step is used as the value
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) if you already have an OAuth/OIDC identity provider, or you can follow the
-[quick start](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/create-oauth-idp.html) to complete
-these prerequisites with an Okta trial.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
 
 Copy and paste the following configuration data into a file named `getting_started.ini`.
 
