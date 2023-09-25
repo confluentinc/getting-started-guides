@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will build Python client applications which produce and consume messages from an Apache Kafka® cluster. 
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
 
 The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
 
@@ -51,7 +51,7 @@ From within the Confluent Cloud Console, creating a new cluster is just a few cl
 Your browser does not support the video tag.
 </video>
 
-If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using [Docker](https://docs.docker.com/get-docker/).
+If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using the Confluent CLI.
 
 ## Create Project
 
@@ -129,26 +129,28 @@ Your browser does not support the video tag.
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
-  
-Paste the following file into a `docker-compose.yml` file:
 
-```yaml file=../docker-compose.yml
+This guide runs Kafka in Docker via the Confluent CLI.
+
+First, install and start [Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) if you don't already have it. Verify that Docker is set up properly by ensuring that no errors are output when you run `docker info` in your terminal.
+
+Install the Confluent CLI if you don't already have it. In your terminal:
+
+```sh
+brew install confluentinc/tap/cli
 ```
 
-<div class="alert-primary">
-<p>
-Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
-Combined mode is only appropriate for local development and testing. Refer to the documentation 
-<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
-for production in isolated mode, meaning controllers run independently from brokers.
-</p>
-</div>
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
 ```sh
-docker compose up -d
+confluent local kafka start
 ```
+
+Note the `Plaintext Ports` printed in your terminal, which you will use when configuring the client in the next step.
 
 </section>
 
@@ -236,7 +238,7 @@ note that the bootstrap server endpoint that you provided in the `Kafka Setup` s
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-Paste the following configuration data into a file named `getting_started.ini`:
+Paste the following configuration data into a file named `getting_started.ini`, substituting the plaintext port(s) output when you started Kafka.
 
 ```ini file=getting_started_local.ini
 ```
@@ -261,8 +263,7 @@ settings](https://kafka.apache.org/documentation/#security).
 
 A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
-Create a new topic, `purchases`, which we will use to produce and consume
-events.
+Create a new topic, `purchases`, which you will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -274,17 +275,12 @@ with 1 partition and defaults for the remaining settings.
 
 </section>
 
-
 <section data-context-key="kafka.broker" data-context-value="local">
 
-We'll use the `kafka-topics` command located inside the local running
-Kafka broker:
-
-```sh file=../create-topic.sh
+```sh
+confluent local kafka topic create purchases
 ```
-
 </section>
-
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
@@ -324,19 +320,19 @@ chmod u+x producer.py
 ./producer.py getting_started.ini
 ```
 
-You should see output that resembles:
+You should see output resembling this:
 
 ```
-Produced event to topic purchases: key = jsmith value = batteries
-Produced event to topic purchases: key = jsmith value = book
-Produced event to topic purchases: key = jbernard value = book
-Produced event to topic purchases: key = eabara value = alarm clock
-Produced event to topic purchases: key = htanaka value = t-shirts
-Produced event to topic purchases: key = jsmith value = book
-Produced event to topic purchases: key = jbernard value = book
-Produced event to topic purchases: key = awalther value = batteries
-Produced event to topic purchases: key = eabara value = alarm clock
-Produced event to topic purchases: key = htanaka value = batteries
+Produced event to topic purchases: key = jsmith     value = batteries
+Produced event to topic purchases: key = jsmith     value = book
+Produced event to topic purchases: key = jbernard   value = book
+Produced event to topic purchases: key = eabara     value = alarm clock
+Produced event to topic purchases: key = htanaka    value = t-shirts
+Produced event to topic purchases: key = jsmith     value = book
+Produced event to topic purchases: key = jbernard   value = book
+Produced event to topic purchases: key = awalther   value = batteries
+Produced event to topic purchases: key = eabara     value = alarm clock
+Produced event to topic purchases: key = htanaka    value = batteries
 ```
 
 ## Consume Events
@@ -349,27 +345,36 @@ chmod u+x consumer.py
 ./consumer.py getting_started.ini
 ```
 
-You should see output that resembles:
+You should see output resembling this:
 
 ```
-Consumed event from topic purchases: key = sgarcia value = t-shirts
-Consumed event from topic purchases: key = htanaka value = alarm clock
-Consumed event from topic purchases: key = awalther value = book
-Consumed event from topic purchases: key = sgarcia value = gift card
-Consumed event from topic purchases: key = eabara value = t-shirts
-Consumed event from topic purchases: key = eabara value = t-shirts
-Consumed event from topic purchases: key = jsmith value = t-shirts
-Consumed event from topic purchases: key = htanaka value = batteries
-Consumed event from topic purchases: key = htanaka value = book
-Consumed event from topic purchases: key = sgarcia value = book
+Consumed event from topic purchases: key = sgarcia    value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = alarm clock
+Consumed event from topic purchases: key = awalther   value = book
+Consumed event from topic purchases: key = sgarcia    value = gift card
+Consumed event from topic purchases: key = eabara     value = t-shirts
+Consumed event from topic purchases: key = eabara     value = t-shirts
+Consumed event from topic purchases: key = jsmith     value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = batteries
+Consumed event from topic purchases: key = htanaka    value = book
+Consumed event from topic purchases: key = sgarcia    value = book
 Waiting...
 Waiting...
 Waiting...
 ```
 
-The consumer will wait indefinitely for new events. You can kill the
-process off (with `Ctrl+C`), or experiment by starting a separate terminal
-window and re-running the producer.
+Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+
+Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+Shut down Kafka when you are done with it:
+
+```sh
+confluent local kafka stop
+```
+</section>
 
 ## Where next?
 

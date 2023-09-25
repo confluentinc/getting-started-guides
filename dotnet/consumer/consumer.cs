@@ -33,7 +33,7 @@ class Consumer {
             try {
                 while (true) {
                     var cr = consumer.Consume(cts.Token);
-                    Console.WriteLine($"Consumed event from topic {topic} with key {cr.Message.Key,-10} and value {cr.Message.Value}");
+                    Console.WriteLine($"Consumed event from topic {topic}: key = {cr.Message.Key,-10} value = {cr.Message.Value}");
                 }
             }
             catch (OperationCanceledException) {

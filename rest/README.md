@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will use the Confluent REST Proxy to produce and consume messages from an Apache Kafka® cluster.
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
 
 <div class="alert-primary">
 <p>
@@ -45,7 +45,7 @@ From within the Confluent Cloud Console, creating a new cluster is just a few cl
 Your browser does not support the video tag.
 </video>
 
-If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using [Docker](https://docs.docker.com/get-docker/).
+If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using the Confluent CLI.
 
 ## Create Project
 
@@ -96,26 +96,28 @@ Your browser does not support the video tag.
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
-  
-Paste the following file into a `docker-compose.yml` file:
 
-```yaml file=../docker-compose.yml
+This guide runs Kafka in Docker via the Confluent CLI.
+
+First, install and start [Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) if you don't already have it. Verify that Docker is set up properly by ensuring that no errors are output when you run `docker info` in your terminal.
+
+Install the Confluent CLI if you don't already have it. In your terminal:
+
+```sh
+brew install confluentinc/tap/cli
 ```
 
-<div class="alert-primary">
-<p>
-Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
-Combined mode is only appropriate for local development and testing. Refer to the documentation 
-<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
-for production in isolated mode, meaning controllers run independently from brokers.
-</p>
-</div>
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
 ```sh
-docker compose up -d
+confluent local kafka start
 ```
+
+Note the `Plaintext Ports` printed in your terminal, which you will use when configuring the client in the next step.
 
 </section>
 
@@ -163,9 +165,9 @@ you by navigating to the `API Keys` section under `Cluster Overview`.
 
 ![](../media/cc-create-key.png)
 
-Copy and paste the following commands into your command line terminal, substituting the API key and
+Paste the following commands into your command line terminal, substituting the API key and
 secret that you just created for the `username` and `password` fields, respectively, of the `SASL_JAAS_CONFIG` 
-environment variable. note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as 
+environment variable. Note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as 
 the value of the `BOOTSTRAP_SERVERS` environment variable.
 
 ```sh file=getting-started-cloud-basic.sh
@@ -178,9 +180,9 @@ the value of the `BOOTSTRAP_SERVERS` environment variable.
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
 and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
 
-Copy and paste the following commands into your command line terminal.
+Paste the following commands into your command line terminal.
 
-note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as
+Note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as
 the value of the `BOOTSTRAP_SERVERS` environment variable. Substitute your OAuth/OIDC-specific configuration values as follows:
 
 * `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
@@ -204,7 +206,7 @@ the value of the `BOOTSTRAP_SERVERS` environment variable. Substitute your OAuth
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-Run the following commands in your command line terminal:
+Run the following command in your command line terminal, substituting the plaintext port(s) output when you started Kafka.
 
 ```sh file=getting-started-local.sh
 ```
@@ -227,8 +229,7 @@ client security configuration, you may require [different settings](https://kafk
 
 A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
-Create a new topic, `purchases`, which we will use to produce and consume
-events.
+Create a new topic, `purchases`, which you will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -242,10 +243,8 @@ with 1 partition and defaults for the remaining settings.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-We'll use the `kafka-topics` command located inside the local running
-Kafka broker:
-
-```sh file=../create-topic.sh
+```sh
+confluent local kafka topic create purchases
 ```
 </section>
 
@@ -265,12 +264,13 @@ request the creation of a topic from your operations team.
 
 ## Start REST Proxy
 
+<section data-context-key="kafka.broker" data-context-value="cloud">
+
 First you need to start the Confluent REST Proxy locally, which you will run in Docker.
 
-Paste the following REST proxy configuration into a new file called `rest-proxy.yml`: 
+Paste the following REST proxy configuration into a new file called `rest-proxy.yml`:
 
-
-<section data-context-key="kafka.broker" data-context-value="cloud">
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
 ```yaml
 ---
@@ -295,7 +295,11 @@ services:
       KAFKA_REST_CLIENT_SASL_JAAS_CONFIG: $SASL_JAAS_CONFIG
       KAFKA_REST_CLIENT_SASL_MECHANISM: $SASL_MECHANISM
 ```
-oauth:
+
+</section>
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
 ```yaml
 ---
 version: '2'
@@ -324,29 +328,35 @@ services:
       KAFKA_REST_CLIENT_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
 
 ```
-</section>
+
+</section> <!--- confluent-cloud.authentication = oauth -->
+
+
+Bring up the REST Proxy:
+
+```sh
+docker compose -f rest-proxy.yml up -d
+```
+
+Wait a few seconds for REST Proxy to start and verify the Docker container logs show "Server started, listening for requests"
+
+```sh
+docker compose -f rest-proxy.yml logs rest-proxy | grep "Server started, listening for requests"
+```
+
+</section> <!--- kafka.broker = cloud -->
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```yaml
----
-version: '2'
-services:
-
-  rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.5.0
-    ports:
-      - 8082:8082
-    hostname: rest-proxy
-    container_name: rest-proxy
-    environment:
-      KAFKA_REST_HOST_NAME: rest-proxy
-      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
-      KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
-```
+When you started Kafka locally via `confluent local kafka start`, REST Proxy also started and is listening on port 8082.
 
 </section>
+
 <section data-context-key="kafka.broker" data-context-value="existing">
+
+First you need to start the Confluent REST Proxy locally, which you will run in Docker.
+
+Paste the following REST proxy configuration into a new file called `rest-proxy.yml`:
 
 ```yaml
 ---
@@ -369,8 +379,6 @@ configuration you provided. If your Kafka cluster requires different
 client security configuration, you may require [additional
 settings](https://kafka.apache.org/documentation/#security).
 
-</section>
-
 Bring up the REST Proxy:
 
 ```sh
@@ -382,6 +390,8 @@ Wait a few seconds for REST Proxy to start and verify the Docker container logs 
 ```sh
 docker compose -f rest-proxy.yml logs rest-proxy | grep "Server started, listening for requests"
 ```
+
+</section>
 
 ## Produce Events
 
@@ -395,7 +405,7 @@ curl -X POST \
      "http://localhost:8082/topics/purchases"
 ```
 
-You should see output that resembles:
+You should see output resembling this:
 
 ```sh
 {"offsets":[{"partition":0,"offset":0,"error_code":null,"error":null},{"partition":0,"offset":1,"error_code":null,"error":null},{"partition":0,"offset":2,"error_code":null,"error":null}],"key_schema_id":null,"value_schema_id":null}  
@@ -449,6 +459,15 @@ curl -X DELETE \
      -H "Content-Type: application/vnd.kafka.v2+json" \
      http://localhost:8082/consumers/cg1/instances/ci1 
 ```
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+Shut down Kafka when you are done with it:
+
+```sh
+confluent local kafka stop
+```
+</section>
 
 ## Where next?
 

@@ -13,7 +13,7 @@ hero:
 
 In this tutorial, you will run a Node.js client application that produces messages to and consumes messages from an Apache Kafka® cluster. 
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
 
 <div class="alert-primary">
 <p>
@@ -44,7 +44,7 @@ From within the Confluent Cloud Console, creating a new cluster is just a few cl
 Your browser does not support the video tag.
 </video>
 
-If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using [Docker](https://docs.docker.com/get-docker/).
+If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using the Confluent CLI.
 
 ## Create Project
 
@@ -63,7 +63,7 @@ Note: Users of macOS 10.13 (High Sierra) and later should read <a href="https://
 Then install the required libraries:
 
 ```sh
-npm i node-rdkafka
+npm install node-rdkafka
 ```
 
 ## Kafka Setup
@@ -107,26 +107,28 @@ Your browser does not support the video tag.
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
-  
-Paste the following file into a `docker-compose.yml` file:
 
-```yaml file=../docker-compose.yml
+This guide runs Kafka in Docker via the Confluent CLI.
+
+First, install and start [Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) if you don't already have it. Verify that Docker is set up properly by ensuring that no errors are output when you run `docker info` in your terminal.
+
+Install the Confluent CLI if you don't already have it. In your terminal:
+
+```sh
+brew install confluentinc/tap/cli
 ```
 
-<div class="alert-primary">
-<p>
-Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
-Combined mode is only appropriate for local development and testing. Refer to the documentation 
-<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
-for production in isolated mode, meaning controllers run independently from brokers.
-</p>
-</div>
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
 ```sh
-docker compose up -d
+confluent local kafka start
 ```
+
+Note the `Plaintext Ports` printed in your terminal, which you will use when configuring the client in the next step.
 
 </section>
 
@@ -174,7 +176,7 @@ you by navigating to the `API Keys` section under `Cluster Overview`.
 
 ![](../media/cc-create-key.png)
 
-Copy and paste the following configuration data into a file named `getting-started.properties`, substituting the API key and
+Paste the following configuration data into a file named `getting-started.properties`, substituting the API key and
 secret that you just created for the `sasl.username` and `sasl.password` values, respectively. Note that bootstrap
 server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `bootstrap.servers`.
 
@@ -188,7 +190,7 @@ server endpoint that you provided in the `Kafka Setup` step is used as the value
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
 and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
 
-Copy and paste the following configuration data into a file named `getting-started.properties`.
+Paste the following configuration data into a file named `getting-started.properties`.
 
 note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to
 `bootstrap.servers`. Substitute your OAuth/OIDC-specific configuration values as follows:
@@ -214,7 +216,7 @@ note that the bootstrap server endpoint that you provided in the `Kafka Setup` s
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-Paste the following configuration data into a file named `getting-started.properties`:
+Paste the following configuration data into a file named `getting-started.properties`, substituting the plaintext port(s) output when you started Kafka.
 
 ```properties file=getting-started-local.properties
 ```
@@ -239,8 +241,7 @@ settings](https://kafka.apache.org/documentation/#security).
 
 A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
-Create a new topic, `purchases`, which we will use to produce and consume
-events.
+Create a new topic, `purchases`, which you will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -254,10 +255,8 @@ with 1 partition and defaults for the remaining settings.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-We'll use the `kafka-topics` command located inside the local running
-Kafka broker:
-
-```sh file=../create-topic.sh
+```sh
+confluent local kafka topic create purchases
 ```
 </section>
 
@@ -302,18 +301,19 @@ In order to run the producer, use the node command, passing in the configuration
 node producer.js getting-started.properties
 ```
 
-You should see output that resembles:
+You should see output resembling this:
+
 ```sh
-Produced event to topic purchases: key = jsmith        value = alarm clock
-Produced event to topic purchases: key = htanaka       value = book
-Produced event to topic purchases: key = eabara        value = batteries
-Produced event to topic purchases: key = htanaka       value = t-shirts
-Produced event to topic purchases: key = htanaka       value = t-shirts
-Produced event to topic purchases: key = htanaka       value = gift card
-Produced event to topic purchases: key = sgarcia       value = gift card
+Produced event to topic purchases: key = jsmith     value = alarm clock
+Produced event to topic purchases: key = htanaka    value = book
+Produced event to topic purchases: key = eabara     value = batteries
+Produced event to topic purchases: key = htanaka    value = t-shirts
+Produced event to topic purchases: key = htanaka    value = t-shirts
+Produced event to topic purchases: key = htanaka    value = gift card
+Produced event to topic purchases: key = sgarcia    value = gift card
 Produced event to topic purchases: key = jbernard   value = gift card
 Produced event to topic purchases: key = awalther   value = alarm clock
-Produced event to topic purchases: key = htanaka       value = book
+Produced event to topic purchases: key = htanaka    value = book
 ```
 
 ## Consume Events
@@ -324,7 +324,7 @@ From another terminal, run the following command to run the consumer application
 node consumer.js getting-started.properties 
 ```
 
-The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output that resembles the below. Once you are done with the consumer, press ctrl-c to terminate the consumer application.
+The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output resembling this:
 
 ```sh
 Consumed event from topic purchases: key = jsmith     value = alarm clock
@@ -334,12 +334,23 @@ Consumed event from topic purchases: key = htanaka    value = t-shirts
 Consumed event from topic purchases: key = htanaka    value = t-shirts
 Consumed event from topic purchases: key = htanaka    value = gift card
 Consumed event from topic purchases: key = sgarcia    value = gift card
-Consumed event from topic purchases: key = jbernard    value = gift card
-Consumed event from topic purchases: key = awalther    value = alarm clock
+Consumed event from topic purchases: key = jbernard   value = gift card
+Consumed event from topic purchases: key = awalther   value = alarm clock
 Consumed event from topic purchases: key = htanaka    value = book
 ```
 
-Re-run the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+
+Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+Shut down Kafka when you are done with it:
+
+```sh
+confluent local kafka stop
+```
+</section>
 
 ## Where next?
 

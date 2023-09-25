@@ -15,7 +15,7 @@ Using Windows? You'll need to download [Windows Subsystem for Linux](https://lea
 
 In this tutorial, you will run a Spring Boot client application that produces messages to and consumes messages from an Apache Kafka® cluster.
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
 
 <div class="alert-primary">
 <p>
@@ -51,7 +51,7 @@ From within the Confluent Cloud Console, creating a new cluster is just a few cl
 Your browser does not support the video tag.
 </video>
 
-If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using [Docker](https://docs.docker.com/get-docker/).
+If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using the Confluent CLI.
 
 ## Create Project
 
@@ -108,26 +108,28 @@ Your browser does not support the video tag.
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
-  
-Paste the following file into a `docker-compose.yml` file:
 
-```yaml file=../docker-compose.yml
+This guide runs Kafka in Docker via the Confluent CLI.
+
+First, install and start [Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) if you don't already have it. Verify that Docker is set up properly by ensuring that no errors are output when you run `docker info` in your terminal.
+
+Install the Confluent CLI if you don't already have it. In your terminal:
+
+```sh
+brew install confluentinc/tap/cli
 ```
 
-<div class="alert-primary">
-<p>
-Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
-Combined mode is only appropriate for local development and testing. Refer to the documentation 
-<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
-for production in isolated mode, meaning controllers run independently from brokers.
-</p>
-</div>
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
 ```sh
-docker compose up -d
+confluent local kafka start
 ```
+
+Note the `Plaintext Ports` printed in your terminal, which you will use when configuring the client in the next step.
 
 </section>
 
@@ -181,7 +183,7 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Copy and paste the following configuration data into a file located at `src/main/resources/application.yaml`, substituting the API key and
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`, substituting the API key and
 secret that you just created for the `username` and `password` fields, respectively, of the `spring.kafka.properties.sasl.jaas.config` value. Note that bootstrap
 server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `spring.kafka.bootstrap-servers`.
 
@@ -195,7 +197,7 @@ server endpoint that you provided in the `Kafka Setup` step is used as the value
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
 and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
 
-Copy and paste the following configuration data into a file located at `src/main/resources/application.yaml`
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`
 
 Note that bootstrap
 server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `spring.kafka.bootstrap-servers`. Substitute your OAuth/OIDC-specific configuration values as follows:
@@ -227,7 +229,7 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`:
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`, substituting the plaintext port(s) output when you started Kafka.
 
 ```yaml file=getting-started-local.yaml
 ```
@@ -258,8 +260,7 @@ settings](https://kafka.apache.org/documentation/#security).
 
 A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
-Create a new topic, `purchases`, which we will use to produce and consume
-events.
+Create a new topic, `purchases`, which you will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -273,10 +274,8 @@ with 1 partition and defaults for the remaining settings.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-We'll use the `kafka-topics` command located inside the local running
-Kafka broker:
-
-```sh file=../create-topic.sh
+```sh
+confluent local kafka topic create purchases
 ```
 </section>
 
@@ -303,13 +302,13 @@ mkdir -p src/main/java/examples
 ```
 
 We will use `SpringBootApplication` annotation for ease of use, auto-configuration and component scanning.
-Paste the following Java code into a file located at `src/main/java/examples/SpringBootWithKafkaApplication.java`
+Paste the following Java code into a file located at `src/main/java/examples/SpringBootWithKafkaApplication.java`.
 
 ```java file=src/main/java/examples/SpringBootWithKafkaApplication.java
 ```
 
 Create the Kafka Producer.
-Paste the following Java code into a file located at `src/main/java/examples/Producer.java`
+Paste the following Java code into a file located at `src/main/java/examples/Producer.java`.
 
 ```java file=src/main/java/examples/Producer.java
 ```
@@ -328,7 +327,7 @@ BUILD SUCCESSFUL
 ## Build Consumer
 
 Create the Kafka Consumer.
-Paste the following Java code into a file located at `src/main/java/examples/Consumer.java`
+Paste the following Java code into a file located at `src/main/java/examples/Consumer.java`.
 
 ```java file=src/main/java/examples/Consumer.java
 ```
@@ -353,7 +352,7 @@ Run the following command to run the Spring Boot application for the Producer.
 gradle bootRun --args='--producer'
 ```
 
-You should see output that includes the lines showing produced records:
+You should see output resembling this:
 
 ```
 2021-08-27 13:09:50.287  INFO 73259 --- [ad | producer-1] examples.Producer                        : Produced event to topic purchases: key = awalther   value = t-shirts
@@ -376,7 +375,7 @@ Run the following command to run the Spring Boot application for the Consumer.
 gradle bootRun --args='--consumer'
 ```
 
-You should see output that includes the lines showing consumed records:
+The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output resembling this:
 
 ```
 2021-08-27 13:09:54.129  INFO 73259 --- [yConsumer-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
@@ -390,6 +389,19 @@ You should see output that includes the lines showing consumed records:
 2021-08-27 13:09:54.129  INFO 73259 --- [yConsumer-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = jsmith     value = gift card
 2021-08-27 13:09:54.129  INFO 73259 --- [yConsumer-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = eabara     value = t-shirts
 ```
+
+Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+
+Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+Shut down Kafka when you are done with it:
+
+```sh
+confluent local kafka stop
+```
+</section>
 
 ## Where next?
 
