@@ -11,6 +11,8 @@ hero:
 
 ## Introduction
 
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
 In this tutorial, you will run a Spring Boot client application that produces messages to and consumes messages from an Apache Kafka® cluster.
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to setup a local Kafka cluster, the tutorial will walk you through those steps.
@@ -24,6 +26,8 @@ If you want to build more complex applications and microservices for data in mot
 </div>
 
 ## Prerequisites
+
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 This guide assumes that you already have:
 
@@ -76,7 +80,7 @@ cluster bootstrap server to connect to.
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
-      <option value="other">Other</option>
+      <option value="existing">I have a cluster already!</option>
     </select>
   </div>
 </p>
@@ -110,8 +114,16 @@ Paste the following file into a `docker-compose.yml` file:
 ```yaml file=../docker-compose.yml
 ```
 
-Now start the Kafka broker with the new `docker compose` command (see the [Docker
-documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+<div class="alert-primary">
+<p>
+Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
+Combined mode is only appropriate for local development and testing. Refer to the documentation 
+<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
+for production in isolated mode, meaning controllers run independently from brokers.
+</p>
+</div>
+
+Now start the Kafka broker:
 
 ```sh
 docker compose up -d
@@ -119,7 +131,7 @@ docker compose up -d
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
   
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
@@ -222,7 +234,7 @@ Paste the following configuration data into a file located at `src/main/resource
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Create a directory for the application resource file:
 
@@ -237,16 +249,14 @@ configuration you provided. If your Kafka Cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```yaml file=getting-started-other.yaml
+```yaml file=getting-started-existing.yaml
 ```
 
 </section>
 
 ## Create Topic
 
-Events in Kafka are organized and durably stored in named topics. Topics
-have parameters that determine the performance and durability guarantees
-of the events that flow through them.
+A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
 Create a new topic, `purchases`, which we will use to produce and consume
 events.
@@ -270,7 +280,7 @@ Kafka broker:
 ```
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control

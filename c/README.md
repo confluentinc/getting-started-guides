@@ -25,6 +25,8 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
 This guide assumes that you already have a C compiler installed. The code in this guide has been tested with GCC and Clang/LLVM.
 
 You’ll also need to install [librdkafka](https://github.com/edenhill/librdkafka), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.
@@ -105,7 +107,7 @@ static void load_config_group(rd_kafka_conf_t *conf,
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
+We are going to need a Kafka cluster for our client application to
 operate with. This dialog can help you configure your Confluent Cloud
 cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
@@ -116,7 +118,7 @@ cluster bootstrap server to connect to.
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
-      <option value="other">Other</option>
+      <option value="existing">I have a cluster already!</option>
     </select>
   </div>
 </p>
@@ -150,8 +152,16 @@ Paste the following file into a `docker-compose.yml` file:
 ```yaml file=../docker-compose.yml
 ```
 
-Now start the Kafka broker with the new `docker compose` command (see the [Docker
-documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+<div class="alert-primary">
+<p>
+Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
+Combined mode is only appropriate for local development and testing. Refer to the documentation 
+<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
+for production in isolated mode, meaning controllers run independently from brokers.
+</p>
+</div>
+
+Now start the Kafka broker:
 
 ```sh
 docker compose up -d
@@ -159,7 +169,7 @@ docker compose up -d
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
   
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
@@ -250,28 +260,25 @@ Paste the following configuration data into a file named `getting-started.ini`:
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Paste the following configuration data into a file named `getting-started.ini`.
 
 The below configuration file includes the bootstrap servers
-configuration you provided. If your Kafka Cluster requires different
+configuration you provided. If your Kafka cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```ini file=getting-started-other.ini
+```ini file=getting-started-existing.ini
 ```
 
 </section>
 
 ## Create Topic
 
-Events in Kafka are organized and durably stored in named topics. Topics
-have parameters that determine the performance and durability guarantees
-of the events that flow through them.
+A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
-Create a new topic, `purchases`, which we will use to produce and consume
-events.
+Create a new topic, `purchases`, which we will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -292,7 +299,7 @@ Kafka broker:
 ```
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control
