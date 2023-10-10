@@ -393,9 +393,9 @@ You should see output that includes the lines showing consumed records:
 
 ## Where next?
 
+- Learn more in the [Introduction to Spring Boot for Apache Kafka](https://developer.confluent.io/learn-kafka/spring/) course.
 - For a Spring Boot example using Schema Registry and Avro, check out 
   [this example](https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/java-springboot.html).
-- Learn more in the [Introduction to Spring Boot for Confluent Cloud](https://developer.confluent.io/learn-kafka/spring/confluent-cloud/) course.
 - If you want to build more complex applications and microservices—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/).
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
