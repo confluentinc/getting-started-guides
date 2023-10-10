@@ -17,6 +17,8 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 ## Prerequisites
 
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
 This guide assumes that you already have a C compiler installed. The code in this guide has been tested with GCC and Clang/LLVM.
 
 You’ll also need to install [librdkafka](https://github.com/edenhill/librdkafka), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.
@@ -97,7 +99,7 @@ static void load_config_group(rd_kafka_conf_t *conf,
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
+We are going to need a Kafka cluster for our client application to
 operate with. This dialog can help you configure your Confluent Cloud
 cluster, create a Kafka cluster for you, or help you input an existing
 cluster bootstrap server to connect to.
@@ -108,7 +110,7 @@ cluster bootstrap server to connect to.
     <select data-context="true" name="kafka.broker">
       <option value="cloud">Confluent Cloud</option>
       <option value="local">Local</option>
-      <option value="other">Other</option>
+      <option value="existing">I have a cluster already!</option>
     </select>
   </div>
 </p>
@@ -142,8 +144,16 @@ Paste the following file into a `docker-compose.yml` file:
 ```yaml file=../docker-compose.yml
 ```
 
-Now start the Kafka broker with the new `docker compose` command (see the [Docker
-documentation for more information](https://docs.docker.com/compose/cli-command/#new-docker-compose-command)).
+<div class="alert-primary">
+<p>
+Note: This runs Kafka in KRaft combined mode, meaning that one process acts as both the broker and controller.
+Combined mode is only appropriate for local development and testing. Refer to the documentation 
+<a href="https://docs.confluent.io/platform/current/kafka-metadata/kraft.html">here</a> for details on configuring KRaft 
+for production in isolated mode, meaning controllers run independently from brokers.
+</p>
+</div>
+
+Now start the Kafka broker:
 
 ```sh
 docker compose up -d
@@ -151,7 +161,7 @@ docker compose up -d
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
   
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
@@ -171,9 +181,26 @@ fill it into the appropriate configuration for you.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-When using Confluent Cloud you will be required to provide an API key
-and secret authorizing your application to produce and consume. You can
-use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
+Client applications access Confluent Cloud Kafka clusters using either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html)
+or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
+
+Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+
+Select your authentication mechanism:
+
+<p>
+  <label>Authentication mechanism</label>
+  <div class="select-wrapper">
+    <select data-context="true" name="confluent-cloud.authentication">
+      <option value="basic">Basic</option>
+      <option value="oauth">OAuth</option>
+    </select>
+  </div>
+</p>
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
 you by navigating to the `API Keys` section under `Cluster Overview`.
 
 ![](../media/cc-create-key.png)
@@ -182,10 +209,39 @@ Copy and paste the following configuration data into a file named `getting_start
 secret that you just created for the `sasl.username` and `sasl.password` values, respectively. Note that bootstrap
 server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `bootstrap.servers`.
 
-```ini file=getting-started-cloud.ini
+```ini file=getting-started-cloud-basic.ini
 ```
 
 </section>
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+
+Copy and paste the following configuration data into a file named `getting_started.ini`.
+
+note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to
+`bootstrap.servers`. Substitute your OAuth/OIDC-specific configuration values as follows:
+
+* `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
+* `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
+* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
+* `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
+  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
+  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
+* `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
+  the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
+* `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
+  by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
+
+```properties file=getting-started-cloud-oauth.ini
+```
+
+</section> <!--- confluent-cloud.authentication = oauth -->
+
+</section> <!--- kafka.broker = cloud -->
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
@@ -196,28 +252,25 @@ Paste the following configuration data into a file named `getting-started.ini`:
 
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Paste the following configuration data into a file named `getting-started.ini`.
 
 The below configuration file includes the bootstrap servers
-configuration you provided. If your Kafka Cluster requires different
+configuration you provided. If your Kafka cluster requires different
 client security configuration, you may require [different
 settings](https://kafka.apache.org/documentation/#security).
 
-```ini file=getting-started-other.ini
+```ini file=getting-started-existing.ini
 ```
 
 </section>
 
 ## Create Topic
 
-Events in Kafka are organized and durably stored in named topics. Topics
-have parameters that determine the performance and durability guarantees
-of the events that flow through them.
+A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
 
-Create a new topic, `purchases`, which we will use to produce and consume
-events.
+Create a new topic, `purchases`, which we will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -238,7 +291,7 @@ Kafka broker:
 ```
 </section>
 
-<section data-context-key="kafka.broker" data-context-value="other">
+<section data-context-key="kafka.broker" data-context-value="existing">
 
 Depending on your available Kafka cluster, you have multiple options
 for creating a topic. You may have access to [Confluent Control

@@ -28,10 +28,11 @@ exports.configFromPath = async function configFromPath(path) {
   const lines = await readAllLines(path);
 
   return lines
-    .filter((line) => !/^\s*?#/.test(line))
+    .filter((line) => !/^\s*$|^\s*?#/.test(line)) // ignore comments and whitespace-only lines
     .map((line) => line
-      .split('=')
-      .map((s) => s.trim()))
+      .split(/=(.*)/) // the (.*) group causes split only on the first occurrence since values can contain equals signs
+      .map((s) => s.trim())
+    )
     .reduce((config, [k, v]) => {
       config[k] = v;
       return config;
