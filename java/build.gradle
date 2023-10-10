@@ -30,6 +30,10 @@ apply plugin: "com.github.johnrengelman.shadow"
 dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-nop', version: '2.0.3'
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.3.1'
+
+    // needed if OAuth is used; otherwise this can be left out.
+    // See: https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_oauth.html
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 }
 
 jar {

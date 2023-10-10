@@ -1,26 +1,9 @@
 const Kafka = require('node-rdkafka');
 const { configFromPath } = require('./util');
 
-function createConfigMap(config) {
-  if (config.hasOwnProperty('security.protocol')) {
-    return {
-      'bootstrap.servers': config['bootstrap.servers'],
-      'sasl.username': config['sasl.username'],
-      'sasl.password': config['sasl.password'],
-      'security.protocol': config['security.protocol'],
-      'sasl.mechanisms': config['sasl.mechanisms'],
-      'dr_msg_cb': true }
-  } else {
-    return {
-      'bootstrap.servers': config['bootstrap.servers'],
-      'dr_msg_cb': true
-    }
-  }
-}
 
 function createProducer(config, onDeliveryReport) {
-
-  const producer = new Kafka.Producer(createConfigMap(config));
+  const producer = new Kafka.Producer(config);
 
   return new Promise((resolve, reject) => {
     producer
@@ -41,6 +24,7 @@ async function produceExample() {
   }
   let configPath = process.argv.slice(2)[0];
   const config = await configFromPath(configPath);
+  config['dr_msg_cb'] = true;
 
   let topic = "purchases";
 
@@ -59,7 +43,6 @@ async function produceExample() {
 
   let numEvents = 10;
   for (let idx = 0; idx < numEvents; ++idx) {
-
     const key = users[Math.floor(Math.random() * users.length)];
     const value = Buffer.from(items[Math.floor(Math.random() * items.length)]);
 
