@@ -110,7 +110,7 @@ First, install and start [Docker Desktop](https://docs.docker.com/desktop/) or [
 
 Install the Confluent CLI if you don't already have it. In your terminal:
 
-```sh
+```plaintext
 brew install confluentinc/tap/cli
 ```
 
@@ -120,7 +120,7 @@ This guide requires version 3.34.1 or later of the Confluent CLI. If you have an
 
 Now start the Kafka broker:
 
-```sh
+```plaintext
 confluent local kafka start
 ```
 
@@ -252,7 +252,7 @@ with 1 partition and defaults for the remaining settings.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```sh
+```plaintext
 confluent local kafka topic create purchases
 ```
 </section>
@@ -352,7 +352,7 @@ Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer ap
 
 Shut down Kafka when you are done with it:
 
-```sh
+```plaintext
 confluent local kafka stop
 ```
 </section>
