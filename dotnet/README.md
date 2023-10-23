@@ -47,7 +47,9 @@ mkdir producer
 mkdir consumer
 ```
 
-Next we’ll create two different C# project files, one for the producer and one for the consumer.
+Next we’ll create two different C# project files, one for the producer and one for the consumer.  The project files
+specify the output type of project artifact which is an executable for both the producer and consumer.  It also specifies the required
+dependencies that the dotnet platform needs for the project.
 
 Copy the following into a project file named `producer.csproj` in the `producer` subdirectory:
 ```xml file=producer/producer.csproj
