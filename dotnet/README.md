@@ -26,6 +26,8 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
+Using Windows? We recommend using [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3), as not all of these commands will work with Command Prompt.
+
 This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 6.0) installed.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
@@ -50,7 +52,8 @@ If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run 
 Create a new directory anywhere you’d like for this project:
 
 ```sh
-mkdir kafka-dotnet-getting-started && cd kafka-dotnet-getting-started
+mkdir kafka-dotnet-getting-started 
+cd kafka-dotnet-getting-started
 mkdir producer
 mkdir consumer
 ```
@@ -255,7 +258,7 @@ In order to run the producer, use the `dotnet run` command passing in the config
 
 ```sh
 cd producer
-dotnet run $(pwd)/../getting-started.properties
+dotnet run "$(pwd)/../getting-started.properties"
 ```
 
 You should see output that resembles:
@@ -280,7 +283,7 @@ read the events from the `purchases` topic and write the information to the term
 
 ```sh
 cd consumer
-dotnet run $(pwd)/../getting-started.properties
+dotnet run "$(pwd)/../getting-started.properties"
 ```
 
 The consumer application will start and print any events it has not yet consumed and then wait 
