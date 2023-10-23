@@ -17,14 +17,6 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 The tutorial will walk you through setting up a local Kafka cluster if you do not already have access to one.
 
-<div class="alert-primary">
-<p>
-Note: This tutorial focuses on a simple application to get you started. For a closer look at Consumers and Producers, alongside Schema Registry and Cluster Administration, check out our course <a href= "https://developer.confluent.io/courses/kafka-python"> Kafka for Python Developers.</a>
-If you want to build more complex applications and microservices for data in motion—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—take a look at the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
-<a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library. </a>
-</p>
-</div>
-
 ## Prerequisites
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).

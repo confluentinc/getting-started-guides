@@ -16,13 +16,6 @@ consume messages from an Apache Kafka® cluster.
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) (no credit card required to sign up) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
 
-<div class="alert-primary">
-<p>
-Note: This tutorial focuses on a simple application to get you started.
-If you want to build more complex applications and microservices for data in motion—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
-<a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>.
-</p>
-</div>
 
 ## Prerequisites
 
