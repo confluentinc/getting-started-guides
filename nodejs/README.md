@@ -53,11 +53,17 @@ Note: Users of macOS 10.13 (High Sierra) and later should read <a href="https://
 </p>
 </div>
 
-Then install the required libraries:
+Then install the client library:
 
 ```sh
 npm install node-rdkafka
 ```
+
+<div class="alert-primary">
+<p>
+Note: node-rdkafka is not supported by Confluent.
+</p>
+</div>
 
 ## Kafka Setup
 
