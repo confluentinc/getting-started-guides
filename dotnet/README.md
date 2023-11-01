@@ -26,7 +26,7 @@ If you want to build more complex applications and microservices for data in mot
 
 ## Prerequisites
 
-Using Windows? We recommend using [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3), as not all of these commands will work with Command Prompt.
+Using Windows? We recommend using [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3), as not all of these commands will work with Command Prompt.
 
 This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 6.0) installed.
 
