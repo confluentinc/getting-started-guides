@@ -29,7 +29,7 @@ If you do not have an existing cluster to use, the easiest way to run Kafka is
 with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, 
 be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). 
 New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) 
-to spend within Confluent Cloud during their first 60 days.
+to spend within Confluent Cloud during their first 30 days.
 
 From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
