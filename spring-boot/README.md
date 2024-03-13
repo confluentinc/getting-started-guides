@@ -33,8 +33,8 @@ Using Windows? You'll need to download [Windows Subsystem for Linux](https://lea
 This guide assumes that you already have:
 
 - [Gradle](https://gradle.org/install/) installed
-- [Java 11](https://openjdk.org/install/) installed and configured as the current Java version for the environment.
-  Verify that `java -version` outputs version 11 and ensure that the `JAVA_HOME` environment variable is set to the Java
+- [Java 17](https://adoptium.net/installation/) installed and configured as the current Java version for the environment.
+  Verify that `java -version` outputs version 17 and ensure that the `JAVA_HOME` environment variable is set to the Java
   installation directory containing `bin`.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
