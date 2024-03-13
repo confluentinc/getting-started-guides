@@ -20,7 +20,7 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 Using Windows? We recommend using [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3), as not all of these commands will work with Command Prompt.
 
-This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 6.0) installed.
+This guide assumes that you already have [.NET Core](https://dotnet.microsoft.com/download) (>= 8.0) installed.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. 
