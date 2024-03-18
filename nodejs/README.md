@@ -20,7 +20,7 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-This guide assumes that you have [node.js](https://nodejs.org/en/download/) installed (tested with `16.3.1`).
+This guide assumes that you have [node.js](https://nodejs.org/en/download/) version 16 or later installed. The guide was last tested with Node version `20.11.1`.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. 
@@ -53,11 +53,13 @@ Note: Users of macOS 10.13 (High Sierra) and later should read <a href="https://
 </p>
 </div>
 
-Then install the client library:
+Then install the Apache Kafka NodeJS client library:
 
 ```sh
 npm install node-rdkafka
 ```
+
+This guide was last tested with version `2.18.0` of `node-rdkafka`.
 
 <div class="alert-primary">
 <p>
