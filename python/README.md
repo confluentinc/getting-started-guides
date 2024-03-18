@@ -21,15 +21,11 @@ The tutorial will walk you through setting up a local Kafka cluster if you do no
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-This guide assumes that you already have
-[Python](https://www.python.org/downloads/) installed.
+This guide assumes that you already have [Python 3](https://www.python.org/downloads/) installed. The example was last tested against Python 3.12.1.
 
-(If you're using Python 2.7, you'll also need to install
-[Pip](https://pypi.org/project/pip/) and
-[VirtualEnv](https://pypi.org/project/virtualenv/) separately.)
+The instructions use [`virtualenv`](https://virtualenv.pypa.io/en/latest/installation.html) but you may use other virtual environment managers like [`venv`](https://docs.python.org/3/library/venv.html) if you prefer.
 
-Later in this tutorial you will set up a new Kafka cluster or connect
-to an existing one. 
+Later in this tutorial you will set up a new Kafka cluster or connect to an existing one. 
 
 If you do not have an existing cluster to use, the easiest way to run Kafka is 
 with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, 
@@ -54,7 +50,7 @@ mkdir kafka-python-getting-started && cd kafka-python-getting-started
 ```
 
 Create and activate a Python virtual environment to give yourself a
-clean, isolated workspace:
+clean, isolated workspace. You may also use [`venv`](https://docs.python.org/3/library/venv.html) if you prefer.
 
 ```sh
 virtualenv env
@@ -62,23 +58,13 @@ virtualenv env
 source env/bin/activate
 ```
 
-#### Python 3.x
-
-Install the Kafka library:
+Install the Apache Kafka Python client library:
 
 ```sh
 pip install confluent-kafka
 ```
 
-#### Python 2.7
-
-First install [librdkafka](https://github.com/edenhill/librdkafka#installation).
-
-Then install the python libraries:
-
-```sh
-pip install confluent-kafka configparser
-```
+Note: this guide was last tested using version `2.3.0` of the client.
 
 ## Kafka Setup
 
@@ -366,6 +352,13 @@ Shut down Kafka when you are done with it:
 ```plaintext
 confluent local kafka stop
 ```
+
+And exit the virtual environment:
+
+```plaintext
+deactivate
+```
+
 </section>
 
 ## Where next?
