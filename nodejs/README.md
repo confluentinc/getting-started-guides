@@ -15,6 +15,11 @@ In this tutorial, you will run a Node.js client application that produces messag
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
 
+<div class="alert-primary">
+<p>
+Note: This tutorial uses the <a href="https://github.com/Blizzard/node-rdkafka">node-rdkafka</a> client library directly. Confluent recently released an early access alternative JavaScript client, <a href="https://github.com/confluentinc/confluent-kafka-javascript">confluent-kafka-javascript</a>, that is based on node-rdkafka but offers a promisified and more idiomatic interface similar to <a href="https://kafka.js.org/">KafkaJS</a>.
+</p>
+</div>
 
 ## Prerequisites
 
