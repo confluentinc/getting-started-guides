@@ -18,7 +18,7 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 <div class="alert-primary">
 <p>
-Note: This tutorial focuses on a simple application to get you started.
+Note: This tutorial focuses on a simple application to get you started. For more in-depth information to get you started you can look at <a href="https://docs.confluent.io/kafka-clients/java/current/overview.html">Kafka clients documentation.</a>
 If you want to build more complex applications and microservices for data in motion—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
 <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>.
 </p>
@@ -400,6 +400,7 @@ confluent local kafka stop
 
 - For the Java client API, check out the
   [Java documentation](https://docs.confluent.io/platform/current/clients/javadocs/javadoc/index.html).
+- The [Kafka clients documentation](https://docs.confluent.io/kafka-clients/java/current/overview.html). 
 - Kafka Streams allows you to build advanced Java applications that include powerful features such as real-time joins, aggregations, filters, and exactly-once processing. The [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/) provides an in-depth approach including videos and exercises. For quick hands-on approach, see the [How to build your first Apache Kafka Streams application](https://kafka-tutorials.confluent.io/creating-first-apache-kafka-streams-application/confluent.html) tutorial.
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
