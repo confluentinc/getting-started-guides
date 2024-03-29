@@ -117,11 +117,11 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-After you sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/)
-and provision your Kafka cluster,
-paste your Confluent Cloud bootstrap server setting below and the
-tutorial will fill in the appropriate configuration for
-you.
+First, sign up for a free [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/) account if you don’t already have one.
+You will get $400 in credits when you sign up. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`.
+With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+
+After you login to the Confluent Cloud Console and provision your Kafka cluster, paste your Confluent Cloud bootstrap server setting below and the tutorial will fill in the appropriate configuration for you.
 
 <p>
   <label for="kafka-broker-server">Bootstrap Server</label>
