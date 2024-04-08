@@ -360,9 +360,10 @@ confluent local kafka stop
 
 ## Where next?
 
+- [Confluent Node JS client](https://docs.confluent.io/cloud/current/client-apps/guides/node-js-guide.html)
+- [Confluent client documentation](https://docs.confluent.io/cloud/current/client-apps/overview.html)
 - [Get started with KafkaJS](https://www.confluent.io/blog/getting-started-with-kafkajs)
 - [Learn more about KafkaJS on the Streaming Audio podcast](https://developer.confluent.io/podcast/powering-microservices-using-apache-kafka-on-nodejs-with-kafkajs-at-klarna-ft-tommy-brunn/)
-- [Try the Node.js code example for Apache Kafka](https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/nodejs.html)
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
 - If you're interested in using streaming SQL for data creation,
