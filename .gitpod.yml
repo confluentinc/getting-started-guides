@@ -1,0 +1,48 @@
+github:
+  prebuilds:
+    master: true
+    branches: true
+
+tasks:
+  - name: Terminal
+    init: |
+      curl -L --http1.1 https://cnfl.io/cli | sudo sh -s -- -b /usr/local/bin
+    command: |
+      gp sync-done code-copy
+      rm -rf !(java)
+      rm -rf .github/
+      rm -f .*
+      rm -f java/src/main/java/io/confluent/developer/*OAuth.java
+      rm -f java/src/main/java/io/confluent/developer/*Existing.java
+      rm -f java/src/main/java/io/confluent/developer/*Local.java
+      mv java/src/main/java/io/confluent/developer/ConsumerExampleCloudBasic.java java/src/main/java/io/confluent/developer/ConsumerExample.java
+      mv java/src/main/java/io/confluent/developer/ProducerExampleCloudBasic.java java/src/main/java/io/confluent/developer/ProducerExample.java
+      cd java
+      gp open src/main/java/io/confluent/developer/ConsumerExample.java
+      gp open src/main/java/io/confluent/developer/ProducerExample.java
+      gp sync-done file-setup
+      clear
+  - name: Open instructions in browser
+    init: |
+      cd java
+      python -m http.server &
+      pip install markdown
+      python -c "import markdown; markdown.markdownFromFile(input='gitpod.md', output='gitpod.html');"
+      rm -rf README.md gitpod.md media
+    command: |
+      gp sync-done file-setup
+      gp preview http://localhost:8000/gitpod.html
+
+vscode:
+  extensions:
+    - github.github-vscode-theme
+    - vscjava.vscode-java-pack
+    - vscjava.vscode-java-debug
+    - vscjava.vscode-gradle
+
+ports:
+  - name: Instructions webpage
+    port: 8000
+    visibility: private
+    # do not notify once the port is detected
+    onOpen: ignore
