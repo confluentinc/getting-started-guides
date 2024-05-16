@@ -247,6 +247,7 @@ go build -o out/producer producer.go
 If you get any errors during the build make sure that you initialized the module correctly per the instructions in the [previous step](#create-project). If you're still stuck then head to the [Confluent Community Forum](https://forum.confluent.io/) for more help. 
 
 ## Build Consumer
+
 Next, create the consumer application by pasting the following Go code into a file named `consumer.go`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>

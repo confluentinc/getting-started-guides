@@ -50,51 +50,7 @@ mkdir kafka-c-getting-started && cd kafka-c-getting-started
 
 Create the following `Makefile` for the project:
 
-```sh
-ALL: producer consumer
-
-CFLAGS=-Wall $(shell pkg-config --cflags glib-2.0 rdkafka)
-LDLIBS=$(shell pkg-config --libs glib-2.0 rdkafka)
-```
-
-We’ll also set up a file for some code used in both the producer and consumer.
-Create the following `common.c` file:
-
-```c
-#include <glib.h>
-
-static void load_config_group(rd_kafka_conf_t *conf,
-                              GKeyFile *key_file,
-                              const char *group
-                              ) {
-    char errstr[512];
-    g_autoptr(GError) error = NULL;
-
-    gchar **ptr = g_key_file_get_keys(key_file, group, NULL, &error);
-    if (error) {
-        g_error("%s", error->message);
-        exit(1);
-    }
-
-    while (*ptr) {
-        const char *key = *ptr;
-        g_autofree gchar *value = g_key_file_get_string(key_file, group, key, &error);
-
-        if (error) {
-            g_error("Reading key: %s", error->message);
-            exit(1);
-        }
-
-        if (rd_kafka_conf_set(conf, key, value, errstr, sizeof(errstr))
-            != RD_KAFKA_CONF_OK
-            ) {
-            g_error("%s", errstr);
-            exit(1);
-        }
-
-        ptr++;
-    }
-}
+```sh file=Makefile
 ```
 
 ## Kafka Setup
@@ -121,19 +77,61 @@ First, sign up for a free [Confluent Cloud](https://www.confluent.io/confluent-c
 You will get $400 in credits when you sign up. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`.
 With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-After you login to the Confluent Cloud Console and provision your Kafka cluster, paste your Confluent Cloud bootstrap server setting below and the tutorial will fill in the appropriate configuration for you.
+After you login to the Confluent Cloud Console and provision your Kafka cluster, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps.
 
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
-</p>
-
-You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud Console](https://confluent.cloud/):
+You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.pn://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/dd72c752e9ed2724edc30a7f9eb77ccb/get-cluster-bootstrap-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
+<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
+
+Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
+
+Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+
+Select your authentication mechanism:
+
+<p>
+  <label>Authentication mechanism</label>
+  <div class="select-wrapper">
+    <select data-context="true" name="confluent-cloud.authentication">
+      <option value="basic">Basic</option>
+      <option value="oauth">OAuth</option>
+    </select>
+  </div>
+</p>
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
+you by navigating to the `API Keys` section under `Cluster Overview`.
+
+![](../media/cc-create-key.png)
+
+Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+
+</section> <!--- confluent-cloud.authentication = basic -->
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+
+Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
+
+* `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
+* `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
+* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
+* `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
+  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
+  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
+* `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
+  the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
+* `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
+  by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
+
+</section> <!--- confluent-cloud.authentication = oauth -->
 
 </section>
 
@@ -172,99 +170,6 @@ Note the `Plaintext Ports` printed in your terminal, which you will use when con
 
 Paste your Kafka cluster bootstrap server URL above and the tutorial will
 fill it into the appropriate configuration for you.
-
-</section>
-
-## Configuration
-
-<section data-context-key="kafka.broker" data-context-default>
-  Please go back to the Kafka Setup section and select a broker type.
-</section>
-
-<section data-context-key="kafka.broker" data-context-value="cloud">
-
-Client applications access Confluent Cloud Kafka clusters using either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html)
-or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
-
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
-
-Select your authentication mechanism:
-
-<p>
-  <label>Authentication mechanism</label>
-  <div class="select-wrapper">
-    <select data-context="true" name="confluent-cloud.authentication">
-      <option value="basic">Basic</option>
-      <option value="oauth">OAuth</option>
-    </select>
-  </div>
-</p>
-
-<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
-
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you by navigating to the `API Keys` section under `Cluster Overview`.
-
-![](../media/cc-create-key.png)
-
-Copy and paste the following configuration data into a file named `getting_started.ini`, substituting the API key and
-secret that you just created for the `sasl.username` and `sasl.password` values, respectively. Note that bootstrap
-server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to `bootstrap.servers`.
-
-```ini file=getting-started-cloud-basic.ini
-```
-
-</section>
-
-<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
-
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
-
-Copy and paste the following configuration data into a file named `getting_started.ini`.
-
-note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to
-`bootstrap.servers`. Substitute your OAuth/OIDC-specific configuration values as follows:
-
-* `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
-* `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
-* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
-  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
-* `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
-  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
-  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
-* `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
-  the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
-* `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
-  by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
-
-```properties file=getting-started-cloud-oauth.ini
-```
-
-</section> <!--- confluent-cloud.authentication = oauth -->
-
-</section> <!--- kafka.broker = cloud -->
-
-<section data-context-key="kafka.broker" data-context-value="local">
-
-Paste the following configuration data into a file named `getting-started.ini`, substituting the plaintext port(s) output when you started Kafka.
-
-```ini file=getting-started-local.ini
-```
-
-</section>
-
-<section data-context-key="kafka.broker" data-context-value="existing">
-
-Paste the following configuration data into a file named `getting-started.ini`.
-
-The below configuration file includes the bootstrap servers
-configuration you provided. If your Kafka cluster requires different
-client security configuration, you may require [different
-settings](https://kafka.apache.org/documentation/#security).
-
-```ini file=getting-started-existing.ini
-```
 
 </section>
 
@@ -307,234 +212,70 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Paste the following C code into a file located at `producer.c`:
+Let's create the producer application by pasting the following C code into a file named `producer.c`.
 
-```c
-#include <glib.h>
-#include <librdkafka/rdkafka.h>
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
-#include "common.c"
-
-#define ARR_SIZE(arr) ( sizeof((arr)) / sizeof((arr[0])) )
-
-/* Optional per-message delivery callback (triggered by poll() or flush())
- * when a message has been successfully delivered or permanently
- * failed delivery (after retries).
- */
-static void dr_msg_cb (rd_kafka_t *kafka_handle,
-                       const rd_kafka_message_t *rkmessage,
-                       void *opaque) {
-    if (rkmessage->err) {
-        g_error("Message delivery failed: %s", rd_kafka_err2str(rkmessage->err));
-    }
-}
-
-int main (int argc, char **argv) {
-    rd_kafka_t *producer;
-    rd_kafka_conf_t *conf;
-    char errstr[512];
-
-    // Parse the command line.
-    if (argc != 2) {
-        g_error("Usage: %s <config.ini>", argv[0]);
-        return 1;
-    }
-
-    // Parse the configuration.
-    // See https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
-    const char *config_file = argv[1];
-
-    g_autoptr(GError) error = NULL;
-    g_autoptr(GKeyFile) key_file = g_key_file_new();
-    if (!g_key_file_load_from_file (key_file, config_file, G_KEY_FILE_NONE, &error)) {
-        g_error ("Error loading config file: %s", error->message);
-        return 1;
-    }
-
-    // Load the relevant configuration sections.
-    conf = rd_kafka_conf_new();
-    load_config_group(conf, key_file, "default");
-
-    // Install a delivery-error callback.
-    rd_kafka_conf_set_dr_msg_cb(conf, dr_msg_cb);
-
-    // Create the Producer instance.
-    producer = rd_kafka_new(RD_KAFKA_PRODUCER, conf, errstr, sizeof(errstr));
-    if (!producer) {
-        g_error("Failed to create new producer: %s", errstr);
-        return 1;
-    }
-
-    // Configuration object is now owned, and freed, by the rd_kafka_t instance.
-    conf = NULL;
-
-    // Produce data by selecting random values from these lists.
-    int message_count = 10;
-    const char *topic = "purchases";
-    const char *user_ids[6] = {"eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther"};
-    const char *products[5] = {"book", "alarm clock", "t-shirts", "gift card", "batteries"};
-
-    for (int i = 0; i < message_count; i++) {
-        const char *key =  user_ids[random() % ARR_SIZE(user_ids)];
-        const char *value =  products[random() % ARR_SIZE(products)];
-        size_t key_len = strlen(key);
-        size_t value_len = strlen(value);
-
-        rd_kafka_resp_err_t err;
-
-        err = rd_kafka_producev(producer,
-                                RD_KAFKA_V_TOPIC(topic),
-                                RD_KAFKA_V_MSGFLAGS(RD_KAFKA_MSG_F_COPY),
-                                RD_KAFKA_V_KEY((void*)key, key_len),
-                                RD_KAFKA_V_VALUE((void*)value, value_len),
-                                RD_KAFKA_V_OPAQUE(NULL),
-                                RD_KAFKA_V_END);
-
-        if (err) {
-            g_error("Failed to produce to topic %s: %s", topic, rd_kafka_err2str(err));
-            return 1;
-        } else {
-            g_message("Produced event to topic %s: key = %12s value = %12s", topic, key, value);
-        }
-
-        rd_kafka_poll(producer, 0);
-    }
-
-    // Block until the messages are all sent.
-    g_message("Flushing final messages..");
-    rd_kafka_flush(producer, 10 * 1000);
-
-    if (rd_kafka_outq_len(producer) > 0) {
-        g_error("%d message(s) were not delivered", rd_kafka_outq_len(producer));
-    }
-
-    g_message("%d events were produced to topic %s.", message_count, topic);
-
-    rd_kafka_destroy(producer);
-
-    return 0;
-}
+```c file=producer_cloud_basic.c
 ```
+
+</section>
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+```c file=producer_cloud_oauth.c
+```
+
+</section>
+</section>
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```c file=producer_local.c
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+```c file=producer_existing.c
+```
+
+</section>
+
+Fill in the appropriate `bootstrap.servers` endpoint and any additional security configuration needed inline where the `set_config` function is called.
 
 ## Build Consumer
 
-Paste the following C code into a file located at `consumer.c`:
+Next, create the consumer application by pasting the following C code into a file named `consumer.c`.
 
-```c
-#include <glib.h>
-#include <librdkafka/rdkafka.h>
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
-#include "common.c"
-
-static volatile sig_atomic_t run = 1;
-
-/**
- * @brief Signal termination of program
- */
-static void stop(int sig) {
-    run = 0;
-}
-
-int main (int argc, char **argv) {
-    rd_kafka_t *consumer;
-    rd_kafka_conf_t *conf;
-    rd_kafka_resp_err_t err;
-    char errstr[512];
-
-    // Parse the command line.
-    if (argc != 2) {
-        g_error("Usage: %s <config.ini>", argv[0]);
-        return 1;
-    }
-
-    // Parse the configuration.
-    // See https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
-    const char *config_file = argv[1];
-
-    g_autoptr(GError) error = NULL;
-    g_autoptr(GKeyFile) key_file = g_key_file_new();
-    if (!g_key_file_load_from_file (key_file, config_file, G_KEY_FILE_NONE, &error)) {
-        g_error ("Error loading config file: %s", error->message);
-        return 1;
-    }
-
-    // Load the relevant configuration sections.
-    conf = rd_kafka_conf_new();
-    load_config_group(conf, key_file, "default");
-    load_config_group(conf, key_file, "consumer");
-
-    // Create the Consumer instance.
-    consumer = rd_kafka_new(RD_KAFKA_CONSUMER, conf, errstr, sizeof(errstr));
-    if (!consumer) {
-        g_error("Failed to create new consumer: %s", errstr);
-        return 1;
-    }
-    rd_kafka_poll_set_consumer(consumer);
-
-    // Configuration object is now owned, and freed, by the rd_kafka_t instance.
-    conf = NULL;
-
-    // Convert the list of topics to a format suitable for librdkafka.
-    const char *topic = "purchases";
-    rd_kafka_topic_partition_list_t *subscription = rd_kafka_topic_partition_list_new(1);
-    rd_kafka_topic_partition_list_add(subscription, topic, RD_KAFKA_PARTITION_UA);
-
-    // Subscribe to the list of topics.
-    err = rd_kafka_subscribe(consumer, subscription);
-    if (err) {
-        g_error("Failed to subscribe to %d topics: %s", subscription->cnt, rd_kafka_err2str(err));
-        rd_kafka_topic_partition_list_destroy(subscription);
-        rd_kafka_destroy(consumer);
-        return 1;
-    }
-
-    rd_kafka_topic_partition_list_destroy(subscription);
-
-    // Install a signal handler for clean shutdown.
-    signal(SIGINT, stop);
-
-    // Start polling for messages.
-    while (run) {
-        rd_kafka_message_t *consumer_message;
-
-        consumer_message = rd_kafka_consumer_poll(consumer, 500);
-        if (!consumer_message) {
-            g_message("Waiting...");
-            continue;
-        }
-
-        if (consumer_message->err) {
-            if (consumer_message->err == RD_KAFKA_RESP_ERR__PARTITION_EOF) {
-                /* We can ignore this error - it just means we've read
-                 * everything and are waiting for more data.
-                 */
-            } else {
-                g_message("Consumer error: %s", rd_kafka_message_errstr(consumer_message));
-                return 1;
-            }
-        } else {
-            g_message("Consumed event from topic %s: key = %.*s value = %s",
-                      rd_kafka_topic_name(consumer_message->rkt),
-                      (int)consumer_message->key_len,
-                      (char *)consumer_message->key,
-                      (char *)consumer_message->payload
-                      );
-        }
-
-        // Free the message when we're done.
-        rd_kafka_message_destroy(consumer_message);
-    }
-
-    // Close the consumer: commit final offsets and leave the group.
-    g_message( "Closing consumer");
-    rd_kafka_consumer_close(consumer);
-
-    // Destroy the consumer.
-    rd_kafka_destroy(consumer);
-
-    return 0;
-}
+```c file=consumer_cloud_basic.c
 ```
+
+</section>
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+```c file=consumer_cloud_oauth.c
+```
+
+</section>
+</section>
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```c file=consumer_local.c
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+```c file=consumer_existing.c
+```
+
+</section>
+
+Fill in the appropriate `bootstrap.servers` endpoint and any additional security configuration needed inline where the `set_config` function is called.
+
 
 ## Produce Events
 
@@ -542,7 +283,7 @@ Make the producer executable and run it:
 
 ```sh
 make producer
-./producer getting-started.ini
+./producer
 ```
 
 You should see output resembling this:
@@ -567,7 +308,7 @@ You should see output resembling this:
 Make the consumer executable and run it:
 ```sh
 make consumer
-./consumer getting-started.ini
+./consumer
 ```
 
 You should see output resembling this:
