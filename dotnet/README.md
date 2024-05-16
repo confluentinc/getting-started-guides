@@ -226,20 +226,20 @@ Let's create the .NET producer application by pasting the following C# code into
 </section>
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
-```c# file=producer_cloud_oauth.c
+```c# file=producer_cloud_oauth.cs
 ```
 
 </section>
 </section>
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```c# file=producer_local.c
+```c# file=producer_local.cs
 ```
 
 </section>
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-```c# file=producer_existing.c
+```c# file=producer_existing.cs
 ```
 
 </section>
@@ -259,26 +259,26 @@ Next, create the .NET consumer application by pasting the following C# code into
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
-```c# file=consumer_cloud_basic.c
+```c# file=consumer_cloud_basic.cs
 ```
 
 </section>
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
-```c# file=consumer_cloud_oauth.c
+```c# file=consumer_cloud_oauth.cs
 ```
 
 </section>
 </section>
 <section data-context-key="kafka.broker" data-context-value="local">
 
-```c# file=consumer_local.c
+```c# file=consumer_local.cs
 ```
 
 </section>
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-```c# file=consumer_existing.c
+```c# file=consumer_existing.cs
 ```
 
 </section>
