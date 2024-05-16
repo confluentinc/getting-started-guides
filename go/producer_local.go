@@ -11,7 +11,11 @@ import (
 func main() {
 
     p, err := kafka.NewProducer(&kafka.ConfigMap{
-        "bootstrap.servers": "localhost:<PLAINTEXT PORTS>"})
+        // User-specific properties that you must set
+        "bootstrap.servers": "localhost:<PLAINTEXT PORTS>",
+
+        // Fixed properties
+        "acks":               "all"})
 
     if err != nil {
         fmt.Printf("Failed to create producer: %s", err)

@@ -13,9 +13,12 @@ import (
 func main() {
 
     c, err := kafka.NewConsumer(&kafka.ConfigMap{
-         "bootstrap.servers":    "localhost:<PLAINTEXT PORTS>",
-         "group.id":             "kafka-go-getting-started",
-         "auto.offset.reset":    "earliest"})
+        // User-specific properties that you must set
+        "bootstrap.servers": "<BOOTSTRAP SERVERS>",
+
+        // Fixed properties
+        "group.id":          "kafka-go-getting-started",
+        "auto.offset.reset": "earliest"})
 
     if err != nil {
         fmt.Printf("Failed to create consumer: %s", err)
