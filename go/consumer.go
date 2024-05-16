@@ -12,18 +12,10 @@ import (
 
 func main() {
 
-    if len(os.Args) != 2 {
-        fmt.Fprintf(os.Stderr, "Usage: %s <config-file-path>\n",
-            os.Args[0])
-        os.Exit(1)
-    }
-
-    configFile := os.Args[1]
-    conf := ReadConfig(configFile)
-    conf["group.id"] = "kafka-go-getting-started"
-    conf["auto.offset.reset"] = "earliest"
-
-    c, err := kafka.NewConsumer(&conf)
+    c, err := kafka.NewConsumer(&kafka.ConfigMap{
+         "bootstrap.servers":    "localhost:<PLAINTEXT PORTS>",
+         "group.id":             "kafka-go-getting-started",
+         "auto.offset.reset":    "earliest"})
 
     if err != nil {
         fmt.Printf("Failed to create consumer: %s", err)

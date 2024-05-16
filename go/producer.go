@@ -10,16 +10,8 @@ import (
 
 func main() {
 
-    if len(os.Args) != 2 {
-        fmt.Fprintf(os.Stderr, "Usage: %s <config-file-path>\n",
-            os.Args[0])
-        os.Exit(1)
-    }
-    configFile := os.Args[1]
-    conf := ReadConfig(configFile)
-
-    topic := "purchases"
-    p, err := kafka.NewProducer(&conf)
+    p, err := kafka.NewProducer(&kafka.ConfigMap{
+        "bootstrap.servers": "localhost:<PLAINTEXT PORTS>"})
 
     if err != nil {
         fmt.Printf("Failed to create producer: %s", err)
@@ -44,6 +36,7 @@ func main() {
 
     users := [...]string{"eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther"}
     items := [...]string{"book", "alarm clock", "t-shirts", "gift card", "batteries"}
+    topic := "purchases"
 
     for n := 0; n < 10; n++ {
         key := users[rand.Intn(len(users))]
