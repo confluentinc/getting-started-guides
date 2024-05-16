@@ -9,7 +9,7 @@ class Consumer {
         var config = new ConsumerConfig
         {
             // User-specific properties that you must set
-            BootstrapServers = "BOOTSTRAP SERVERS",
+            BootstrapServers = "<BOOTSTRAP SERVERS>",
 
             // Fixed properties
             GroupId = "kafka-dotnet-getting-started",
