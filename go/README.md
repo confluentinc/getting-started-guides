@@ -224,19 +224,23 @@ Let's create the producer application by pasting the following Go code into a fi
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
 ```go file=producer_cloud_basic.go
 ```
 </section>
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
 ```go file=producer_cloud_oauth.go
 ```
 </section>
 </section>
 <section data-context-key="kafka.broker" data-context-value="local">
+
 ```go file=producer_local.go
 ```
 </section>
 <section data-context-key="kafka.broker" data-context-value="existing">
+
 ```go file=producer_existing.go
 ```
 </section>
@@ -255,19 +259,23 @@ Next, create the consumer application by pasting the following Go code into a fi
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
 ```go file=consumer_cloud_basic.go
 ```
 </section>
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
 ```go file=consumer_cloud_oauth.go
 ```
 </section>
 </section>
 <section data-context-key="kafka.broker" data-context-value="local">
+
 ```go file=consumer_local.go
 ```
 </section>
 <section data-context-key="kafka.broker" data-context-value="existing">
+
 ```go file=consumer_existing.go
 ```
 </section>
