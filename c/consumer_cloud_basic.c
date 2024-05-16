@@ -22,7 +22,7 @@ int main (int argc, char **argv) {
     conf = rd_kafka_conf_new();
 
     // User-specific properties that you must set
-    set_config(conf, "bootstrap.servers", "localhost:<PLAINTEXT PORTS>");
+    set_config(conf, "bootstrap.servers", "<BOOTSTRAP SERVERS>");
     set_config(conf, "sasl.username",     "<CLUSTER API KEY>");
     set_config(conf, "sasl.password",     "<CLUSTER API SECRET>");
 
