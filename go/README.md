@@ -222,6 +222,9 @@ request the creation of a topic from your operations team.
 
 Let's create the producer application by pasting the following Go code into a file named `producer.go`.
 
+```go file=producer_cloud_basic.go
+```
+
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
