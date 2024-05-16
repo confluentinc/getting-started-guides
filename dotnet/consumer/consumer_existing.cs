@@ -1,22 +1,20 @@
 using Confluent.Kafka;
 using System;
 using System.Threading;
-using Microsoft.Extensions.Configuration;
 
 class Consumer {
 
     static void Main(string[] args)
     {
-        if (args.Length != 1) {
-            Console.WriteLine("Please provide the configuration file path as a command line argument");
-        }
+        var config = new ConsumerConfig
+        {
+            // User-specific properties that you must set
+            BootstrapServers = "BOOTSTRAP SERVERS",
 
-        IConfiguration configuration = new ConfigurationBuilder()
-            .AddIniFile(args[0])
-            .Build();
-
-        configuration["group.id"] = "kafka-dotnet-getting-started";
-        configuration["auto.offset.reset"] = "earliest";
+            // Fixed properties
+            GroupId = "kafka-dotnet-getting-started",
+            AutoOffsetReset = AutoOffsetReset.Earliest
+        };
 
         const string topic = "purchases";
 
@@ -26,8 +24,7 @@ class Consumer {
             cts.Cancel();
         };
 
-        using (var consumer = new ConsumerBuilder<string, string>(
-            configuration.AsEnumerable()).Build())
+        using (var consumer = new ConsumerBuilder<string, string>(config).Build())
         {
             consumer.Subscribe(topic);
             try {

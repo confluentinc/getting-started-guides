@@ -1,25 +1,24 @@
 using Confluent.Kafka;
 using System;
-using Microsoft.Extensions.Configuration;
 
 class Producer {
     static void Main(string[] args)
     {
-        if (args.Length != 1) {
-            Console.WriteLine("Please provide the configuration file path as a command line argument");
-        }
-
-        IConfiguration configuration = new ConfigurationBuilder()
-            .AddIniFile(args[0])
-            .Build();
-
         const string topic = "purchases";
 
         string[] users = { "eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther" };
         string[] items = { "book", "alarm clock", "t-shirts", "gift card", "batteries" };
 
-        using (var producer = new ProducerBuilder<string, string>(
-            configuration.AsEnumerable()).Build())
+        var config = new ProducerConfig
+        {
+            // User-specific properties that you must set
+            BootstrapServers = "localhost:<PLAINTEXT PORTS>",
+
+            // Fixed properties
+            Acks = Acks.All
+        };
+
+        using (var producer = new ProducerBuilder<string, string>(config).Build())
         {
             var numProduced = 0;
             Random rnd = new Random();

@@ -157,19 +157,13 @@ Now start the Kafka broker:
 confluent local kafka start
 ```
 
-Note the `Plaintext Ports` printed in your terminal, which you will use when configuring the client in the next step.
+Note the `Plaintext Ports` printed in your terminal, which you will need to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="existing">
-  
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
-</p>
 
-Paste your Kafka cluster bootstrap server URL above and the tutorial will
-fill it into the appropriate configuration for you.
+Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
