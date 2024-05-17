@@ -1,5 +1,4 @@
 const Kafka = require('node-rdkafka');
-const { configFromPath } = require('./util');
 
 
 function createProducer(config, onDeliveryReport) {
@@ -18,13 +17,16 @@ function createProducer(config, onDeliveryReport) {
 }
 
 async function produceExample() {
-  if (process.argv.length < 3) {
-    console.log("Please provide the configuration file path as the command line argument");
-    process.exit(1);
+  const config = {
+    // User-specific properties that you must set
+    'bootstrap.servers': 'localhost:<PLAINTEXT PORTS>',
+
+    // Fixed properties
+    'acks': 'all',
+
+    // Needed for delivery callback to be invoked
+    'dr_msg_cb': true
   }
-  let configPath = process.argv.slice(2)[0];
-  const config = await configFromPath(configPath);
-  config['dr_msg_cb'] = true;
 
   let topic = "purchases";
 

@@ -1,5 +1,4 @@
 const Kafka = require('node-rdkafka');
-const { configFromPath } = require('./util');
 
 
 function createConsumer(config, onData) {
@@ -16,15 +15,19 @@ function createConsumer(config, onData) {
 
 
 async function consumerExample() {
-  if (process.argv.length < 3) {
-    console.log("Please provide the configuration file path as the command line argument");
-    process.exit(1);
-  }
-  let configPath = process.argv.slice(2)[0];
-  const config = await configFromPath(configPath);
-  config['group.id'] = 'kafka-nodejs-getting-started';
+  const config = {
+    // User-specific properties that you must set
+    'bootstrap.servers': '<BOOTSTRAP SERVERS>',
+    'sasl.username':     '<CLUSTER API KEY>',
+    'sasl.password':     '<CLUSTER API SECRET>',
 
-  //let seen = 0;
+    // Fixed properties
+    'security.protocol': 'SASL_SSL',
+    'sasl.mechanisms': 'PLAIN',
+    'group.id': 'kafka-nodejs-getting-started',
+    'auto.offset.reset': 'earliest'
+  }
+
   let topic = "purchases";
 
   const consumer = await createConsumer(config, ({key, value}) => {
