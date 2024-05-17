@@ -19,15 +19,15 @@ public class ProducerExample {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
             put(BOOTSTRAP_SERVERS_CONFIG, "<BOOTSTRAP SERVERS>");
-            put("sasl.username", "<CLUSTER API KEY>");
-            put("sasl.password", "<CLUSTER API SECRET>");
+            put("sasl.username",          "<CLUSTER API KEY>");
+            put("sasl.password",          "<CLUSTER API SECRET>");
 
             // Fixed properties
-            put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
+            put(KEY_SERIALIZER_CLASS_CONFIG,   StringSerializer.class.getCanonicalName());
             put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
-            put(ACKS_CONFIG, "all");
-            put(SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
-            put(SASL_MECHANISM, "PLAIN");
+            put(ACKS_CONFIG,                   "all");
+            put(SECURITY_PROTOCOL_CONFIG,      "SASL_SSL");
+            put(SASL_MECHANISM,                "PLAIN");
         }};
 
         final String topic = "purchases";

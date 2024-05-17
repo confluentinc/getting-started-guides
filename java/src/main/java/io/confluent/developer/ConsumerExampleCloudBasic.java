@@ -22,16 +22,16 @@ public class ConsumerExample {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
             put(BOOTSTRAP_SERVERS_CONFIG, "<BOOTSTRAP SERVERS>");
-            put("sasl.username", "<CLUSTER API KEY>");
-            put("sasl.password", "<CLUSTER API SECRET>");
+            put("sasl.username",          "<CLUSTER API KEY>");
+            put("sasl.password",          "<CLUSTER API SECRET>");
 
             // Fixed properties
-            put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
+            put(KEY_DESERIALIZER_CLASS_CONFIG,   StringDeserializer.class.getCanonicalName());
             put(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-            put(GROUP_ID_CONFIG, "kafka-java-getting-started");
-            put(AUTO_OFFSET_RESET_CONFIG, "earliest");
-            put(SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
-            put(SASL_MECHANISM, "PLAIN");
+            put(GROUP_ID_CONFIG,                 "kafka-java-getting-started");
+            put(AUTO_OFFSET_RESET_CONFIG,        "earliest");
+            put(SECURITY_PROTOCOL_CONFIG,        "SASL_SSL");
+            put(SASL_MECHANISM,                  "PLAIN");
         }};
 
         final String topic = "purchases";

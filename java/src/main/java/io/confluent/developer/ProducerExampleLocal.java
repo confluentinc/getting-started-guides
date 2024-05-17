@@ -18,9 +18,9 @@ public class ProducerExample {
             put(BOOTSTRAP_SERVERS_CONFIG, "localhost:<PLAINTEXT PORTS>");
 
             // Fixed properties
-            put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
+            put(KEY_SERIALIZER_CLASS_CONFIG,   StringSerializer.class.getCanonicalName());
             put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
-            put(ACKS_CONFIG, "all");
+            put(ACKS_CONFIG,                   "all");
         }};
 
         final String topic = "purchases";

@@ -20,10 +20,10 @@ public class ConsumerExample {
             put(BOOTSTRAP_SERVERS_CONFIG, "localhost:<PLAINTEXT PORTS>");
 
             // Fixed properties
-            put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
+            put(KEY_DESERIALIZER_CLASS_CONFIG,   StringDeserializer.class.getCanonicalName());
             put(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-            put(GROUP_ID_CONFIG, "kafka-java-getting-started");
-            put(AUTO_OFFSET_RESET_CONFIG, "earliest");
+            put(GROUP_ID_CONFIG,                 "kafka-java-getting-started");
+            put(AUTO_OFFSET_RESET_CONFIG,        "earliest");
         }};
 
         final String topic = "purchases";

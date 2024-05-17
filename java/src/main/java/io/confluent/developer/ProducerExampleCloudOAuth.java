@@ -23,20 +23,20 @@ public class ProducerExample {
     public static void main(final String[] args) {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
-            put(BOOTSTRAP_SERVERS_CONFIG, "<BOOTSTRAP SERVERS>");
-            put("sasl.oauthbearer.client.id", "<OAUTH2 CLIENT ID>");
-            put("sasl.oauthbearer.client.secret", "<OAUTH2 CLIENT SECRET>");
+            put(BOOTSTRAP_SERVERS_CONFIG,              "<BOOTSTRAP SERVERS>");
+            put("sasl.oauthbearer.client.id",          "<OAUTH2 CLIENT ID>");
+            put("sasl.oauthbearer.client.secret",      "<OAUTH2 CLIENT SECRET>");
             put("sasl.oauthbearer.token.endpoint.url", "<OAUTH2 TOKEN ENDPOINT URL>");
-            put("sasl.oauthbearer.scope", "<OAUTH2 SCOPE>");
-            put("sasl.oauthbearer.extensions", "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,");
+            put("sasl.oauthbearer.scope",              "<OAUTH2 SCOPE>");
+            put("sasl.oauthbearer.extensions",         "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,");
 
             // Fixed properties
-            put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
+            put(KEY_SERIALIZER_CLASS_CONFIG,   StringSerializer.class.getCanonicalName());
             put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
-            put(ACKS_CONFIG, "all");
-            put(SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
-            put(SASL_MECHANISM, "OAUTHBEARER");
-            put("sasl.oauthbearer.method", "OIDC");
+            put(ACKS_CONFIG,                   "all");
+            put(SECURITY_PROTOCOL_CONFIG,      "SASL_SSL");
+            put(SASL_MECHANISM,                "OAUTHBEARER");
+            put("sasl.oauthbearer.method",     "OIDC");
         }};
 
         final String topic = "purchases";

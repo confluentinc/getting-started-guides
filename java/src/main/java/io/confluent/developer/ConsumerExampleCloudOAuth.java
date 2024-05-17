@@ -21,21 +21,21 @@ public class ConsumerExample {
 
         final Properties props = new Properties() {{
             // User-specific properties that you must set
-            put(BOOTSTRAP_SERVERS_CONFIG, "<BOOTSTRAP SERVERS>");
-            put("sasl.oauthbearer.client.id", "<OAUTH2 CLIENT ID>");
-            put("sasl.oauthbearer.client.secret", "<OAUTH2 CLIENT SECRET>");
+            put(BOOTSTRAP_SERVERS_CONFIG,              "<BOOTSTRAP SERVERS>");
+            put("sasl.oauthbearer.client.id",          "<OAUTH2 CLIENT ID>");
+            put("sasl.oauthbearer.client.secret",      "<OAUTH2 CLIENT SECRET>");
             put("sasl.oauthbearer.token.endpoint.url", "<OAUTH2 TOKEN ENDPOINT URL>");
-            put("sasl.oauthbearer.scope", "<OAUTH2 SCOPE>");
-            put("sasl.oauthbearer.extensions", "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,");
+            put("sasl.oauthbearer.scope",              "<OAUTH2 SCOPE>");
+            put("sasl.oauthbearer.extensions",         "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,");
 
             // Fixed properties
-            put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
+            put(KEY_DESERIALIZER_CLASS_CONFIG,   StringDeserializer.class.getCanonicalName());
             put(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-            put(GROUP_ID_CONFIG, "kafka-java-getting-started");
-            put(AUTO_OFFSET_RESET_CONFIG, "earliest");
-            put(SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
-            put(SASL_MECHANISM, "OAUTHBEARER");
-            put("sasl.oauthbearer.method", "OIDC");
+            put(GROUP_ID_CONFIG,                 "kafka-java-getting-started");
+            put(AUTO_OFFSET_RESET_CONFIG,        "earliest");
+            put(SECURITY_PROTOCOL_CONFIG,        "SASL_SSL");
+            put(SASL_MECHANISM,                  "OAUTHBEARER");
+            put("sasl.oauthbearer.method",       "OIDC");
         }};
 
         final String topic = "purchases";
