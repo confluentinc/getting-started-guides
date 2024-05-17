@@ -17,19 +17,19 @@ function createConsumer(config, onData) {
 async function consumerExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': '<BOOTSTRAP SERVERS>',
-    'sasl.oauthbearer.client.id': '<OAUTH2 CLIENT ID>',
-    'sasl.oauthbearer.client.secret': '<OAUTH2 CLIENT SECRET>',
+    'bootstrap.servers':                   '<BOOTSTRAP SERVERS>',
+    'sasl.oauthbearer.client.id':          '<OAUTH2 CLIENT ID>',
+    'sasl.oauthbearer.client.secret':      '<OAUTH2 CLIENT SECRET>',
     'sasl.oauthbearer.token.endpoint.url': '<OAUTH2 TOKEN ENDPOINT URL>',
-    'sasl.oauthbearer.scope': '<OAUTH2 SCOPE>',
-    'sasl.oauthbearer.extensions': 'logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>',
+    'sasl.oauthbearer.scope':              '<OAUTH2 SCOPE>',
+    'sasl.oauthbearer.extensions':         'logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>',
 
     // Fixed properties
-    'security.protocol': 'SASL_SSL',
-    'sasl.mechanisms': 'OAUTHBEARER',
+    'security.protocol':       'SASL_SSL',
+    'sasl.mechanisms':         'OAUTHBEARER',
     'sasl.oauthbearer.method': 'OIDC',
-    'group.id': 'kafka-nodejs-getting-started',
-    'auto.offset.reset': 'earliest'
+    'group.id':                'kafka-nodejs-getting-started',
+    'auto.offset.reset':       'earliest'
   }
 
   let topic = "purchases";
