@@ -1,22 +1,17 @@
 #!/usr/bin/env python
 
-import sys
 from random import choice
-from argparse import ArgumentParser, FileType
-from configparser import ConfigParser
 from confluent_kafka import Producer
 
 if __name__ == '__main__':
-    # Parse the command line.
-    parser = ArgumentParser()
-    parser.add_argument('config_file', type=FileType('r'))
-    args = parser.parse_args()
 
-    # Parse the configuration.
-    # See https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
-    config_parser = ConfigParser()
-    config_parser.read_file(args.config_file)
-    config = dict(config_parser['default'])
+    config = {
+        # User-specific properties that you must set
+        'bootstrap.servers': '<BOOTSTRAP SERVERS>',
+
+        # Fixed properties
+        'acks': 'all'
+    }
 
     # Create Producer instance
     producer = Producer(config)
@@ -38,7 +33,6 @@ if __name__ == '__main__':
 
     count = 0
     for _ in range(10):
-
         user_id = choice(user_ids)
         product = choice(products)
         producer.produce(topic, product, user_id, callback=delivery_callback)
