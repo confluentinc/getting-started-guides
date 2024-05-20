@@ -206,7 +206,12 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Let's create the producer application by pasting the following C code into a file named `producer.c`.
+Let's create the producer application by first adding a utility method for setting configuration in a file named `common.c`:
+
+```c file=common.c
+```
+
+Next, paste the following C code into a file named `producer.c`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
