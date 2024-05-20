@@ -28,8 +28,7 @@ async function consumerExample() {
     'security.protocol':       'SASL_SSL',
     'sasl.mechanisms':         'OAUTHBEARER',
     'sasl.oauthbearer.method': 'OIDC',
-    'group.id':                'kafka-nodejs-getting-started',
-    'auto.offset.reset':       'earliest'
+    'group.id':                'kafka-nodejs-getting-started'
   }
 
   let topic = "purchases";
