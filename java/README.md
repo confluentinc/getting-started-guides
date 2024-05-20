@@ -87,23 +87,65 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-First, sign up for a free [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/) account if you don’t already have one. 
+First, sign up for a free [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/) account if you don’t already have one.
 You will get $400 in credits when you sign up. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`.
 With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-After you login to the Confluent Cloud Console and provision your Kafka cluster, paste your Confluent Cloud bootstrap server setting below and the tutorial will fill in the appropriate configuration for you.
+After you login to the Confluent Cloud Console and provision your Kafka cluster, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps.
 
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
-</p>
-
-You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud Console](https://confluent.cloud/):
+You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.pn://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/dd72c752e9ed2724edc30a7f9eb77ccb/get-cluster-bootstrap-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
+<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
+
+Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
+
+Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+
+Select your authentication mechanism:
+
+<p>
+  <label>Authentication mechanism</label>
+  <div class="select-wrapper">
+    <select data-context="true" name="confluent-cloud.authentication">
+      <option value="basic">Basic</option>
+      <option value="oauth">OAuth</option>
+    </select>
+  </div>
+</p>
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
+you by navigating to the `API Keys` section under `Cluster Overview`.
+
+![](../media/cc-create-key.png)
+
+Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+
+</section> <!--- confluent-cloud.authentication = basic -->
+
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+
+Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
+
+* `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
+* `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
+* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
+* `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
+  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
+  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
+* `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
+  the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
+* `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
+  by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
+
+</section> <!--- confluent-cloud.authentication = oauth -->
 
 </section>
 
@@ -129,113 +171,13 @@ Now start the Kafka broker:
 confluent local kafka start
 ```
 
-Note the `Plaintext Ports` printed in your terminal, which you will use when configuring the client in the next step.
-
-</section>
-
-<section data-context-key="kafka.broker" data-context-value="existing">
-  
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
-</p>
-
-Paste your Kafka cluster bootstrap server URL above and the tutorial will
-fill it into the appropriate configuration for you.
-
-</section>
-
-## Configuration
-
-<section data-context-key="kafka.broker" data-context-default>
-  Please go back to the Kafka Setup section and select a broker type.
-</section>
-
-<section data-context-key="kafka.broker" data-context-value="cloud">
-
-Client applications access Confluent Cloud Kafka clusters using either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html)
- or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
-
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
-
-Select your authentication mechanism:
-
-<p>
-  <label>Authentication mechanism</label>
-  <div class="select-wrapper">
-    <select data-context="true" name="confluent-cloud.authentication">
-      <option value="basic">Basic</option>
-      <option value="oauth">OAuth</option>
-    </select>
-  </div>
-</p>
-
-<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
-
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you by navigating to the `API Keys` section under `Cluster Overview`.
-
-![](../media/cc-create-key.png)
-
-Copy and paste the following configuration data into a file named `getting-started.properties`, substituting the API key and
-secret that you just created for the `username` and `password` fields, respectively, in the `sasl.jaas.config` value.
-note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to 
-`bootstrap.servers`.
-
-```properties file=getting-started-cloud-basic.properties
-```
-
-</section>
-
-<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
-
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
-
-Copy and paste the following configuration data into a file named `getting-started.properties`.
-
-note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as the value corresponding to
-`bootstrap.servers`. Substitute your OAuth/OIDC-specific configuration values as follows:
-
-* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
-  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
-* `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
-* `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
-* `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens. 
-  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account, 
-  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
-* `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
-  the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
-* `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
-  by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
-
-```properties file=getting-started-cloud-oauth.properties
-```
-
-</section> <!--- confluent-cloud.authentication = oauth -->
-
-</section> <!--- kafka.broker = cloud -->
-
-<section data-context-key="kafka.broker" data-context-value="local">
-
-Paste the following configuration data into a file named `getting-started.properties`, substituting the plaintext port(s) output when you started Kafka.
-
-```properties file=getting-started-local.properties
-```
+Note the `Plaintext Ports` printed in your terminal, which you will need to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Paste the following configuration data into a file named `getting-started.properties`.
-
-The below configuration file includes the bootstrap servers
-configuration you provided. If your Kafka Cluster requires different
-client security configuration, you may require [different
-settings](https://kafka.apache.org/documentation/#security).
-
-```properties file=getting-started-existing.properties
-```
+Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
@@ -281,15 +223,41 @@ request the creation of a topic from your operations team.
 Create a directory for the Java files in this project:
 
 ```sh
-mkdir -p src/main/java/examples
+mkdir -p src/main/java/io/confluent/developer
 ```
 
-Paste the following Java code into a file located at `src/main/java/examples/ProducerExample.java`.
+Let's create the Java producer application by pasting the following code into a file located at `src/main/java/io/confluent/developer/ProducerExample.java`.
 
-```java file=src/main/java/examples/ProducerExample.java
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
+```java file=src/main/java/io/confluent/developer/ProducerExampleCloudBasic.java
 ```
 
-You can test the code before preceding by compiling with:
+</section>
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+```java file=src/main/java/io/confluent/developer/ProducerExampleCloudOAuth.java
+```
+
+</section>
+</section>
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```java file=src/main/java/io/confluent/developer/ProducerExampleLocal.java
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+```java file=src/main/java/io/confluent/developer/ProducerExampleExisting.java
+```
+
+</section>
+
+Fill in the appropriate `BOOTSTRAP_SERVERS_CONFIG` value and any additional security configuration needed inline where the client configuration `Properties` object is instantiated.
+
+You can test the syntax before preceding by compiling with:
 
 ```sh
 gradle build
@@ -302,10 +270,36 @@ BUILD SUCCESSFUL
 
 ## Build Consumer
 
-Paste the following Java code into a file located at `src/main/java/examples/ConsumerExample.java`.
+Next, create the Java consumer application by pasting the following code into a file located at `src/main/java/io/confluent/developer/ConsumerExample.java`.
 
-```java file=src/main/java/examples/ConsumerExample.java
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+<section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
+
+```java file=src/main/java/io/confluent/developer/ConsumerExampleCloudBasic.java
 ```
+
+</section>
+<section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
+
+```java file=src/main/java/io/confluent/developer/ConsumerExampleCloudOAuth.java
+```
+
+</section>
+</section>
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```java file=src/main/java/io/confluent/developer/ConsumerExampleLocal.java
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+```java file=src/main/java/io/confluent/developer/ConsumerExampleExisting.java
+```
+
+</section>
+
+Fill in the appropriate `BOOTSTRAP_SERVERS_CONFIG` value and any additional security configuration needed inline where the client configuration `Properties` object is instantiated.
 
 Once again, you can compile the code before preceding by with:
 
@@ -333,11 +327,10 @@ And you should see:
 BUILD SUCCESSFUL
 ```
 
-Run the following command to build and execute the producer application,
-which will produce some random data events to the `purchases` topic.
+Run the following command to execute the producer application, which will produce some random events to the `purchases` topic.
 
 ```sh
-java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ProducerExample getting-started.properties
+java -cp build/libs/kafka-java-getting-started-0.0.1.jar io.confluent.developer.ProducerExample
 ```
 
 You should see output resembling this:
@@ -359,11 +352,11 @@ Produced event to topic purchases: key = eabara     value = t-shirts
 ## Consume Events
 
 From another terminal, run the following command to run the consumer
-application which will read the events from the `purchases` topic and write
+application, which will read the events from the `purchases` topic and write
 the information to the terminal.
 
 ```sh
-java -cp build/libs/kafka-java-getting-started-0.0.1.jar examples.ConsumerExample getting-started.properties
+java -cp build/libs/kafka-java-getting-started-0.0.1.jar io.confluent.developer.ConsumerExample
 ```
 
 The consumer application will start and print any events it has not

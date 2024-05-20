@@ -1,13 +1,14 @@
-# Getting Started Guide Weaving/File Layout Demo
+# Kafka Client Getting Started Guides
 
-```sh
-yarn
+This repo includes guides to get started with Kafka client libraries in the following languages:
 
-yarn python
-yarn java
-```
+* [C / C++](c/README.md)
+* [C# / .NET](dotnet/README.md)
+* [Go](go/README.md)
+* [Java](java/README.md)
+* [Node.js](nodejs/README.md)
+* [Python](python/README.md)
+* [REST API](rest/README.md)
+* [Spring Boot](spring-boot/README.md)
 
-...creates `java/README.html` and `python/README.html`.
-
-Take a look at the `java/README.md` and `python/README.md` and note the `file=`
-includes and `<section>` markers. :-)
+The guides are rendered [here](https://developer.confluent.io/get-started/java/) on Confluent Developer.
