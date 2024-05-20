@@ -12,7 +12,7 @@ class Consumer {
             BootstrapServers = "<BOOTSTRAP SERVERS>",
 
             // Fixed properties
-            GroupId = "kafka-dotnet-getting-started",
+            GroupId         = "kafka-dotnet-getting-started",
             AutoOffsetReset = AutoOffsetReset.Earliest
         };
 

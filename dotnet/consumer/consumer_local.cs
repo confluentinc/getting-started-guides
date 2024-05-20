@@ -12,7 +12,7 @@ class Consumer {
             BootstrapServers = "localhost:<PLAINTEXT PORTS>",
 
             // Fixed properties
-            GroupId = "kafka-dotnet-getting-started",
+            GroupId         = "kafka-dotnet-getting-started",
             AutoOffsetReset = AutoOffsetReset.Earliest
         };
 

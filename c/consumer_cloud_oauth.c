@@ -33,8 +33,8 @@ int main (int argc, char **argv) {
     set_config(conf, "security.protocol",       "SASL_SSL");
     set_config(conf, "sasl.mechanisms",         "OAUTHBEARER");
     set_config(conf, "sasl.oauthbearer.method", "OIDC");
-    set_config(conf, "group.id",          "kafka-c-getting-started");
-    set_config(conf, "auto.offset.reset", "earliest");
+    set_config(conf, "group.id",                "kafka-c-getting-started");
+    set_config(conf, "auto.offset.reset",       "earliest");
 
     // Create the Consumer instance.
     consumer = rd_kafka_new(RD_KAFKA_CONSUMER, conf, errstr, sizeof(errstr));

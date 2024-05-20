@@ -20,7 +20,7 @@ async function consumerExample() {
     'bootstrap.servers': '<BOOTSTRAP SERVERS>',
 
     // Fixed properties
-    'group.id': 'kafka-nodejs-getting-started',
+    'group.id':          'kafka-nodejs-getting-started',
     'auto.offset.reset': 'earliest'
   }
 

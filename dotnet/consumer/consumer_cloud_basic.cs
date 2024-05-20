@@ -16,8 +16,8 @@ class Consumer {
             // Fixed properties
             SecurityProtocol = SecurityProtocol.SaslSsl
             SaslMechanism    = SaslMechanism.Plain
-            GroupId = "kafka-dotnet-getting-started",
-            AutoOffsetReset = AutoOffsetReset.Earliest
+            GroupId          = "kafka-dotnet-getting-started",
+            AutoOffsetReset  = AutoOffsetReset.Earliest
         };
 
         const string topic = "purchases";

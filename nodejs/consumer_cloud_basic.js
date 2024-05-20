@@ -23,8 +23,8 @@ async function consumerExample() {
 
     // Fixed properties
     'security.protocol': 'SASL_SSL',
-    'sasl.mechanisms': 'PLAIN',
-    'group.id': 'kafka-nodejs-getting-started',
+    'sasl.mechanisms':   'PLAIN',
+    'group.id':          'kafka-nodejs-getting-started',
     'auto.offset.reset': 'earliest'
   }
 

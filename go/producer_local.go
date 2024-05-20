@@ -15,7 +15,7 @@ func main() {
         "bootstrap.servers": "localhost:<PLAINTEXT PORTS>",
 
         // Fixed properties
-        "acks":               "all"})
+        "acks": "all"})
 
     if err != nil {
         fmt.Printf("Failed to create producer: %s", err)

@@ -22,11 +22,11 @@ func main() {
         "sasl.oauthbearer.extensions":         "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,",
 
         // Fixed properties
-        "security.protocol":                   "SASL_SSL",
-        "sasl.mechanisms":                     "OAUTHBEARER",
-        "sasl.oauthbearer.method":             "OIDC",
-        "group.id":                            "kafka-go-getting-started",
-        "auto.offset.reset":                   "earliest"})
+        "security.protocol":       "SASL_SSL",
+        "sasl.mechanisms":         "OAUTHBEARER",
+        "sasl.oauthbearer.method": "OIDC",
+        "group.id":                "kafka-go-getting-started",
+        "auto.offset.reset":       "earliest"})
 
     if err != nil {
         fmt.Printf("Failed to create consumer: %s", err)

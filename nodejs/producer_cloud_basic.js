@@ -25,8 +25,8 @@ async function produceExample() {
 
     // Fixed properties
     'security.protocol': 'SASL_SSL',
-    'sasl.mechanisms': 'PLAIN',
-    'acks': 'all',
+    'sasl.mechanisms':   'PLAIN',
+    'acks':              'all',
 
     // Needed for delivery callback to be invoked
     'dr_msg_cb': true

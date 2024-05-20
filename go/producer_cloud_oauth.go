@@ -20,10 +20,10 @@ func main() {
         "sasl.oauthbearer.extensions":         "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,",
 
         // Fixed properties
-        "security.protocol":                   "SASL_SSL",
-        "sasl.mechanisms":                     "OAUTHBEARER",
-        "sasl.oauthbearer.method":             "OIDC",
-        "acks":                                "all"})
+        "security.protocol":       "SASL_SSL",
+        "sasl.mechanisms":         "OAUTHBEARER",
+        "sasl.oauthbearer.method": "OIDC",
+        "acks":                    "all"})
 
     if err != nil {
         fmt.Printf("Failed to create producer: %s", err)

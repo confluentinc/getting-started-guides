@@ -225,7 +225,7 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Let's create the producer application by pasting the following code into a file `producer.js`.
+Let's create the Node.js producer application by pasting the following code into a file `producer.js`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
@@ -258,7 +258,7 @@ Fill in the appropriate `bootstrap.servers` value and any additional security co
 
 ## Build Consumer
 
-Next, create the consumer application by pasting the following code into a file `consumer.js`.
+Next, create the Node.js consumer application by pasting the following code into a file `consumer.js`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
