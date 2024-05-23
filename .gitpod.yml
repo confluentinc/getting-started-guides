@@ -3,7 +3,23 @@ github:
     master: true
     branches: true
 
+ports:
+  - name: Instructions webpage
+    port: 8000
+    visibility: private
+    # do not notify once the port is detected
+    onOpen: ignore
+
 tasks:
+  - name: Open instructions in browser
+    init: |
+      cd java
+      pip install grip
+      grip gitpod.md 8000 &
+      rm -rf README.md media
+    command: |
+      gp sync-done file-setup
+      gp preview http://localhost:8000
   - name: Terminal
     init: |
       curl -L --http1.1 https://cnfl.io/cli | sudo sh -s -- -b /usr/local/bin
@@ -22,15 +38,6 @@ tasks:
       gp open src/main/java/io/confluent/developer/ProducerExample.java
       gp sync-done file-setup
       clear
-  - name: Open instructions in browser
-    init: |
-      cd java
-      pip install grip
-      grip gitpod.md 8000 &
-      rm -rf README.md media
-    command: |
-      gp sync-done file-setup
-      gp preview http://localhost:8000
 
 vscode:
   extensions:
@@ -38,10 +45,3 @@ vscode:
     - vscjava.vscode-java-pack
     - vscjava.vscode-java-debug
     - vscjava.vscode-gradle
-
-ports:
-  - name: Instructions webpage
-    port: 8000
-    visibility: private
-    # do not notify once the port is detected
-    onOpen: ignore
