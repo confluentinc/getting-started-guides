@@ -25,13 +25,12 @@ tasks:
   - name: Open instructions in browser
     init: |
       cd java
-      python -m http.server &
-      pip install markdown
-      python -c "import markdown; markdown.markdownFromFile(input='gitpod.md', output='gitpod.html');"
-      rm -rf README.md gitpod.md media
+      pip install grip
+      grip gitpod.md 8000 &
+      rm -rf README.md media
     command: |
       gp sync-done file-setup
-      gp preview http://localhost:8000/gitpod.html
+      gp preview http://localhost:8000
 
 vscode:
   extensions:

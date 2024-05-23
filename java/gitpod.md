@@ -19,19 +19,19 @@ With this promo code, you will not have to enter your credit card info for 30 da
 
 We'll use the Confluent CLI, which is already installed in your Gitpod workspace, to create a Kafka cluster. First, login to your account:
 
-```plaintext
+```
 confluent login --prompt
 ```
 
 Next, create a cluster in the `default` environment named `kafka-java-gettin-started`. You may pick `aws`, `azure`, or `gcp` as the `--cloud` argument, and any supported region returned by `confluent kafka region list` as the `--region` argument. For example, to create the cluster in AWS region `us-east-2`:
 
-```plaintext
+```
 confluent kafka cluster create kafka-java-gettin-started --cloud aws --region us-east-2
 ```
 
 Note the ID of the form `lkc-123456` in the command output, and set it as the active cluster so that we won't need to specify it in future commands:
 
-```plaintext
+```
 confluent kafka cluster use <CLUSTER ID>
 ```
 
@@ -41,7 +41,7 @@ A topic is an immutable, append-only log of events. Usually, a topic is comprise
 
 Create a new topic, `purchases`, which you will use to produce and consume events:
 
-```plaintext
+```
 confluent kafka topic create purchases
 ```
 
@@ -49,13 +49,13 @@ confluent kafka topic create purchases
 
 Using the cluster ID of the form `lkc-123456` from before, create an API key that our Java client applications will use to authenticate to Confluent Cloud:
 
-```plaintext
+```
 confluent api-key create --resource <CLUSTER ID>
 ```
 
 Also, get the bootstrap servers endpoint by running:
 
-```plaintext
+```
 confluent kafka cluster describe <CLUSTER ID>
 ```
 
