@@ -21,7 +21,7 @@ Using Windows? You'll need to download [Windows Subsystem for Linux](https://lea
 
 This guide assumes that you already have a C compiler installed. The code in this guide has been tested with GCC and Clang/LLVM.
 
-You’ll also need to install [librdkafka](https://github.com/edenhill/librdkafka), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.
+You’ll also need to install [librdkafka](https://github.com/confluentinc/librdkafka?tab=readme-ov-file#installation), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.
 
 Later in this tutorial you will set up a new Kafka cluster or connect
 to an existing one. 
