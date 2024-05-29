@@ -17,16 +17,28 @@ With this promo code, you will not have to enter your credit card info for 30 da
 
 ## Kafka Setup
 
-We'll use the Confluent CLI, which is already installed in your Gitpod workspace, to create a Kafka cluster. First, login to your account:
+We'll use the Confluent CLI, which is already installed in your Gitpod workspace, to create a Kafka cluster. First, login to your account by running the following command in the terminal window below. Note that, if you attempt to copy/paste the command, you may be prompted by your browser to allow this.
 
 ```
 confluent login --prompt
 ```
 
-Next, create a cluster in the `default` environment named `kafka-java-gettin-started`. You may pick `aws`, `azure`, or `gcp` as the `--cloud` argument, and any supported region returned by `confluent kafka region list` as the `--region` argument. For example, to create the cluster in AWS region `us-east-2`:
+Next, create an environment to use for this guide:
 
 ```
-confluent kafka cluster create kafka-java-gettin-started --cloud aws --region us-east-2
+confluent environment create kafka-java-getting-started
+```
+
+The output of this command will contain an environment ID of the form `env-123456`. Set the activate environment to the one you just created so that you won't need to specify it in future commands:
+
+```
+confluent environment use <ENVIRONMENT ID>
+```
+
+Next, create a cluster named `kafka-java-getting-started`. You may pick `aws`, `azure`, or `gcp` as the `--cloud` argument, and any supported region returned by `confluent kafka region list` as the `--region` argument. For example, to create the cluster in AWS region `us-east-2`:
+
+```
+confluent kafka cluster create kafka-java-getting-started --cloud aws --region us-east-2
 ```
 
 Note the ID of the form `lkc-123456` in the command output, and set it as the active cluster so that we won't need to specify it in future commands:
@@ -37,7 +49,7 @@ confluent kafka cluster use <CLUSTER ID>
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this tutorial we create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events:
 
@@ -63,12 +75,12 @@ You will use the `Endpoint` value _after_ `SASL_SSL://` as the bootstrap servers
 
 ## Configure clients
 
-In both the `ProducerExample` an `ConsumerExample` classes in the pane to the left, replace the `<BOOTSTRAP SERVERS>`, `<CLUSTER API KEY>`, and `<CLUSTER API SECRET>` placeholders with the bootstrap servers endpoint, API Key, and API secret that you gathered in the previous step.
+In both the `ProducerExample` and `ConsumerExample` classes in the pane to the left, replace the `<BOOTSTRAP SERVERS>`, `<CLUSTER API KEY>`, and `<CLUSTER API SECRET>` placeholders with the bootstrap servers endpoint, API Key, and API secret that you gathered in the previous step.
 Fill in the appropriate `BOOTSTRAP_SERVERS_CONFIG` value and any additional security configuration needed inline where the client configuration `Properties` object is instantiated.
 
 ## Compile applications
 
-You can test the syntax before preceding by compiling with:
+You can test the syntax before preceding by compiling with this command in the terminal pane at the bottom of the Gitpod workspace:
 
 ```sh
 gradle build
