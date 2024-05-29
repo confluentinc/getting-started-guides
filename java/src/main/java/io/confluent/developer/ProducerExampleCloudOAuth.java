@@ -24,19 +24,21 @@ public class ProducerExample {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
             put(BOOTSTRAP_SERVERS_CONFIG,              "<BOOTSTRAP SERVERS>");
-            put("sasl.oauthbearer.client.id",          "<OAUTH2 CLIENT ID>");
-            put("sasl.oauthbearer.client.secret",      "<OAUTH2 CLIENT SECRET>");
-            put("sasl.oauthbearer.token.endpoint.url", "<OAUTH2 TOKEN ENDPOINT URL>");
-            put("sasl.oauthbearer.scope",              "<OAUTH2 SCOPE>");
-            put("sasl.oauthbearer.extensions",         "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,");
+            put(SASL_JAAS_CONFIG,                      "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required " +
+                    " clientId='<OAUTH2 CLIENT ID>'" +
+                    " clientSecret='<OAUTH2 CLIENT SECRET>'" +
+                    " scope='<OAUTH2 SCOPE >'" +
+                    " extension_logicalCluster='<LOGICAL CLUSTER ID>'" +
+                    " extension_identityPoolId='<IDENTITY POOL ID>';");
+            put(SASL_OAUTHBEARER_TOKEN_ENDPOINT_URL,   "<OAUTH2 TOKEN ENDPOINT URL>");
 
             // Fixed properties
-            put(KEY_SERIALIZER_CLASS_CONFIG,   StringSerializer.class.getCanonicalName());
-            put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
-            put(ACKS_CONFIG,                   "all");
-            put(SECURITY_PROTOCOL_CONFIG,      "SASL_SSL");
-            put(SASL_MECHANISM,                "OAUTHBEARER");
-            put("sasl.oauthbearer.method",     "OIDC");
+            put(KEY_SERIALIZER_CLASS_CONFIG,       StringSerializer.class.getCanonicalName());
+            put(VALUE_SERIALIZER_CLASS_CONFIG,     StringSerializer.class.getCanonicalName());
+            put(ACKS_CONFIG,                       "all");
+            put(SECURITY_PROTOCOL_CONFIG,          "SASL_SSL");
+            put(SASL_MECHANISM,                    "OAUTHBEARER");
+            put(SASL_LOGIN_CALLBACK_HANDLER_CLASS, "org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler");
         }};
 
         final String topic = "purchases";

@@ -13,6 +13,7 @@ import java.util.Properties;
 import static org.apache.kafka.clients.CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.clients.CommonClientConfigs.SECURITY_PROTOCOL_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
+import static org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG;
 import static org.apache.kafka.common.config.SaslConfigs.SASL_MECHANISM;
 
 public class ConsumerExample {
@@ -22,8 +23,7 @@ public class ConsumerExample {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
             put(BOOTSTRAP_SERVERS_CONFIG, "<BOOTSTRAP SERVERS>");
-            put("sasl.username",          "<CLUSTER API KEY>");
-            put("sasl.password",          "<CLUSTER API SECRET>");
+            put(SASL_JAAS_CONFIG,         "org.apache.kafka.common.security.plain.PlainLoginModule required username='<CLUSTER API KEY>' password='<CLUSTER API SECRET>';")
 
             // Fixed properties
             put(KEY_DESERIALIZER_CLASS_CONFIG,   StringDeserializer.class.getCanonicalName());

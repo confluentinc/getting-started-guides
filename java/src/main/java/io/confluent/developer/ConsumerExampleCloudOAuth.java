@@ -13,7 +13,10 @@ import java.util.Properties;
 import static org.apache.kafka.clients.CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.clients.CommonClientConfigs.SECURITY_PROTOCOL_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
+import static org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG;
+import static org.apache.kafka.common.config.SaslConfigs.SASL_LOGIN_CALLBACK_HANDLER_CLASS;
 import static org.apache.kafka.common.config.SaslConfigs.SASL_MECHANISM;
+import static org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_TOKEN_ENDPOINT_URL;
 
 public class ConsumerExample {
 
@@ -22,20 +25,22 @@ public class ConsumerExample {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
             put(BOOTSTRAP_SERVERS_CONFIG,              "<BOOTSTRAP SERVERS>");
-            put("sasl.oauthbearer.client.id",          "<OAUTH2 CLIENT ID>");
-            put("sasl.oauthbearer.client.secret",      "<OAUTH2 CLIENT SECRET>");
-            put("sasl.oauthbearer.token.endpoint.url", "<OAUTH2 TOKEN ENDPOINT URL>");
-            put("sasl.oauthbearer.scope",              "<OAUTH2 SCOPE>");
-            put("sasl.oauthbearer.extensions",         "logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>,");
+            put(SASL_JAAS_CONFIG,                      "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required " +
+                    " clientId='<OAUTH2 CLIENT ID>'" +
+                    " clientSecret='<OAUTH2 CLIENT SECRET>'" +
+                    " scope='<OAUTH2 SCOPE >'" +
+                    " extension_logicalCluster='<LOGICAL CLUSTER ID>'" +
+                    " extension_identityPoolId='<IDENTITY POOL ID>';");
+            put(SASL_OAUTHBEARER_TOKEN_ENDPOINT_URL,   "<OAUTH2 TOKEN ENDPOINT URL>");
 
             // Fixed properties
-            put(KEY_DESERIALIZER_CLASS_CONFIG,   StringDeserializer.class.getCanonicalName());
-            put(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-            put(GROUP_ID_CONFIG,                 "kafka-java-getting-started");
-            put(AUTO_OFFSET_RESET_CONFIG,        "earliest");
-            put(SECURITY_PROTOCOL_CONFIG,        "SASL_SSL");
-            put(SASL_MECHANISM,                  "OAUTHBEARER");
-            put("sasl.oauthbearer.method",       "OIDC");
+            put(KEY_DESERIALIZER_CLASS_CONFIG,     StringDeserializer.class.getCanonicalName());
+            put(VALUE_DESERIALIZER_CLASS_CONFIG,   StringDeserializer.class.getCanonicalName());
+            put(GROUP_ID_CONFIG,                   "kafka-java-getting-started");
+            put(AUTO_OFFSET_RESET_CONFIG,          "earliest");
+            put(SECURITY_PROTOCOL_CONFIG,          "SASL_SSL");
+            put(SASL_MECHANISM,                    "OAUTHBEARER");
+            put(SASL_LOGIN_CALLBACK_HANDLER_CLASS, "org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler");
         }};
 
         final String topic = "purchases";
