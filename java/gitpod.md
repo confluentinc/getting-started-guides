@@ -54,7 +54,7 @@ confluent kafka topic create purchases
 
 ## Generate Credentials
 
-Using the cluster ID of the form `lkc-123456` from before, create an API key that our Java client applications will use to authenticate to Confluent Cloud:
+Using the cluster ID of the form `lkc-123456` from before, create an API key that your Java client applications will use to authenticate to Confluent Cloud:
 
 ```
 confluent api-key create --resource <CLUSTER ID>
@@ -151,4 +151,18 @@ Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer ap
 
 ## Clean up
 
-TODO
+Once you are done exploring, delete the Confluent Cloud environment that you created at the beginning of this tutorial.
+
+Note: run `confluent environment list` if you need to find your environment ID of the form `env-123456`.
+
+```
+confluent environment delete <ENVIRONMENT ID>
+```
+
+Next, logout of Confluent Cloud:
+
+```
+confluent logout
+```
+
+Finally, delete your Gitpod workspace [here](https://gitpod.io/workspaces) by right-clicking the three dots to the right of your workspace, and clicking `Delete`.
