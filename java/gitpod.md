@@ -1,8 +1,3 @@
-
-
-https://gitpod.io/#https://github.com/confluentinc/getting-started-guides/blob/gitpod-poc
-
-
 # Getting Started with Apache Kafka and Java
 
 ## Introduction
