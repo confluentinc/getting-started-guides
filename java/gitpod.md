@@ -14,33 +14,28 @@ With this promo code, you will not have to enter your credit card info for 30 da
 
 We'll use the Confluent CLI, which is already installed in your Gitpod workspace, to create a Kafka cluster. First, login to your account by running the following command in the terminal window below. Note that, if you attempt to copy/paste the command, you may be prompted by your browser to allow this.
 
-```
+```noformat
 confluent login --prompt
 ```
 
-Next, create an environment to use for this guide:
+Next, install a CLI plugin that will create an environment to use for this guide:
 
-```
-confluent environment create kafka-java-getting-started
-```
-
-The output of this command will contain an environment ID of the form `env-123456`. Set the activate environment to the one you just created so that you won't need to specify it in future commands:
-
-```
-confluent environment use <ENVIRONMENT ID>
+```noformat
+confluent plugin install confluent-cloud_kickstart
 ```
 
-Next, create a cluster named `kafka-java-getting-started`. You may pick `aws`, `azure`, or `gcp` as the `--cloud` argument, and any supported region returned by `confluent kafka region list` as the `--region` argument. For example, to create the cluster in AWS region `us-east-2`:
+This plugin allows you to provision a Confluent Cloud environment, cluster, and API key in one command. It also enables Schema Registry, though we don't use it in this language guide. You may pick `aws`, `azure`, or `gcp` as the `--cloud` argument, and any supported region returned by `confluent kafka region list` as the `--region` argument. For example, to use AWS region `us-east-2`:
 
-```
-confluent kafka cluster create kafka-java-getting-started --cloud aws --region us-east-2
+```noformat
+confluent cloud-kickstart --name java-quickstart \
+  --env java-quickstart-env \
+  --cloud aws \
+  --region us-east-2 \
+  --geo us \
+  --output-format stdout
 ```
 
-Note the ID of the form `lkc-123456` in the command output, and set it as the active cluster so that we won't need to specify it in future commands:
-
-```
-confluent kafka cluster use <CLUSTER ID>
-```
+The output of this command will contain a `Kafka API key` and `Kafka API secret` that we will use in the `Configure clients` step below.
 
 ## Create Topic
 
@@ -48,21 +43,21 @@ A topic is an immutable, append-only log of events. Usually, a topic is comprise
 
 Create a new topic, `purchases`, which you will use to produce and consume events:
 
-```
+```noformat
 confluent kafka topic create purchases
 ```
 
-## Generate Credentials
+## Get Kafka boostrap servers endpoint
 
-Using the cluster ID of the form `lkc-123456` from before, create an API key that your Java client applications will use to authenticate to Confluent Cloud:
+Run the following command to get your cluster ID of the form `lkc-123456`:
 
+```noformat
+confluent kafka cluster list
 ```
-confluent api-key create --resource <CLUSTER ID>
-```
 
-Also, get the bootstrap servers endpoint by running:
+Next, get your Kafka bootstrap servers endpoint by running:
 
-```
+```noformat
 confluent kafka cluster describe <CLUSTER ID>
 ```
 
@@ -70,8 +65,7 @@ You will use the `Endpoint` value _after_ `SASL_SSL://` as the bootstrap servers
 
 ## Configure clients
 
-In both the `ProducerExample` and `ConsumerExample` classes in the pane to the left, replace the `<BOOTSTRAP SERVERS>`, `<CLUSTER API KEY>`, and `<CLUSTER API SECRET>` placeholders with the bootstrap servers endpoint, API Key, and API secret that you gathered in the previous step.
-Fill in the appropriate `BOOTSTRAP_SERVERS_CONFIG` value and any additional security configuration needed inline where the client configuration `Properties` object is instantiated.
+In both the `ProducerExample` and `ConsumerExample` classes in the pane to the left, replace the `<BOOTSTRAP SERVERS>`, `<CLUSTER API KEY>`, and `<CLUSTER API SECRET>` placeholders with the bootstrap servers endpoint, API Key, and API secret that you gathered in the previous steps.
 
 ## Compile applications
 
@@ -82,7 +76,7 @@ gradle build
 ```
 And you should see:
 
-```
+```noformat
 BUILD SUCCESSFUL
 ```
 
@@ -96,7 +90,7 @@ gradle shadowJar
 
 And you should see:
 
-```
+```noformat
 BUILD SUCCESSFUL
 ```
 
@@ -108,7 +102,7 @@ java -cp build/libs/kafka-java-getting-started-0.0.1.jar io.confluent.developer.
 
 You should see output resembling this:
 
-```
+```noformat
 Produced event to topic purchases: key = awalther   value = t-shirts
 Produced event to topic purchases: key = htanaka    value = t-shirts
 Produced event to topic purchases: key = htanaka    value = batteries
@@ -132,7 +126,7 @@ java -cp build/libs/kafka-java-getting-started-0.0.1.jar io.confluent.developer.
 
 The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output resembling this:
 
-```
+```noformat
 Consumed event from topic purchases: key = awalther   value = t-shirts
 Consumed event from topic purchases: key = htanaka    value = t-shirts
 Consumed event from topic purchases: key = htanaka    value = batteries
@@ -153,15 +147,21 @@ Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer ap
 
 Once you are done exploring, delete the Confluent Cloud environment that you created at the beginning of this tutorial.
 
-Note: run `confluent environment list` if you need to find your environment ID of the form `env-123456`.
+First, run the following commqand to get your environment ID of the form `env-123456`:
 
+```noformat
+confluent ennvironment list
 ```
+
+Second, delete the environment. This deletes the cluster and API key that the `cloud-kickstart` plugin provisioned.
+
+```noformat
 confluent environment delete <ENVIRONMENT ID>
 ```
 
 Next, logout of Confluent Cloud:
 
-```
+```noformat
 confluent logout
 ```
 
