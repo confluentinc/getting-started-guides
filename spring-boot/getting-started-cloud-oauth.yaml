@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: {{ kafka.broker.server }}
+    bootstrap-servers: < BOOTSTRAP SERVERS >
     properties:
       security:
         protocol: SASL_SSL

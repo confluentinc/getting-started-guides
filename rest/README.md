@@ -13,8 +13,9 @@ hero:
 
 In this tutorial, you will use the Confluent REST Proxy to produce and consume messages from an Apache Kafka® cluster.
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so you don't have to run your own Kafka cluster and you can focus on the client development. But if you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
+If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
 
 ## Prerequisites
 
@@ -22,23 +23,6 @@ Using Windows? You'll need to download [Windows Subsystem for Linux](https://lea
 
 This guide assumes that you already have installed [Docker](https://docs.docker.com/get-docker/),
 [Docker Compose](https://docs.docker.com/compose/install/), and [curl](https://curl.se/).
-
-Later in this tutorial you will set up a new Kafka cluster or connect
-to an existing one. 
-
-If you do not have an existing cluster to use, the easiest way to run Kafka is 
-with [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you do not already have an account, 
-be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). 
-New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) 
-to spend within Confluent Cloud during their first 30 days.
-
-From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-
-If you cannot use Confluent Cloud, you can use an existing Kafka cluster or run one locally using the Confluent CLI.
 
 ## Create Project
 
@@ -68,19 +52,13 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-First, sign up for a free [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree/) account if you don’t already have one.
-You will get $400 in credits when you sign up. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`.
-With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-After you login to the Confluent Cloud Console and provision your Kafka cluster, paste your Confluent Cloud bootstrap server setting below and the tutorial will fill in the appropriate configuration for you.
-
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="cluster-id.region.provider.confluent.cloud:9092" />
-</p>
-
-You can obtain your Confluent Cloud Kafka cluster bootstrap server
-configuration using the [Confluent Cloud Console](https://confluent.cloud/):
+Next, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps. You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.png" loop>
 	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
 Your browser does not support the video tag.
@@ -116,13 +94,7 @@ Note the `Plaintext Ports` printed in your terminal, which you will use when con
 
 <section data-context-key="kafka.broker" data-context-value="existing">
   
-<p>
-  <label for="kafka-broker-server">Bootstrap Server</label>
-  <input id="kafka-broker-server" data-context="true" name="kafka.broker.server" placeholder="broker:9092" />
-</p>
-
-Paste your Kafka cluster bootstrap server URL above and the tutorial will
-fill it into the appropriate configuration for you.
+Note your Kafka cluster bootstrap server URL as you will need it to configure the proxy in upcoming steps.
 
 </section>
 
@@ -158,10 +130,9 @@ you by navigating to the `API Keys` section under `Cluster Overview`.
 
 ![](../media/cc-create-key.png)
 
-Paste the following commands into your command line terminal, substituting the API key and
+Paste the following commands into your command line terminal, substituting your cluster bootstrap servers endpoint and the API key and
 secret that you just created for the `username` and `password` fields, respectively, of the `SASL_JAAS_CONFIG` 
-environment variable. Note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as 
-the value of the `BOOTSTRAP_SERVERS` environment variable.
+environment variable.
 
 ```sh file=getting-started-cloud-basic.sh
 ```
@@ -173,10 +144,7 @@ the value of the `BOOTSTRAP_SERVERS` environment variable.
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
 and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
 
-Paste the following commands into your command line terminal.
-
-Note that the bootstrap server endpoint that you provided in the `Kafka Setup` step is used as
-the value of the `BOOTSTRAP_SERVERS` environment variable. Substitute your OAuth/OIDC-specific configuration values as follows:
+Paste the following commands into your command line terminal. Substitute your cluster bootstrap servers endpoint as well as your OAuth/OIDC-specific configuration values as follows:
 
 * `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
   format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
@@ -208,13 +176,11 @@ Run the following command in your command line terminal, substituting the plaint
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Run the following commands in your command line terminal:
+Run the following commands in your command line terminal, substituting your cluster bootstrap servers endpoint. If your Kafka cluster requires different
+client security configuration, you may require [different settings](https://kafka.apache.org/documentation/#security).
 
 ```sh file=getting-started-existing.sh
 ```
-
-This uses the bootstrap servers configuration you provided. If your Kafka cluster requires different
-client security configuration, you may require [different settings](https://kafka.apache.org/documentation/#security).
 
 </section>
 
