@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: {{ kafka.broker.server }}
+    bootstrap-servers: < BOOTSTRAP SERVERS >
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer

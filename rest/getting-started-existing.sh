@@ -1,1 +1,1 @@
-export BOOTSTRAP_SERVERS={{ kafka.broker.server }}
+export BOOTSTRAP_SERVERS=< BOOTSTRAP SERVERS >
