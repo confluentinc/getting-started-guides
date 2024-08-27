@@ -1,0 +1,29 @@
+github:
+  prebuilds:
+    master: true
+    branches: true
+
+tasks:
+  - name: Terminal
+    init: |
+      curl -L --http1.1 https://cnfl.io/cli | sudo sh -s -- -b /usr/local/bin
+      rm -rf !(java)
+      rm -rf .github/
+      rm -f java/src/main/java/io/confluent/developer/*OAuth.java
+      rm -f java/src/main/java/io/confluent/developer/*Existing.java
+      rm -f java/src/main/java/io/confluent/developer/*Local.java
+      rm -f java/README.md
+      rm -rf java/media
+      mv java/src/main/java/io/confluent/developer/ConsumerExampleCloudBasic.java java/src/main/java/io/confluent/developer/ConsumerExample.java
+      mv java/src/main/java/io/confluent/developer/ProducerExampleCloudBasic.java java/src/main/java/io/confluent/developer/ProducerExample.java
+    command: |
+      cd java
+      gp open gitpod.md
+      clear
+
+vscode:
+  extensions:
+    - github.github-vscode-theme
+    - vscjava.vscode-java-pack
+    - vscjava.vscode-java-debug
+    - vscjava.vscode-gradle
