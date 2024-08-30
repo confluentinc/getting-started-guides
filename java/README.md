@@ -11,6 +11,16 @@ hero:
 
 ## Introduction
 
+**New!** Open the language guide in Gitpod for an in-browser experience by clicking this button:
+
+<div style="width:100%">
+  <a style="display:flex;flex-direction:column;width:100px;height:50px;justify-content:center;margin: 0 auto;background-color:#f9f9f9;border:1px solid #dcdcde;padding:10px;border-radius:10px;" target="_blank" href="https://gitpod.io/#https://github.com/confluentinc/getting-started-guides/blob/gitpod-integration">
+    <img alt="Gitpod" src="//images.ctfassets.net/gt6dp23g0g38/6ZSSfl01xAF2sq5UHvfmxI/21d7a5982af2272f5e05e8c83eaa8058/logo-light-theme.png"/>
+  </a>
+</div>
+
+Otherwise, continue reading to run through the guide locally on your machine.
+
 In this tutorial, you will run a Java client application that produces messages to and consumes messages from an Apache Kafka® cluster. 
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
