@@ -11,15 +11,17 @@ hero:
 
 ## Introduction
 
-**New!** Open the language guide in Gitpod for an in-browser experience by clicking this button:
-
-<div style="width:100%">
-  <a style="display:flex;flex-direction:column;width:100px;height:50px;justify-content:center;margin: 0 auto;background-color:#f9f9f9;border:1px solid #dcdcde;padding:10px;border-radius:10px;" target="_blank" href="https://gitpod.io/#https://github.com/confluentinc/getting-started-guides/blob/gitpod-integration">
-    <img alt="Gitpod" src="//images.ctfassets.net/gt6dp23g0g38/6ZSSfl01xAF2sq5UHvfmxI/21d7a5982af2272f5e05e8c83eaa8058/logo-light-theme.png"/>
-  </a>
+<div class="alert-success">
+  <p>
+    <b>New!</b> Open the language guide in Gitpod for an in-browser experience by clicking this button:
+    <span style="width:100%">
+      <a style="display:flex;flex-direction:column;width:100px;height:50px;justify-content:center;margin: 0 auto;background-color:#f9f9f9;border:1px solid #dcdcde;padding:10px;border-radius:10px;" target="_blank" href="https://gitpod.io/#https://github.com/confluentinc/getting-started-guides/blob/gitpod-integration">
+        <img alt="Gitpod" src="//images.ctfassets.net/gt6dp23g0g38/6ZSSfl01xAF2sq5UHvfmxI/21d7a5982af2272f5e05e8c83eaa8058/logo-light-theme.png"/>
+      </a>
+    </span>
+    Otherwise, continue reading to run through the guide locally on your machine.
+  </p>
 </div>
-
-Otherwise, continue reading to run through the guide locally on your machine.
 
 In this tutorial, you will run a Java client application that produces messages to and consumes messages from an Apache Kafka® cluster. 
 
