@@ -11,11 +11,11 @@ class Consumer {
             // User-specific properties that you must set
             BootstrapServers = "<BOOTSTRAP SERVERS>",
             SaslUsername     = "<CLUSTER API KEY>",
-            SaslPassword     = "<CLUSTER API SECRET>"
+            SaslPassword     = "<CLUSTER API SECRET>",
 
             // Fixed properties
-            SecurityProtocol = SecurityProtocol.SaslSsl
-            SaslMechanism    = SaslMechanism.Plain
+            SecurityProtocol = SecurityProtocol.SaslSsl,
+            SaslMechanism    = SaslMechanism.Plain,
             GroupId          = "kafka-dotnet-getting-started",
             AutoOffsetReset  = AutoOffsetReset.Earliest
         };
