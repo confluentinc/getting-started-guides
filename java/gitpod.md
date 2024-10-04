@@ -31,7 +31,6 @@ confluent cloud-kickstart --name java-quickstart \
   --env java-quickstart-env \
   --cloud aws \
   --region us-east-2 \
-  --geo us \
   --output-format stdout
 ```
 
