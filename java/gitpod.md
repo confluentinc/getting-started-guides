@@ -46,27 +46,11 @@ Create a new topic, `purchases`, which you will use to produce and consume event
 confluent kafka topic create purchases
 ```
 
-## Get Kafka boostrap servers endpoint
-
-Run the following command to get your cluster ID of the form `lkc-123456`:
-
-```noformat
-confluent kafka cluster list
-```
-
-Next, get your Kafka bootstrap servers endpoint by running:
-
-```noformat
-confluent kafka cluster describe <CLUSTER ID>
-```
-
-You will use the `Endpoint` value _after_ `SASL_SSL://` as the bootstrap servers endpoint. I.e., if the `Endpoint` is `SASL_SSL://pkc-123456.us-east-2.aws.confluent.cloud:9092`, then the bootstrap servers endpoint to use in the next step is `pkc-123456.us-east-2.aws.confluent.cloud:9092`.
-
 ## Configure clients
 
 Open the `ProducerExample.java` and `ConsumerExample.java` files in the file explorer to the left by navigating to `java/src/main/java/io/confluent/developer/`. Right-click on the first and select `Open to the Side` so that you can continue to view these instructions in the panel on the left.
 
-In both the `ProducerExample` and `ConsumerExample` classes, replace the `<BOOTSTRAP SERVERS>`, `<CLUSTER API KEY>`, and `<CLUSTER API SECRET>` placeholders with the bootstrap servers endpoint, API Key, and API secret from the previous steps.
+In both the `ProducerExample` and `ConsumerExample` classes, replace the `<BOOTSTRAP SERVERS>`, `<CLUSTER API KEY>`, and `<CLUSTER API SECRET>` placeholders with the bootstrap servers endpoint, API Key, and API secret from earlier.
 
 ## Compile applications
 
