@@ -76,6 +76,9 @@ Your browser does not support the video tag.
 Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
 Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+If you would like to get started with Confluent Cloud OAuth but don't have an identity provider to use,
+[this](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/create-oauth-idp.html) quick start
+shows how to use Okta as an OAuth/OIDC identity provider for Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -103,7 +106,9 @@ Note the API key and secret as we will use them when configuring the producer an
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) if you already have an OAuth/OIDC identity provider, or you can follow the
+[quick start](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/create-oauth-idp.html) to complete
+these prerequisites with an Okta trial.
 
 Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
 
