@@ -1,26 +1,24 @@
 ---
 seo:
-  title: Apache Kafka and Node.js - Getting Started Tutorial 
-  description: How to develop your first Kafka client application in Node.js, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
+  title: Apache Kafka and Node.js - Getting Started Tutorial
+  description: How to develop your first Kafka client application in Node.js, which produces and consumes messages from a Kafka cluster, complete with configuration instructions.
 hero:
   title: Getting Started with Apache Kafka and Node.js
-  description: Step-by-step guide to building a Node.js client application for Kafka 
+  description: Step-by-step guide to building a Node.js client application for Kafka
 ---
 
 # Getting Started with Apache Kafka and Node.js
 
 ## Introduction
 
-In this tutorial, you will run a Node.js client application that produces messages to and consumes messages from an Apache Kafka® cluster. 
+In this tutorial, you will run a Node.js client application that produces messages to and consumes messages from an Apache Kafka® cluster.
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
 If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
 
 <div class="alert-primary">
-<p>
-Note: This tutorial uses the <a href="https://github.com/Blizzard/node-rdkafka">node-rdkafka</a> client library directly. Confluent recently released an early access alternative JavaScript client, <a href="https://github.com/confluentinc/confluent-kafka-javascript">confluent-kafka-javascript</a>, that is based on node-rdkafka but offers a promisified and more idiomatic interface similar to <a href="https://kafka.js.org/">KafkaJS</a>.
-</p>
+
 </div>
 
 ## Prerequisites
@@ -37,25 +35,19 @@ Create a new directory anywhere you’d like for this project:
 mkdir kafka-nodejs-getting-started && cd kafka-nodejs-getting-started
 ```
 
-<div class="alert-primary">
-<p>
-Note: Users of macOS 10.13 (High Sierra) and later should read <a href="https://github.com/Blizzard/node-rdkafka/blob/master/README.md#mac-os-high-sierra--mojave">node-rdkafka additional configuration instructions</a> related to OpenSSL before running `npm install`.
-</p>
-</div>
-
 Then install the Apache Kafka NodeJS client library:
 
 ```sh
-npm install node-rdkafka
+npm install @confluentinc/kafka-javascript
 ```
 
-This guide was last tested with version `2.18.0` of `node-rdkafka`.
+As well as [dotenv](https://www.npmjs.com/package/dotenv):
 
-<div class="alert-primary">
-<p>
-Note: node-rdkafka is not supported by Confluent.
-</p>
-</div>
+```sh
+npm install dotenv
+```
+
+This guide was last tested with version `0.3.0` of `confluent-kafka-javascript`.
 
 ## Kafka Setup
 
@@ -79,13 +71,15 @@ cluster bootstrap server to connect to.
 
 From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
+
+<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 
 Next, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps. You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
 <video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
+
+<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 
@@ -123,16 +117,16 @@ and [create an identity pool](https://docs.confluent.io/cloud/current/access-man
 
 Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
 
-* `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
-* `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
-* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+- `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
+- `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
+- `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
   format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
-* `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
+- `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
   In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
   you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
-* `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
+- `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
   the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
-* `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
+- `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
   by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
 
 </section> <!--- confluent-cloud.authentication = oauth -->
@@ -192,6 +186,7 @@ with 1 partition and defaults for the remaining settings.
 ```plaintext
 confluent local kafka topic create purchases
 ```
+
 </section>
 
 <section data-context-key="kafka.broker" data-context-value="existing">
@@ -216,12 +211,14 @@ Let's create the Node.js producer application by pasting the following code into
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
 ```javascript file=producer_cloud_basic.js
+
 ```
 
 </section>
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 ```javascript file=producer_cloud_oauth.js
+
 ```
 
 </section>
@@ -229,17 +226,19 @@ Let's create the Node.js producer application by pasting the following code into
 <section data-context-key="kafka.broker" data-context-value="local">
 
 ```javascript file=producer_local.js
+
 ```
 
 </section>
 <section data-context-key="kafka.broker" data-context-value="existing">
 
 ```javascript file=producer_existing.js
+
 ```
 
 </section>
 
-Fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline where the client configuration `config` object is created.
+Fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline in a `.env` file matching the client configuration. Refer to the `sample.env` file in this folder for an example.
 
 ## Build Consumer
 
@@ -249,12 +248,14 @@ Next, create the Node.js consumer application by pasting the following code into
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
 ```javascript file=consumer_cloud_basic.js
+
 ```
 
 </section>
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 ```javascript file=consumer_cloud_oauth.js
+
 ```
 
 </section>
@@ -262,18 +263,19 @@ Next, create the Node.js consumer application by pasting the following code into
 <section data-context-key="kafka.broker" data-context-value="local">
 
 ```javascript file=consumer_local.js
+
 ```
 
 </section>
 <section data-context-key="kafka.broker" data-context-value="existing">
 
 ```javascript file=consumer_existing.js
+
 ```
 
 </section>
 
-Again, fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline where the client configuration `config` object is created.
-
+Again, fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline in a `.env` file matching the client configuration.
 
 ## Produce Events
 
@@ -332,18 +334,14 @@ Shut down Kafka when you are done with it:
 ```plaintext
 confluent local kafka stop
 ```
+
 </section>
 
 ## Where next?
 
-- [Confluent Node JS client](https://docs.confluent.io/cloud/current/client-apps/guides/node-js-guide.html)
+- [Confluent Node.js client](https://docs.confluent.io/cloud/current/client-apps/guides/node-js-guide.html)
 - [Confluent client documentation](https://docs.confluent.io/cloud/current/client-apps/overview.html)
-- [Get started with KafkaJS](https://www.confluent.io/blog/getting-started-with-kafkajs)
-- [Learn more about KafkaJS on the Streaming Audio podcast](https://developer.confluent.io/podcast/powering-microservices-using-apache-kafka-on-nodejs-with-kafkajs-at-klarna-ft-tommy-brunn/)
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
-- If you're interested in using streaming SQL for data creation,
-  processing, and querying in your applications, check out the
-  [ksqlDB 101 course](/learn-kafka/ksqldb/intro/).
 - Interested in performance tuning of your event streaming applications?
   Check out the [Kafka Performance resources](/learn/kafka-performance/).

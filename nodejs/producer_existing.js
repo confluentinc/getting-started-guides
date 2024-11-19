@@ -1,5 +1,5 @@
-const Kafka = require('node-rdkafka');
-
+const Kafka = require('@confluentinc/kafka-javascript');
+require("dotenv").config();
 
 function createProducer(config, onDeliveryReport) {
   const producer = new Kafka.Producer(config);
@@ -19,7 +19,7 @@ function createProducer(config, onDeliveryReport) {
 async function produceExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': '<BOOTSTRAP SERVERS>',
+    'bootstrap.servers': process.env.BOOTSTRAP_SERVERS,
 
     // Fixed properties
     'acks': 'all',

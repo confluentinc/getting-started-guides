@@ -1,5 +1,5 @@
-const Kafka = require('node-rdkafka');
-
+const Kafka = require('@confluentinc/kafka-javascript');
+require("dotenv").config();
 
 function createConsumer(config, onData) {
   const consumer = new Kafka.KafkaConsumer(config, {'auto.offset.reset': 'earliest'});
@@ -17,12 +17,12 @@ function createConsumer(config, onData) {
 async function consumerExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers':                   '<BOOTSTRAP SERVERS>',
-    'sasl.oauthbearer.client.id':          '<OAUTH2 CLIENT ID>',
-    'sasl.oauthbearer.client.secret':      '<OAUTH2 CLIENT SECRET>',
-    'sasl.oauthbearer.token.endpoint.url': '<OAUTH2 TOKEN ENDPOINT URL>',
-    'sasl.oauthbearer.scope':              '<OAUTH2 SCOPE>',
-    'sasl.oauthbearer.extensions':         'logicalCluster=<LOGICAL CLUSTER ID>,identityPoolId=<IDENTITY POOL ID>',
+    'bootstrap.servers':                   process.env.BOOTSTRAP_SERVERS,
+    'sasl.oauthbearer.client.id':          process.env.OAUTH2_CLIENT_ID,
+    'sasl.oauthbearer.client.secret':      process.env.OAUTH2_CLIENT_SECRET,
+    'sasl.oauthbearer.token.endpoint.url': process.env.OAUTH2_TOKEN_ENDPOINT_URL,
+    'sasl.oauthbearer.scope':              process.env.OAUTH2_SCOPE,
+    'sasl.oauthbearer.extensions':         `logicalCluster=${process.env.LOGICAL_CLUSTER_ID},identityPoolId=${process.env.IDENTITY_POOL_ID}`,
 
     // Fixed properties
     'security.protocol':       'SASL_SSL',

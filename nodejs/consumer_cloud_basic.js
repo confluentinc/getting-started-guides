@@ -1,5 +1,5 @@
-const Kafka = require('node-rdkafka');
-
+const Kafka = require('@confluentinc/kafka-javascript');
+require("dotenv").config();
 
 function createConsumer(config, onData) {
   const consumer = new Kafka.KafkaConsumer(config, {'auto.offset.reset': 'earliest'});
@@ -17,9 +17,9 @@ function createConsumer(config, onData) {
 async function consumerExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': '<BOOTSTRAP SERVERS>',
-    'sasl.username':     '<CLUSTER API KEY>',
-    'sasl.password':     '<CLUSTER API SECRET>',
+    'bootstrap.servers': process.env.BOOTSTRAP_SERVERS,
+    'sasl.username':     process.env.CLUSTER_API_KEY,
+    'sasl.password':     process.env.CLUSTER_API_SECRET,
 
     // Fixed properties
     'security.protocol': 'SASL_SSL',

@@ -1,5 +1,5 @@
-const Kafka = require('node-rdkafka');
-
+const Kafka = require('@confluentinc/kafka-javascript');
+require("dotenv").config();
 
 function createConsumer(config, onData) {
   const consumer = new Kafka.KafkaConsumer(config, {'auto.offset.reset': 'earliest'});
@@ -17,7 +17,7 @@ function createConsumer(config, onData) {
 async function consumerExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': 'localhost:<PLAINTEXT PORTS>',
+    'bootstrap.servers': `localhost:${process.env.PLAINTEXT_PORTS}`,
 
     // Fixed properties
     'group.id':          'kafka-nodejs-getting-started'
