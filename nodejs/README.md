@@ -238,7 +238,7 @@ Let's create the Node.js producer application by pasting the following code into
 
 </section>
 
-Fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline in a `.env` file matching the client configuration. Refer to the `sample.env` file in this folder for an example.
+Create a `.env` file containing the appropriate configuration needed to connect to Kafka. Refer to the `sample.env` file [here](https://raw.githubusercontent.com/confluentinc/getting-started-guides/main/nodejs/sample.env) to see which environment variables need to be set based on how Kafka is deployed.
 
 ## Build Consumer
 
@@ -274,8 +274,6 @@ Next, create the Node.js consumer application by pasting the following code into
 ```
 
 </section>
-
-Again, fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline in a `.env` file matching the client configuration.
 
 ## Produce Events
 
