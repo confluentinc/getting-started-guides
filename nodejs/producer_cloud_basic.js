@@ -1,5 +1,5 @@
-const Kafka = require('node-rdkafka');
-
+const Kafka = require('@confluentinc/kafka-javascript');
+require("dotenv").config();
 
 function createProducer(config, onDeliveryReport) {
   const producer = new Kafka.Producer(config);
@@ -19,10 +19,9 @@ function createProducer(config, onDeliveryReport) {
 async function produceExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': '<BOOTSTRAP SERVERS>',
-    'sasl.username':     '<CLUSTER API KEY>',
-    'sasl.password':     '<CLUSTER API SECRET>',
-
+    'bootstrap.servers': process.env.BOOTSTRAP_SERVERS,
+    'sasl.username':     process.env.CLUSTER_API_KEY,
+    'sasl.password':     process.env.CLUSTER_API_SECRET,
     // Fixed properties
     'security.protocol': 'SASL_SSL',
     'sasl.mechanisms':   'PLAIN',
