@@ -238,7 +238,7 @@ Let's create the JavaScript producer application by pasting the following code i
 
 </section>
 
-Create a `.env` file containing the appropriate configuration needed to connect to Kafka. Refer to the `sample.env` file [here](https://raw.githubusercontent.com/confluentinc/getting-started-guides/main/nodejs/sample.env) to see which environment variables need to be set based on how Kafka is deployed.
+Create a `.env` file containing the appropriate configuration needed to connect to Kafka. Refer to the `sample.env` file [here](https://raw.githubusercontent.com/confluentinc/getting-started-guides/main/javascript/sample.env) to see which environment variables need to be set based on how Kafka is deployed.
 
 ## Build Consumer
 

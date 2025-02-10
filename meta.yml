@@ -8,7 +8,7 @@ languages:
     name: Go
   - path: dotnet
     name: .NET
-  - path: nodejs
+  - path: javascript
     name: JavaScript
   - path: c
     name: C/C++
