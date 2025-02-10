@@ -1,17 +1,17 @@
 ---
 seo:
-  title: Apache Kafka and Node.js - Getting Started Tutorial
-  description: How to develop your first Kafka client application in Node.js, which produces and consumes messages from a Kafka cluster, complete with configuration instructions.
+  title: Apache Kafka and JavaScript - Getting Started Tutorial
+  description: How to develop your first Kafka client application in JavaScript, which produces and consumes messages from a Kafka cluster, complete with configuration instructions.
 hero:
-  title: Getting Started with Apache Kafka and Node.js
-  description: Step-by-step guide to building a Node.js client application for Kafka
+  title: Getting Started with Apache Kafka and JavaScript
+  description: Step-by-step guide to building a JavaScript client application for Kafka
 ---
 
-# Getting Started with Apache Kafka and Node.js
+# Getting Started with Apache Kafka and JavaScript
 
 ## Introduction
 
-In this tutorial, you will run a Node.js client application that produces messages to and consumes messages from an Apache Kafka® cluster.
+In this tutorial, you will run a JavaScript client application that produces messages to and consumes messages from an Apache Kafka® cluster.
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
@@ -25,17 +25,17 @@ If you prefer to set up a local Kafka cluster, the tutorial will walk you throug
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-This guide assumes that you have [node.js](https://nodejs.org/en/download/) version 16 or later installed. The guide was last tested with Node version `20.11.1`.
+This guide assumes that you have [Node.js](https://nodejs.org/en/download/) version 16 or later installed. The guide was last tested with Node version `20.11.1`.
 
 ## Create Project
 
 Create a new directory anywhere you’d like for this project:
 
 ```sh
-mkdir kafka-nodejs-getting-started && cd kafka-nodejs-getting-started
+mkdir kafka-javascript-getting-started && cd kafka-javascript-getting-started
 ```
 
-Then install the Apache Kafka NodeJS client library:
+Then install the Apache Kafka JavaScript client library:
 
 ```sh
 npm install @confluentinc/kafka-javascript
@@ -205,7 +205,7 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Let's create the Node.js producer application by pasting the following code into a file `producer.js`.
+Let's create the JavaScript producer application by pasting the following code into a file `producer.js`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
@@ -242,7 +242,7 @@ Create a `.env` file containing the appropriate configuration needed to connect 
 
 ## Build Consumer
 
-Next, create the Node.js consumer application by pasting the following code into a file `consumer.js`.
+Next, create the JavaScript consumer application by pasting the following code into a file `consumer.js`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
@@ -337,7 +337,7 @@ confluent local kafka stop
 
 ## Where next?
 
-- [Confluent Node.js client](https://docs.confluent.io/cloud/current/client-apps/guides/node-js-guide.html)
+- [Confluent JavaScript client](https://docs.confluent.io/kafka-clients/javascript/current/overview.html)
 - [Confluent client documentation](https://docs.confluent.io/cloud/current/client-apps/overview.html)
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
