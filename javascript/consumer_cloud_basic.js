@@ -24,7 +24,7 @@ async function consumerExample() {
     // Fixed properties
     'security.protocol': 'SASL_SSL',
     'sasl.mechanisms':   'PLAIN',
-    'group.id':          'kafka-nodejs-getting-started'
+    'group.id':          'kafka-javascript-getting-started'
   }
 
   let topic = "purchases";

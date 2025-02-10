@@ -17,10 +17,10 @@ function createConsumer(config, onData) {
 async function consumerExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': `localhost:${process.env.PLAINTEXT_PORTS}`,
+    'bootstrap.servers': process.env.BOOTSTRAP_SERVERS,
 
     // Fixed properties
-    'group.id':          'kafka-nodejs-getting-started'
+    'group.id':          'kafka-javascript-getting-started'
   }
 
   let topic = "purchases";

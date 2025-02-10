@@ -17,10 +17,18 @@ function createConsumer(config, onData) {
 async function consumerExample() {
   const config = {
     // User-specific properties that you must set
-    'bootstrap.servers': process.env.BOOTSTRAP_SERVERS,
+    'bootstrap.servers':                   process.env.BOOTSTRAP_SERVERS,
+    'sasl.oauthbearer.client.id':          process.env.OAUTH2_CLIENT_ID,
+    'sasl.oauthbearer.client.secret':      process.env.OAUTH2_CLIENT_SECRET,
+    'sasl.oauthbearer.token.endpoint.url': process.env.OAUTH2_TOKEN_ENDPOINT_URL,
+    'sasl.oauthbearer.scope':              process.env.OAUTH2_SCOPE,
+    'sasl.oauthbearer.extensions':         `logicalCluster=${process.env.LOGICAL_CLUSTER_ID},identityPoolId=${process.env.IDENTITY_POOL_ID}`,
 
     // Fixed properties
-    'group.id':          'kafka-nodejs-getting-started'
+    'security.protocol':       'SASL_SSL',
+    'sasl.mechanisms':         'OAUTHBEARER',
+    'sasl.oauthbearer.method': 'OIDC',
+    'group.id':                'kafka-javascript-getting-started'
   }
 
   let topic = "purchases";
