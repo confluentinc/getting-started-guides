@@ -9,7 +9,7 @@ languages:
   - path: dotnet
     name: .NET
   - path: nodejs
-    name: Node.js
+    name: JavaScript
   - path: c
     name: C/C++
   - path: rest

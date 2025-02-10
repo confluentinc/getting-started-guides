@@ -6,7 +6,7 @@ This repo includes guides to get started with Kafka client libraries in the foll
 - [C# / .NET](dotnet/README.md)
 - [Go](go/README.md)
 - [Java](java/README.md)
-- [Node.js](nodejs/README.md)
+- [JavaScript](nodejs/README.md)
 - [Python](python/README.md)
 - [REST API](rest/README.md)
 - [Spring Boot](spring-boot/README.md)
