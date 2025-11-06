@@ -48,7 +48,7 @@ Install the Apache Kafka Python client library:
 pip install confluent-kafka
 ```
 
-Note: this guide was last tested using version `2.4.0` of the client.
+Note: this guide was last tested using version `2.12.1` of the client.
 
 ## Kafka Setup
 
