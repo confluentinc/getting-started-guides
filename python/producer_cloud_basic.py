@@ -42,6 +42,8 @@ if __name__ == '__main__':
         producer.produce(topic, product, user_id, callback=delivery_callback)
         count += 1
 
-    # Block until the messages are sent.
-    producer.poll(10000)
+        # Trigger any outstanding delivery report callbacks.
+        producer.poll(0)
+
+    # Block until the messages are delivered.
     producer.flush()
