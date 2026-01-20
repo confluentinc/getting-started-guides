@@ -343,7 +343,8 @@ deactivate
 ## Where next?
 
 
-- To delve deeper into producers, consumers, schema registry and cluster administration try our [Apache Kafka for Python Developers](https://developer.confluent.io/courses/kafka-python/intro/) course.
+- Check out the hands-on tutorial [How to produce messages to an Apache Kafka® topic using the Python `asyncio` client](https://developer.confluent.io/confluent-tutorials/kafka-python-async/).
+- To delve deeper into producers, consumers, Schema Registry, and cluster administration try our [Apache Kafka for Python Developers](https://developer.confluent.io/courses/kafka-python/intro/) course.
 - If you're interested in writing Apache Kafka microservices in Python, follow this step-by-step [blog post](https://www.confluent.io/en-gb/blog/event-driven-microservices-with-python-and-kafka/). 
 - For the Python client API, check out the
   [confluent_kafka documentation](https://docs.confluent.io/platform/current/clients/confluent-kafka-python/html/index.html).
