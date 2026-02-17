@@ -1,9 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
-    }
-    dependencies {
-        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
+        gradlePluginPortal()
     }
 }
 
@@ -11,6 +9,7 @@ plugins {
     id "java"
     id "idea"
     id "eclipse"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 sourceCompatibility = "1.11"
@@ -19,21 +18,20 @@ version = "0.0.1"
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 
     maven {
         url "https://packages.confluent.io/maven"
     }
 }
 
-apply plugin: "com.github.johnrengelman.shadow"
-
 dependencies {
-    implementation group: 'org.slf4j', name: 'slf4j-nop', version: '2.0.3'
-    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.3.1'
+    implementation group: 'org.slf4j', name: 'slf4j-nop', version: '2.0.17'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '4.2.0'
 
     // needed if OAuth is used; otherwise this can be left out.
-    // See: https://docs.confluent.io/platform/current/kafka/authentication_sasl/authentication_sasl_oauth.html
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+    // See: https://docs.confluent.io/platform/current/security/authentication/sasl/oauthbearer/overview.html
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.21.0'
 }
 
 jar {

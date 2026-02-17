@@ -48,7 +48,7 @@ Install the Apache Kafka Python client library:
 pip install confluent-kafka
 ```
 
-Note: this guide was last tested using version `2.12.1` of the client.
+Note: this guide was last tested using version `2.13.0` of the client.
 
 ## Kafka Setup
 
@@ -332,7 +332,7 @@ Shut down Kafka when you are done with it:
 confluent local kafka stop
 ```
 
-And exit the virtual environment:
+Exit the virtual environment:
 
 ```plaintext
 deactivate

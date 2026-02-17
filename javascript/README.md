@@ -47,7 +47,7 @@ As well as [dotenv](https://www.npmjs.com/package/dotenv):
 npm install dotenv
 ```
 
-This guide was last tested with version `0.3.0` of `confluent-kafka-javascript`.
+This guide was last tested with version `1.8.0` of `@confluentinc/kafka-javascript`.
 
 ## Kafka Setup
 
