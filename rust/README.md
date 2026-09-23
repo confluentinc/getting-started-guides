@@ -1,0 +1,296 @@
+---
+seo:
+  title: Apache Kafka and Rust - Getting Started Tutorial 
+  description: How to run a Kafka client application written in Rust that produces to and consumes messages from a Kafka cluster, complete with step-by-step instructions and examples. 
+hero:
+  title: Getting Started with Apache Kafka and Rust
+  description: Step-by-step guide to building a Rust client application for Kafka 
+---
+
+# Getting Started with Apache Kafka and Rust
+
+## Introduction
+
+In this tutorial, you will build Rust client applications which produce and consume messages from an Apache Kafka® cluster. 
+
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+
+If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
+
+<div class="alert-primary">
+<p>
+Note: The Rust client is under active development. This guide covers the basics of producing and consuming string-keyed, string-valued records; it does not yet cover Schema Registry, transactions, or OAuth authentication to Confluent Cloud.
+</p>
+</div>
+
+## Prerequisites
+
+Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+This guide assumes that you already have [Rust and Cargo](https://www.rust-lang.org/tools/install) installed via `rustup`. The example was last tested against Rust 1.95.
+
+The Rust Kafka client used in this guide is not yet published to [crates.io](https://crates.io); it is added directly from its [GitHub repository](https://github.com/confluentinc/kafka-clients), as shown below.
+
+## Create Project
+
+Create a new directory anywhere you'd like for this project and initialize a new Cargo project:
+
+```sh
+mkdir kafka-rust-getting-started && cd kafka-rust-getting-started
+
+cargo init
+```
+
+Add the Kafka client and its runtime dependencies to your `Cargo.toml`:
+
+```toml
+[dependencies]
+confluent-kafka-rust = { git = "https://github.com/confluentinc/kafka-clients", branch = "fix/client-dns-lookup" }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal"] }
+rand = "0.9"
+```
+
+The producer and consumer below each run as their own binary, so remove the generated `src/main.rs` and create a `src/bin` directory instead:
+
+```sh
+rm src/main.rs
+
+mkdir src/bin
+```
+
+## Kafka Setup
+
+We are going to need a Kafka Cluster for our client application to
+operate with. This dialog can help you configure your Confluent Cloud
+cluster, create a Kafka cluster for you, or help you input an existing
+cluster bootstrap server to connect to.
+
+<p>
+  <label>Kafka location</label>
+  <div class="select-wrapper">
+    <select data-context="true" name="kafka.broker">
+      <option value="cloud">Confluent Cloud</option>
+      <option value="local">Local</option>
+      <option value="existing">I have a cluster already!</option>
+    </select>
+  </div>
+</p>
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+
+From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+Next, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps. You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
+<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.png" loop>
+	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+Next, create an API key that the producer and consumer client applications will use to access Confluent Cloud with [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html). (The Rust client does not yet support [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html) authentication to Confluent Cloud.)
+
+You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
+you by navigating to the `API Keys` section under `Cluster Overview`.
+
+![](../media/cc-create-key.png)
+
+Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+This guide runs Kafka in Docker via the Confluent CLI.
+
+First, install and start [Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) if you don't already have it. Verify that Docker is set up properly by ensuring that no errors are output when you run `docker info` in your terminal.
+
+Install the Confluent CLI if you don't already have it. In your terminal:
+
+```plaintext
+brew install confluentinc/tap/cli
+```
+
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+This guide requires version 4.0.0 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
+
+Now start the Kafka broker:
+
+```plaintext
+confluent local kafka start
+```
+
+Note the `Plaintext Ports` printed in your terminal, which you will need to configure the producer and consumer clients in upcoming steps.
+
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
+
+</section>
+
+## Create Topic
+
+A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+
+Create a new topic, `purchases`, which you will use to produce and consume events.
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
+
+![](../media/cc-create-topic.png)
+
+When using Confluent Cloud, you can use the [Confluent Cloud
+Console](https://confluent.cloud/) to create a topic. Create a topic
+with 1 partition and defaults for the remaining settings.
+
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```plaintext
+confluent local kafka topic create purchases
+```
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+Depending on your available Kafka cluster, you have multiple options
+for creating a topic. You may have access to [Confluent Control
+Center](https://docs.confluent.io/platform/current/control-center/index.html),
+where you can [create a topic with a
+UI](https://docs.confluent.io/platform/current/control-center/topics/create.html). You
+may have already installed a Kafka distribution, in which case you can
+use the [kafka-topics command](https://kafka.apache.org/documentation/#basic_ops_add_topic).
+Note that, if your cluster is centrally managed, you may need to
+request the creation of a topic from your operations team.
+
+</section>
+
+## Build Producer
+
+Let's create the Rust producer application by pasting the following code into a file `src/bin/producer.rs`.
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+
+```rust file=producer_cloud_basic.rs
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```rust file=producer_local.rs
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+```rust file=producer_existing.rs
+```
+
+</section>
+
+Fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline where the `props` map is created.
+
+## Build Consumer
+
+Next, create the Rust consumer application by pasting the following code into a file `src/bin/consumer.rs`.
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
+
+```rust file=consumer_cloud_basic.rs
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="local">
+
+```rust file=consumer_local.rs
+```
+
+</section>
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+```rust file=consumer_existing.rs
+```
+
+</section>
+
+Again, fill in the appropriate `bootstrap.servers` value and any additional security configuration needed inline where the `props` map is created.
+
+## Build Binaries
+
+Build the producer and consumer binaries:
+
+```sh
+cargo build
+```
+
+## Produce Events
+
+Run the producer:
+
+```sh
+cargo run --bin producer
+```
+
+You should see output resembling this:
+
+```
+Produced event to topic purchases: key = jsmith     value = batteries
+Produced event to topic purchases: key = jsmith     value = book
+Produced event to topic purchases: key = jbernard   value = book
+Produced event to topic purchases: key = eabara     value = alarm clock
+Produced event to topic purchases: key = htanaka    value = t-shirts
+Produced event to topic purchases: key = jsmith     value = book
+Produced event to topic purchases: key = jbernard   value = book
+Produced event to topic purchases: key = awalther   value = batteries
+Produced event to topic purchases: key = eabara     value = alarm clock
+Produced event to topic purchases: key = htanaka    value = batteries
+```
+
+## Consume Events
+
+From another terminal, in the same project directory, run the consumer:
+
+```sh
+cargo run --bin consumer
+```
+
+You should see output resembling this:
+
+```
+Consumed event from topic purchases: key = sgarcia    value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = alarm clock
+Consumed event from topic purchases: key = awalther   value = book
+Consumed event from topic purchases: key = sgarcia    value = gift card
+Consumed event from topic purchases: key = eabara     value = t-shirts
+Consumed event from topic purchases: key = eabara     value = t-shirts
+Consumed event from topic purchases: key = jsmith     value = t-shirts
+Consumed event from topic purchases: key = htanaka    value = batteries
+Consumed event from topic purchases: key = htanaka    value = book
+Consumed event from topic purchases: key = sgarcia    value = book
+```
+
+Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+
+Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+Shut down Kafka when you are done with it:
+
+```plaintext
+confluent local kafka stop
+```
+
+</section>
+
+## Where next?
+
+- For the RFCs behind this client's design and additional examples, check out
+  the [kafka-clients GitHub repository](https://github.com/confluentinc/kafka-clients).
+- Interested in performance tuning of your event streaming applications?
+  Check out the [Kafka Performance resources](/learn/kafka-performance/).
