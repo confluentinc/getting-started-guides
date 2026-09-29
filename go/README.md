@@ -58,17 +58,45 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+Use the [Confluent CLI](https://docs.confluent.io/confluent-cli/current/overview.html) to create a Confluent Cloud environment and Kafka cluster. Install the CLI if you don't already have it:
 
-Next, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps. You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+```plaintext
+brew install confluentinc/tap/cli
+```
+
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+Log in to Confluent Cloud:
+
+```plaintext
+confluent login
+```
+
+Install the `confluent-quickstart` CLI plugin, then use it to provision the environment and cluster:
+
+```plaintext
+confluent plugin install confluent-quickstart
+
+confluent quickstart \
+  --environment-name kafka-getting-started-env \
+  --kafka-cluster-name kafka-getting-started-cluster \
+  --cloud aws \
+  --region us-east-1
+```
+
+The example above provisions the cluster in AWS's `us-east-1` region. To use a different cloud provider (`gcp` or `azure`) or region, pass different values for `--cloud` and `--region`. You can find the regions supported by a given cloud provider by running:
+
+```plaintext
+confluent kafka region list --cloud <CLOUD>
+```
+
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as we will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+
+```plaintext
+confluent kafka cluster describe
+```
+
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap servers endpoint. Save it for later.
 
 Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
@@ -88,10 +116,17 @@ Select your authentication mechanism:
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you by navigating to the `API Keys` section under `Cluster Overview`.
+Get the ID of your Kafka cluster:
 
-![](../media/cc-create-key.png)
+```plaintext
+confluent kafka cluster list
+```
+
+Then create an API key and secret for it, substituting your cluster ID for `<KAFKA_CLUSTER_ID>`:
+
+```plaintext
+confluent api-key create --resource <KAFKA_CLUSTER_ID>
+```
 
 Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
 
@@ -160,11 +195,9 @@ Create a new topic, `purchases`, which you will use to produce and consume event
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
-![](../media/cc-create-topic.png)
-
-When using Confluent Cloud, you can use the [Confluent Cloud
-Console](https://confluent.cloud/) to create a topic. Create a topic
-with 1 partition and defaults for the remaining settings.
+```plaintext
+confluent kafka topic create purchases --partitions 1
+```
 
 </section>
 
