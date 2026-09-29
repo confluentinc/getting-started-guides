@@ -35,7 +35,7 @@ Create a new directory anywhere you’d like for this project:
 mkdir kafka-javascript-getting-started && cd kafka-javascript-getting-started
 ```
 
-Then install the Apache Kafka JavaScript client library:
+Then install Confluent's JavaScript client for Apache Kafka:
 
 ```sh
 npm install @confluentinc/kafka-javascript
@@ -47,7 +47,7 @@ As well as [dotenv](https://www.npmjs.com/package/dotenv):
 npm install dotenv
 ```
 
-This guide was last tested with version `0.3.0` of `confluent-kafka-javascript`.
+This guide was last tested with version `1.10.1` of `confluent-kafka-javascript`.
 
 ## Kafka Setup
 
@@ -180,7 +180,7 @@ brew install confluentinc/tap/cli
 
 If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
 
-This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
+This guide requires version 4.0.0 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
@@ -354,7 +354,7 @@ Consumed event from topic purchases: key = htanaka    value = book
 
 Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
 
-Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+Enter `Ctrl-C` to terminate the consumer application.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
@@ -362,6 +362,22 @@ Shut down Kafka when you are done with it:
 
 ```plaintext
 confluent local kafka stop
+```
+
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
+
+When you are finished, delete the `kafka-getting-started-env` environment by first getting the environment ID of the form `env-123456` corresponding to it:
+
+```plaintext
+confluent environment list
+```
+
+Delete the environment, including all resources created for this language guide:
+
+```plaintext
+confluent environment delete <ENVIRONMENT ID>
 ```
 
 </section>

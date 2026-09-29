@@ -48,7 +48,7 @@ Install the Apache Kafka Python client library:
 pip install confluent-kafka
 ```
 
-Note: this guide was last tested using version `2.12.1` of the client.
+Note: this guide was last tested using version `2.15.1` of the client.
 
 ## Kafka Setup
 
@@ -181,7 +181,7 @@ brew install confluentinc/tap/cli
 
 If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
 
-This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
+This guide requires version 4.0.0 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
@@ -355,7 +355,7 @@ Waiting...
 
 Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
 
-Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+Enter `Ctrl-C` to terminate the consumer application.
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
@@ -369,6 +369,22 @@ And exit the virtual environment:
 
 ```plaintext
 deactivate
+```
+
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
+
+When you are finished, delete the `kafka-getting-started-env` environment by first getting the environment ID of the form `env-123456` corresponding to it:
+
+```plaintext
+confluent environment list
+```
+
+Delete the environment, including all resources created for this language guide:
+
+```plaintext
+confluent environment delete <ENVIRONMENT ID>
 ```
 
 </section>
