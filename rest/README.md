@@ -452,14 +452,7 @@ curl -X DELETE \
      http://localhost:8082/consumers/cg1/instances/ci1 
 ```
 
-<section data-context-key="kafka.broker" data-context-value="local">
-
-Shut down Kafka when you are done with it:
-
-```plaintext
-confluent local kafka stop
-```
-</section>
+## Clean Up
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
@@ -474,6 +467,21 @@ Delete the environment, including all resources created for this language guide:
 ```plaintext
 confluent environment delete <ENVIRONMENT ID>
 ```
+
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="local">
+
+Shut down Kafka when you are done with it:
+
+```plaintext
+confluent local kafka stop
+```
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+If you created any temporary resources on your existing cluster for this guide, such as the `purchases` topic, clean them up now.
 
 </section>
 
