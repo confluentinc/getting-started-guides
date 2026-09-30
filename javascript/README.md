@@ -15,7 +15,7 @@ In this tutorial, you will run a JavaScript client application that produces mes
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
+If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
 <div class="alert-primary">
 
@@ -269,7 +269,11 @@ Let's create the JavaScript producer application by pasting the following code i
 
 </section>
 
-Create a `.env` file containing the appropriate configuration needed to connect to Kafka. Refer to the `sample.env` file [here](https://raw.githubusercontent.com/confluentinc/getting-started-guides/main/javascript/sample.env) to see which environment variables need to be set based on how Kafka is deployed.
+Create a `.env` file containing the appropriate configuration needed to connect to Kafka. The variables you need depend on how Kafka is deployed; copy the relevant block below into your `.env` file and replace `value_here` with your actual values (the full reference is also available as the [`sample.env`](https://raw.githubusercontent.com/confluentinc/getting-started-guides/main/javascript/sample.env) file):
+
+```sh file=sample.env
+
+```
 
 ## Build Consumer
 

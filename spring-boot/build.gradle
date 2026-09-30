@@ -22,6 +22,7 @@ java {
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web:4.1.1'
+  implementation 'org.springframework.boot:spring-boot-starter-kafka:4.1.1'
   implementation 'org.apache.kafka:kafka-clients'
   implementation 'org.springframework.kafka:spring-kafka'
 }

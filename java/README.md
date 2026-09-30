@@ -15,7 +15,7 @@ In this tutorial, you will run a Java client application that produces messages 
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
+If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
 <div class="alert-primary">
 <p>
@@ -32,7 +32,7 @@ Using Windows? You'll need to download [Windows Subsystem for Linux](https://lea
 This guide assumes that you already have:
 
 - [Gradle 9](https://gradle.org/install/) installed.
-- [Java 11](https://openjdk.org/install/) installed and configured as the current Java version for the environment.
+- [Java 11 or above](https://openjdk.org/install/) installed and configured as the current Java version for the environment.
   Verify that `java -version` outputs version 11 and ensure that the `JAVA_HOME` environment variable is set to the Java
   installation directory containing `bin`.
 

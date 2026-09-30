@@ -15,21 +15,13 @@ In this tutorial, you will build Rust client applications which produce and cons
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
-
-<div class="alert-primary">
-<p>
-Note: The Rust client is under active development. This guide covers the basics of producing and consuming string-keyed, string-valued records; it does not yet cover Schema Registry, transactions, or OAuth authentication to Confluent Cloud.
-</p>
-</div>
+If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
 ## Prerequisites
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 This guide assumes that you already have [Rust and Cargo](https://www.rust-lang.org/tools/install) installed via `rustup`. The example was last tested against Rust 1.95.
-
-The Rust Kafka client used in this guide is not yet published to [crates.io](https://crates.io); it is added directly from its [GitHub repository](https://github.com/confluentinc/kafka-clients), as shown below.
 
 ## Create Project
 
@@ -45,7 +37,7 @@ Add the Kafka client and its runtime dependencies to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-confluent-kafka-rust = { git = "https://github.com/confluentinc/kafka-clients", branch = "fix/client-dns-lookup" }
+confluent-kafka-rust = { git = "https://github.com/confluentinc/kafka-clients" }
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal"] }
 rand = "0.9"
 ```
