@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::time::Duration;
 
 use confluent_kafka::common::serialization::StringDeserializer;
-use confluent_kafka::consumer::AutoOffsetResetStrategy;
 use confluent_kafka::consumer::ConsumerConfig;
 use confluent_kafka::consumer::GroupProtocol;
 use confluent_kafka::consumer::KafkaConsumer;
@@ -17,12 +16,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         (ConsumerConfig::BOOTSTRAP_SERVERS_CONFIG.to_string(), "<BOOTSTRAP SERVERS>".to_string()),
         // Fixed properties
         (ConsumerConfig::GROUP_ID_CONFIG.to_string(), "kafka-rust-getting-started".to_string()),
-        (ConsumerConfig::AUTO_OFFSET_RESET_CONFIG.to_string(), AutoOffsetResetStrategy::EARLIEST.name()),
+        (ConsumerConfig::AUTO_OFFSET_RESET_CONFIG.to_string(), "earliest".to_string()),
         (ConsumerConfig::GROUP_PROTOCOL_CONFIG.to_string(), GroupProtocol::Consumer.to_string()),
     ]);
     let config = ConsumerConfig::new(&props)?;
     let mut consumer =
-        KafkaConsumer::new::<String, String>(config, Box::new(StringDeserializer), Box::new(StringDeserializer))?;
+        KafkaConsumer::new::<String, String>(config, Box::new(StringDeserializer::new()), Box::new(StringDeserializer::new()))?;
 
     consumer.subscribe_with_topics(vec![TOPIC.to_string()]).await?;
 

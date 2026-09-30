@@ -37,7 +37,7 @@ Add the Kafka client and its runtime dependencies to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-confluent-kafka-rust = { git = "https://github.com/confluentinc/kafka-clients" }
+confluent-kafka = { git = "https://github.com/confluentinc/kafka-clients" }
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal"] }
 rand = "0.9"
 ```

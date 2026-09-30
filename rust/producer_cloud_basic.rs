@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use confluent_kafka::common::security::SecurityProtocol;
+use confluent_kafka::common::security::auth::SecurityProtocol;
 use confluent_kafka::common::serialization::StringSerializer;
 use confluent_kafka::producer::Callback;
 use confluent_kafka::producer::KafkaProducer;
@@ -30,7 +30,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     ]);
     let config = ProducerConfig::new(&props)?;
     let producer =
-        KafkaProducer::<String, String>::new(config, Box::new(StringSerializer), Box::new(StringSerializer))?;
+        KafkaProducer::<String, String>::new(config, Box::new(StringSerializer::new()), Box::new(StringSerializer::new()))?;
 
     let mut rng = rand::rng();
     for _ in 0..10 {
