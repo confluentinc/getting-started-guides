@@ -270,7 +270,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.5.0
+    image: confluentinc/cp-kafka-rest:8.3.2
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -298,7 +298,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.3.0
+    image: confluentinc/cp-kafka-rest:8.3.2
     ports:
       - 8082:8082
     hostname: rest-proxy
