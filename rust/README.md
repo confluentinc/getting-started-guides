@@ -17,6 +17,12 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
+<div class="alert-primary">
+<p>
+Note: The Rust client, available in the <a href="https://github.com/confluentinc/kafka-clients">confluentinc/kafka-clients</a> repository, is an early preview and is subject to change. If you run into an issue, please <a href="https://github.com/confluentinc/kafka-clients/issues">open a GitHub issue</a>. For general feedback, start a <a href="https://github.com/confluentinc/kafka-clients/discussions">GitHub discussion</a>.
+</p>
+</div>
+
 ## Prerequisites
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
