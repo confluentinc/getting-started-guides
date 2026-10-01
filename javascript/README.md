@@ -13,9 +13,9 @@ hero:
 
 In this tutorial, you will run a JavaScript client application that produces messages to and consumes messages from an Apache Kafka® cluster.
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you won't need to enter payment information for 30 days or until your credits run out.
 
-If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
+If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial covers that setup as well.
 
 <div class="alert-primary">
 
@@ -41,20 +41,20 @@ Then install Confluent's JavaScript client for Apache Kafka:
 npm install @confluentinc/kafka-javascript
 ```
 
-As well as [dotenv](https://www.npmjs.com/package/dotenv):
+You'll also need [dotenv](https://www.npmjs.com/package/dotenv):
 
 ```sh
 npm install dotenv
 ```
 
-This guide was last tested with version `1.10.1` of `confluent-kafka-javascript`.
+This guide was last tested with version `1.10.1` of `@confluentinc/kafka-javascript`.
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
-operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+You'll need a Kafka cluster for your client application to connect to.
+This dialog can help you create a Confluent Cloud cluster, create a
+local Kafka cluster, or connect to an existing cluster's bootstrap
+server.
 
 <p>
   <label>Kafka location</label>
@@ -101,17 +101,17 @@ The example above provisions the cluster in AWS's `us-east-1` region. To use a d
 confluent kafka region list --cloud <CLOUD>
 ```
 
-Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as we will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as you will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
 
 ```plaintext
 confluent kafka cluster describe
 ```
 
-Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap servers endpoint. Save it for later.
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap server endpoint. Save it for later.
 
 Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud. OAuth requires more setup: you need an OAuth provider, plus an OAuth application created within it for use with Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -139,24 +139,24 @@ Then create an API key and secret for it, substituting your cluster ID for `<KAF
 confluent api-key create --resource <KAFKA_CLUSTER_ID>
 ```
 
-Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+Note the API key and secret as you will use them when configuring the producer and consumer clients in upcoming steps.
 
 </section> <!--- confluent-cloud.authentication = basic -->
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) for it.
 
-Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
+Note the following OAuth/OIDC-specific configuration values, which you will use to configure the producer and consumer clients in upcoming steps:
 
 - `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
 - `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
-- `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
-  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
+- `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. For example, Okta's token endpoint URL
+  format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`.
 - `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
-  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
-  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
+  In Okta, you or your Okta administrator provides the scope name when configuring your authorization server. You can find this
+  in your Okta Developer account under `Security > API`, by clicking the authorization server name and viewing the defined scopes under the `Scopes` tab.
 - `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
   the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
 - `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
@@ -194,13 +194,13 @@ Note the `Plaintext Ports` printed in your terminal, which you will need to conf
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
+Note your Kafka cluster bootstrap server endpoint as you will need it to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is composed of the same kind of events — for example, in this guide, you create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events.
 
@@ -236,7 +236,7 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Let's create the JavaScript producer application by pasting the following code into a file `producer.js`.
+Next, create the JavaScript producer application by pasting the following code into a file `producer.js`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
@@ -335,13 +335,13 @@ Produced event to topic purchases: key = htanaka    value = book
 
 ## Consume Events
 
-From another terminal, run the following command to run the consumer application, which will read the events from the purchases topic and write the information to the terminal.
+From another terminal, run the following command to start the consumer application. It reads events from the purchases topic and writes them to the terminal.
 
 ```sh
 node consumer.js
 ```
 
-The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output resembling this:
+The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. When the consumer starts, you should see output resembling this:
 
 ```sh
 Consumed event from topic purchases: key = jsmith     value = alarm clock
@@ -364,7 +364,7 @@ Enter `Ctrl-C` to terminate the consumer application.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
-When you are finished, delete the `kafka-getting-started-env` environment by first getting the environment ID of the form `env-123456` corresponding to it:
+When you are finished, delete the `kafka-getting-started-env` environment by first getting its environment ID (in the form `env-123456`):
 
 ```plaintext
 confluent environment list

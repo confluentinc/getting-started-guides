@@ -11,7 +11,7 @@ hero:
 
 ## Introduction
 
-In this tutorial, you will build Rust client applications which produce and consume messages from an Apache Kafka® cluster. 
+In this tutorial, you will build Rust client applications that produce and consume messages from an Apache Kafka® cluster. 
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
@@ -58,10 +58,9 @@ mkdir src/bin
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
-operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+You'll need a Kafka cluster for your client application to connect to.
+This dialog can help you configure a Confluent Cloud cluster, create a
+local Kafka cluster, or connect to an existing cluster's bootstrap server.
 
 <p>
   <label>Kafka location</label>
@@ -108,13 +107,13 @@ The example above provisions the cluster in AWS's `us-east-1` region. To use a d
 confluent kafka region list --cloud <CLOUD>
 ```
 
-Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as we will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as you will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
 
 ```plaintext
 confluent kafka cluster describe
 ```
 
-Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap servers endpoint. Save it for later.
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap server endpoint. Save it for later.
 
 Next, create an API key that the producer and consumer client applications will use to access Confluent Cloud with [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html).
 
@@ -130,7 +129,7 @@ Then create an API key and secret for it, substituting your cluster ID for `<KAF
 confluent api-key create --resource <KAFKA_CLUSTER_ID>
 ```
 
-Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+Note the API key and secret as you will use them when configuring the producer and consumer clients in upcoming steps.
 
 </section>
 
@@ -162,13 +161,13 @@ Note the `Plaintext Ports` printed in your terminal, which you will need to conf
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
+Note your Kafka cluster bootstrap server endpoint as you will need it to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is composed of the same kind of events. For example, in this guide, you create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events.
 
@@ -313,7 +312,7 @@ Enter `Ctrl-C` to terminate the consumer application.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
-When you are finished, delete the `kafka-getting-started-env` environment by first getting the environment ID of the form `env-123456` corresponding to it:
+When you are finished, delete the `kafka-getting-started-env` environment. First, get its environment ID (in the form `env-123456`):
 
 ```plaintext
 confluent environment list

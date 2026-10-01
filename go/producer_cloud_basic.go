@@ -26,7 +26,7 @@ func main() {
         os.Exit(1)
     }
 
-    // Go-routine to handle message delivery reports and
+    // Goroutine to handle message delivery reports and
     // possibly other event types (errors, stats, etc)
     go func() {
         for e := range p.Events() {

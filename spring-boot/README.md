@@ -11,8 +11,6 @@ hero:
 
 ## Introduction
 
-Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
-
 In this tutorial, you will run a Spring Boot client application that produces messages to and consumes messages from an Apache Kafka® cluster.
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
@@ -22,7 +20,7 @@ If you already have a Kafka cluster or prefer to set up a new one locally, the t
 <div class="alert-primary">
 <p>
 Note: This tutorial focuses on a simple application to get you started.
-If you want to build more complex applications and microservices for data in motion—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
+If you want to build more complex stream processing applications and microservices—with features such as real-time joins, aggregations, filters, and exactly-once processing—check out the <a href="/learn-kafka/kafka-streams/get-started/">Kafka Streams 101 course</a>, which covers the
 <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a>.
 </p>
 </div>
@@ -54,10 +52,10 @@ Create the following Gradle build file for the project, named
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
-operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+You'll need a Kafka cluster for your client application to connect to.
+This dialog can help you create a Confluent Cloud cluster, create a
+local Kafka cluster, or connect to an existing cluster's bootstrap
+server.
 
 <p>
   <label>Kafka location</label>
@@ -104,13 +102,13 @@ The example above provisions the cluster in AWS's `us-east-1` region. To use a d
 confluent kafka region list --cloud <CLOUD>
 ```
 
-Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as we will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as you will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
 
 ```plaintext
 confluent kafka cluster describe
 ```
 
-Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap servers endpoint. Save it for later.
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap server endpoint. Save it for later.
 
 </section>
 
@@ -142,7 +140,7 @@ Note the `Plaintext Ports` printed in your terminal, which you will use when con
 
 <section data-context-key="kafka.broker" data-context-value="existing">
   
-Note your Kafka cluster bootstrap server URL as you will need it to configure the application in upcoming steps.
+Note your Kafka cluster bootstrap server endpoint as you will need it to configure the application in upcoming steps.
 
 </section>
 
@@ -157,7 +155,7 @@ Note your Kafka cluster bootstrap server URL as you will need it to configure th
 Client applications access Confluent Cloud Kafka clusters using either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html)
 or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud. OAuth requires more setup: an OAuth provider, plus an OAuth application created within it for use with Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -191,12 +189,7 @@ Create a directory for the application resource file:
 mkdir -p src/main/resources
 ```
 
-Paste the following commands into your command line terminal, substituting your cluster bootstrap servers endpoint and the API key and
-secret that you just created for the `username` and `password` fields, respectively, of the `SASL_JAAS_CONFIG` 
-environment variable.
-
-
-Paste the following configuration data into a file located at `src/main/resources/application.yaml`, substituting your cluster bootstrap servers endpoint and the API key and
+Paste the following configuration data into a file located at `src/main/resources/application.yaml`, substituting your cluster bootstrap server endpoint and the API key and
 secret that you just created for the `username` and `password` fields, respectively, of the `spring.kafka.properties.sasl.jaas.config` value.
 
 ```yaml file=getting-started-cloud-basic.yaml
@@ -207,22 +200,22 @@ secret that you just created for the `username` and `password` fields, respectiv
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with it.
 
 Paste the following configuration data into a file located at `src/main/resources/application.yaml`
 
-Substitute your cluster bootstrap servers endpoint as well as the OAuth/OIDC-specific configuration values as follows:
+Substitute your cluster bootstrap server endpoint as well as the OAuth/OIDC-specific configuration values as follows:
 
 * `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
 * `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
 * `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
-  In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
-  you can find this by navigating to `Security > API`, clicking the authorization server name, and finding the defined scopes under the `Scopes` tab.
+  In Okta, you or your Okta administrator provides the scope name when configuring your authorization server. In your Okta Developer account,
+  you can find this under `Security > API`, by clicking the authorization server name and finding the defined scopes under the `Scopes` tab.
 * `LOGICAL CLUSTER ID`: Your Confluent Cloud logical cluster ID of the form `lkc-123456`. You can view your Kafka cluster ID in
   the Confluent Cloud Console by navigating to `Cluster Settings` in the left navigation of your cluster homepage.
 * `IDENTITY POOL ID`: Your Confluent Cloud identity pool ID of the form `pool-1234`. You can find this in the Confluent Cloud Console
   by navigating to `Accounts & access` in the top right menu, selecting the `Identity providers` tab, clicking your identity provider, and viewing the `Identity pools` section of the page.
-* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. For example, Okta's token endpoint URL
   format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
 
 ```properties file=getting-started-cloud-oauth.yaml
@@ -257,8 +250,8 @@ mkdir -p src/main/resources
 
 Paste the following configuration data into a file located at `src/main/resources/application.yaml`.
 
-Substitute your cluster bootstrap servers endpoint. If your Kafka cluster requires different
-client security configuration, you may require [different settings](https://kafka.apache.org/documentation/#security).
+Substitute your cluster bootstrap server endpoint. If your Kafka cluster requires different
+client security configuration, you may need [different settings](https://kafka.apache.org/documentation/#security).
 
 ```yaml file=getting-started-existing.yaml
 ```
@@ -267,7 +260,7 @@ client security configuration, you may require [different settings](https://kafk
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is composed of the same kind of events, e.g., in this guide you create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events.
 
@@ -308,7 +301,7 @@ Create a directory for the Java files in this project:
 mkdir -p src/main/java/examples
 ```
 
-We will use `SpringBootApplication` annotation for ease of use, auto-configuration and component scanning.
+You'll use the `@SpringBootApplication` annotation for ease of use, auto-configuration, and component scanning.
 Paste the following Java code into a file located at `src/main/java/examples/SpringBootWithKafkaApplication.java`.
 
 ```java file=src/main/java/examples/SpringBootWithKafkaApplication.java
@@ -320,7 +313,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Pro
 ```java file=src/main/java/examples/Producer.java
 ```
 
-You can test the code before preceding by compiling with:
+You can test the code before proceeding by compiling with:
 
 ```sh
 gradle build
@@ -339,7 +332,7 @@ Paste the following Java code into a file located at `src/main/java/examples/Con
 ```java file=src/main/java/examples/Consumer.java
 ```
 
-Once again, you can compile the code before preceding by with:
+Once again, you can test the code before proceeding by compiling with:
 
 ```sh
 gradle build
@@ -353,7 +346,7 @@ BUILD SUCCESSFUL
 
 ## Produce Events
 
-Run the following command to run the Spring Boot application for the Producer.
+Use the following command to run the Spring Boot application for the Producer.
 
 ```sh
 gradle bootRun --args='--producer'
@@ -376,13 +369,13 @@ You should see output resembling this:
 
 ## Consume Events
 
-Run the following command to run the Spring Boot application for the Consumer.
+Use the following command to run the Spring Boot application for the Consumer.
 
 ```sh
 gradle bootRun --args='--consumer'
 ```
 
-The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. On startup of the consumer, you should see output resembling this:
+The consumer application will start and print any events it has not yet consumed and then wait for more events to arrive. When the consumer starts, you should see output resembling this:
 
 ```
 2021-08-27 13:09:54.129  INFO 73259 --- [yConsumer-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = awalther   value = t-shirts
@@ -397,7 +390,7 @@ The consumer application will start and print any events it has not yet consumed
 2021-08-27 13:09:54.129  INFO 73259 --- [yConsumer-0-C-1] examples.Consumer                        : Consumed event from topic purchases: key = eabara     value = t-shirts
 ```
 
-Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
+Rerun the producer to see more events, or modify the code to create more or different events.
 
 Enter `Ctrl-C` to terminate the consumer application.
 
@@ -439,7 +432,7 @@ If you created any temporary resources on your existing cluster for this guide, 
 - Learn more in the [Introduction to Spring Boot for Apache Kafka](https://developer.confluent.io/learn-kafka/spring/) course.
 - For a Spring Boot example using Schema Registry and Avro, check out 
   [this example](https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/java-springboot.html).
-- If you want to build more complex applications and microservices—with powerful features such as real-time joins, aggregations, filters, exactly-once processing, and more—check out the [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/).
+- Learn how to build more complex stream processing applications and microservices with the [Kafka Streams 101 course](/learn-kafka/kafka-streams/get-started/).
 - For information on testing in the Kafka ecosystem, check out
   [Testing Event Streaming Apps](/learn/testing-kafka).
 - Interested in performance tuning of your event streaming applications?

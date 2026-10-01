@@ -11,9 +11,9 @@ hero:
 
 ## Introduction
 
-In this tutorial, you will build C client applications which produce and consume messages from an Apache Kafka® cluster. 
+In this tutorial, you will build C client applications that produce and consume messages from an Apache Kafka® cluster. 
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
 If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
@@ -25,7 +25,7 @@ This guide assumes that you already have a C compiler installed. The code in thi
 
 You’ll also need to install [librdkafka](https://github.com/confluentinc/librdkafka?tab=readme-ov-file#installation), [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) and [glibc](https://www.gnu.org/software/libc/). These libraries are widely available - search your package manager for `librdkafka`, `pkg-config` and `glib`.
 
-Later in this tutorial you will set up a new Kafka cluster or connect
+Later in this tutorial, you will set up a new Kafka cluster or connect
 to an existing one.
 
 ## Create Project
@@ -43,10 +43,10 @@ Create the following `Makefile` for the project:
 
 ## Kafka Setup
 
-We are going to need a Kafka cluster for our client application to
-operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+You'll need a Kafka cluster for your client application to connect to.
+This dialog can help you create a Confluent Cloud cluster, create a
+local Kafka cluster, or connect to an existing cluster's bootstrap
+server.
 
 <p>
   <label>Kafka location</label>
@@ -93,17 +93,17 @@ The example above provisions the cluster in AWS's `us-east-1` region. To use a d
 confluent kafka region list --cloud <CLOUD>
 ```
 
-Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as we will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as you will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
 
 ```plaintext
 confluent kafka cluster describe
 ```
 
-Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap servers endpoint. Save it for later.
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap server endpoint. Save it for later.
 
 Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+Basic authentication is quicker to implement — you only need to create an API key in Confluent Cloud. OAuth requires more setup: an OAuth provider, plus an OAuth application created within it for use with Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -131,16 +131,16 @@ Then create an API key and secret for it, substituting your cluster ID for `<KAF
 confluent api-key create --resource <KAFKA_CLUSTER_ID>
 ```
 
-Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+Note the API key and secret as you will use them when configuring the producer and consumer clients in upcoming steps.
 
 </section> <!--- confluent-cloud.authentication = basic -->
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with it.
 
-Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
+Note the following OAuth/OIDC-specific configuration values, which you will use to configure the producer and consumer clients in upcoming steps:
 
 * `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
 * `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
@@ -186,13 +186,13 @@ Note the `Plaintext Ports` printed in your terminal, which you will need to conf
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
+Note your Kafka cluster bootstrap server endpoint as you will need it to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is composed of the same kind of events, e.g., in this guide you create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events.
 
@@ -227,7 +227,7 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Let's create the producer application by first adding a utility method for setting configuration in a file named `common.c`:
+Next, create the producer application by first adding a utility method for setting configuration in a file named `common.c`:
 
 ```c file=common.c
 ```
