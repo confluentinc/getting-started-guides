@@ -12,6 +12,8 @@ languages:
     name: JavaScript
   - path: c
     name: C/C++
+  - path: rust
+    name: Rust
   - path: rest
     name: REST
   - path: spring-boot

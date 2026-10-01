@@ -13,9 +13,9 @@ hero:
 
 In this tutorial, you will use the Confluent REST Proxy to produce and consume messages from an Apache Kafka® cluster.
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
+If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
 ## Prerequisites
 
@@ -24,20 +24,11 @@ Using Windows? You'll need to download [Windows Subsystem for Linux](https://lea
 This guide assumes that you already have installed [Docker](https://docs.docker.com/get-docker/),
 [Docker Compose](https://docs.docker.com/compose/install/), and [curl](https://curl.se/).
 
-## Create Project
-
-Create a new directory anywhere you’d like for this project:
-
-```sh
-mkdir kafka-restproxy-getting-started && cd kafka-restproxy-getting-started
-```
-
 ## Kafka Setup
 
-We are going to need a Kafka cluster for our client application to
-operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+You'll need a Kafka cluster for your client application to connect to.
+This dialog can help you create a Confluent Cloud cluster, create a
+local Kafka cluster, or connect to an existing cluster.
 
 <p>
   <label>Kafka location</label>
@@ -52,17 +43,45 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+Use the [Confluent CLI](https://docs.confluent.io/confluent-cli/current/overview.html) to create a Confluent Cloud environment and Kafka cluster. Install the CLI if you don't already have it:
 
-Next, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps. You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+```plaintext
+brew install confluentinc/tap/cli
+```
+
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+Log in to Confluent Cloud:
+
+```plaintext
+confluent login
+```
+
+Install the `confluent-quickstart` CLI plugin, then use it to provision the environment and cluster:
+
+```plaintext
+confluent plugin install confluent-quickstart
+
+confluent quickstart \
+  --environment-name kafka-getting-started-env \
+  --kafka-cluster-name kafka-getting-started-cluster \
+  --cloud aws \
+  --region us-east-1
+```
+
+The example above provisions the cluster in AWS's `us-east-1` region. To use a different cloud provider (`gcp` or `azure`) or region, pass different values for `--cloud` and `--region`. You can find the regions supported by a given cloud provider by running:
+
+```plaintext
+confluent kafka region list --cloud <CLOUD>
+```
+
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as you will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+
+```plaintext
+confluent kafka cluster describe
+```
+
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap server endpoint. Save it for later.
 
 </section>
 
@@ -80,7 +99,7 @@ brew install confluentinc/tap/cli
 
 If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
 
-This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
+This guide requires version 4.0.0 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
@@ -94,7 +113,7 @@ Note the `Plaintext Ports` printed in your terminal, which you will use when con
 
 <section data-context-key="kafka.broker" data-context-value="existing">
   
-Note your Kafka cluster bootstrap server URL as you will need it to configure the proxy in upcoming steps.
+Note your Kafka cluster bootstrap server endpoint as you will need it to configure the proxy in upcoming steps.
 
 </section>
 
@@ -109,7 +128,7 @@ Note your Kafka cluster bootstrap server URL as you will need it to configure th
 Client applications access Confluent Cloud Kafka clusters using either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html)
 or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+Basic authentication is quicker to implement — you only need to create an API key in Confluent Cloud. OAuth requires more setup: an OAuth provider, plus an OAuth application created within it for use with Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -125,12 +144,19 @@ Select your authentication mechanism:
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you by navigating to the `API Keys` section under `Cluster Overview`.
+Get the ID of your Kafka cluster:
 
-![](../media/cc-create-key.png)
+```plaintext
+confluent kafka cluster list
+```
 
-Paste the following commands into your command line terminal, substituting your cluster bootstrap servers endpoint and the API key and
+Then create an API key and secret for it, substituting your cluster ID for `<KAFKA_CLUSTER_ID>`:
+
+```plaintext
+confluent api-key create --resource <KAFKA_CLUSTER_ID>
+```
+
+Paste the following commands into your command line terminal, substituting your cluster bootstrap server endpoint and the API key and
 secret that you just created for the `username` and `password` fields, respectively, of the `SASL_JAAS_CONFIG` 
 environment variable.
 
@@ -142,11 +168,11 @@ environment variable.
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with it.
 
-Paste the following commands into your command line terminal. Substitute your cluster bootstrap servers endpoint as well as your OAuth/OIDC-specific configuration values as follows:
+Paste the following commands into your command line terminal. Substitute your cluster bootstrap server endpoint as well as your OAuth/OIDC-specific configuration values as follows:
 
-* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. e.g., Okta's token endpoint URL
   format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
 * `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
 * `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
@@ -176,8 +202,8 @@ Run the following command in your command line terminal, substituting the plaint
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Run the following commands in your command line terminal, substituting your cluster bootstrap servers endpoint. If your Kafka cluster requires different
-client security configuration, you may require [different settings](https://kafka.apache.org/documentation/#security).
+Run the following commands in your command line terminal, substituting your cluster bootstrap server endpoint. If your Kafka cluster requires different
+client security configuration, you may need [different settings](https://kafka.apache.org/documentation/#security).
 
 ```sh file=getting-started-existing.sh
 ```
@@ -186,17 +212,15 @@ client security configuration, you may require [different settings](https://kafk
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is composed of the same kind of events, e.g., in this guide you create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
-![](../media/cc-create-topic.png)
-
-When using Confluent Cloud, you can use the [Confluent Cloud
-Console](https://confluent.cloud/) to create a topic. Create a topic
-with 1 partition and defaults for the remaining settings.
+```plaintext
+confluent kafka topic create purchases --partitions 1
+```
 
 </section>
 
@@ -225,9 +249,9 @@ request the creation of a topic from your operations team.
 
 <section data-context-key="kafka.broker" data-context-value="cloud">
 
-First you need to start the Confluent REST Proxy locally, which you will run in Docker.
+First, you need to start the Confluent REST Proxy locally, which you will run in Docker.
 
-Paste the following REST proxy configuration into a new file called `rest-proxy.yml`:
+Paste the following REST Proxy configuration into a new file called `rest-proxy.yml`:
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
@@ -237,7 +261,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.5.0
+    image: confluentinc/cp-kafka-rest:8.3.2
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -265,7 +289,7 @@ version: '2'
 services:
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.3.0
+    image: confluentinc/cp-kafka-rest:8.3.2
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -297,7 +321,7 @@ Bring up the REST Proxy:
 docker compose -f rest-proxy.yml up -d
 ```
 
-Wait a few seconds for REST Proxy to start and verify the Docker container logs show "Server started, listening for requests"
+Wait a few seconds for REST Proxy to start and verify the Docker container logs show "Server started, listening for requests".
 
 ```sh
 docker compose -f rest-proxy.yml logs rest-proxy | grep "Server started, listening for requests"
@@ -313,9 +337,9 @@ When you started Kafka locally via `confluent local kafka start`, REST Proxy als
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-First you need to start the Confluent REST Proxy locally, which you will run in Docker.
+First, you need to start the Confluent REST Proxy locally, which you will run in Docker.
 
-Paste the following REST proxy configuration into a new file called `rest-proxy.yml`:
+Paste the following REST Proxy configuration into a new file called `rest-proxy.yml`:
 
 ```yaml
 ---
@@ -333,9 +357,9 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
 ```
-The above Docker Compose file refers to the bootstrap servers
-configuration you provided. If your Kafka cluster requires different
-client security configuration, you may require [additional
+The above Docker Compose file refers to the bootstrap server endpoint
+you provided. If your Kafka cluster requires different client security
+configuration, you may need [additional
 settings](https://kafka.apache.org/documentation/#security).
 
 Bring up the REST Proxy:
@@ -344,7 +368,7 @@ Bring up the REST Proxy:
 docker compose -f rest-proxy.yml up -d
 ```
 
-Wait a few seconds for REST Proxy to start and verify the Docker container logs show "Server started, listening for requests"
+Wait a few seconds for REST Proxy to start and verify the Docker container logs show "Server started, listening for requests".
 
 ```sh
 docker compose -f rest-proxy.yml logs rest-proxy | grep "Server started, listening for requests"
@@ -372,7 +396,7 @@ You should see output resembling this:
 
 ## Consume Events
 
-Run the following commands to run a consumer with the REST Proxy, which will read the events from the purchases topic and write the information to the terminal.
+Use the following commands to start a consumer with the REST Proxy that reads events from the purchases topic and writes them to the terminal.
 
 Create a consumer, starting at the beginning of the topic's log:
 
@@ -392,8 +416,8 @@ curl -X POST \
      http://localhost:8082/consumers/cg1/instances/ci1/subscription 
 ```
 
-Consume some data using the base URL in the first response:
-(Note that you must issue this command twice due to https://github.com/confluentinc/kafka-rest/issues/432)
+Consume the data from the consumer instance:
+(Note that you must issue this command twice due to a [known kafka-rest issue](https://github.com/confluentinc/kafka-rest/issues/432).)
 
 ```sh
 curl -X GET \
@@ -419,6 +443,24 @@ curl -X DELETE \
      http://localhost:8082/consumers/cg1/instances/ci1 
 ```
 
+## Clean Up
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
+
+When you are finished, delete the `kafka-getting-started-env` environment by first getting the environment ID of the form `env-123456` corresponding to it:
+
+```plaintext
+confluent environment list
+```
+
+Delete the environment, including all resources created for this guide:
+
+```plaintext
+confluent environment delete <ENVIRONMENT ID>
+```
+
+</section>
+
 <section data-context-key="kafka.broker" data-context-value="local">
 
 Shut down Kafka when you are done with it:
@@ -426,6 +468,12 @@ Shut down Kafka when you are done with it:
 ```plaintext
 confluent local kafka stop
 ```
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+If you created any temporary resources on your existing cluster for this guide, such as the `purchases` topic, clean them up now.
+
 </section>
 
 ## Where next?

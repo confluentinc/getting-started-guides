@@ -11,11 +11,11 @@ hero:
 
 ## Introduction
 
-In this tutorial, you will build C# client applications which produce and consume messages from an Apache Kafka® cluster. 
+In this tutorial, you will build C# client applications that produce and consume messages from an Apache Kafka® cluster. 
 
-As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on the client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
+As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
-If you prefer to set up a local Kafka cluster, the tutorial will walk you through those steps as well.
+If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
 ## Prerequisites
 
@@ -34,8 +34,8 @@ mkdir producer
 mkdir consumer
 ```
 
-Next we’ll create two different C# project files, one for the producer and one for the consumer.  The project files
-specify the output type of project artifact which is an executable for both the producer and consumer.  It also specifies the required
+Next we’ll create two different C# project files, one for the producer and one for the consumer. The project files
+specify the project's output type — an executable, for both the producer and consumer. They also specify the
 dependencies that the .NET platform needs for the project.
 
 Copy the following into a project file named `producer.csproj` in the `producer` subdirectory:
@@ -48,10 +48,8 @@ Copy the following into a project file named `consumer.csproj` in the `consumer`
 
 ## Kafka Setup
 
-We are going to need a Kafka Cluster for our client application to
-operate with. This dialog can help you configure your Confluent Cloud
-cluster, create a Kafka cluster for you, or help you input an existing
-cluster bootstrap server to connect to.
+You'll need a Kafka cluster for your client application to connect to. This dialog can help you create a
+Confluent Cloud cluster, set up a local Kafka cluster, or connect to an existing cluster's bootstrap server.
 
 <p>
   <label>Kafka location</label>
@@ -66,21 +64,49 @@ cluster bootstrap server to connect to.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 
-From within the Confluent Cloud Console, creating a new cluster is just a few clicks:
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/4JMGlor4A4ad1Doa5JXkUg/bcd6f6fafd5c694af33e91562fd160c0/create-cluster-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/6zFaUcKTgj5pCKCZWb0zXP/6b25ae63eae25756441a572c2bbcffb6/create-cluster.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+Use the [Confluent CLI](https://docs.confluent.io/confluent-cli/current/overview.html) to create a Confluent Cloud environment and Kafka cluster. Install the CLI if you don't already have it:
 
-Next, note your Confluent Cloud bootstrap server as we will need it to configure the producer and consumer clients in upcoming steps. You can obtain your Confluent Cloud Kafka cluster bootstrap server configuration using the [Confluent Cloud Console](https://confluent.cloud/):
-<video autoplay muted playsinline poster="https://images.ctfassets.net/gt6dp23g0g38/nrZ31F1vVHVWKpQpBYzi1/a435b23ed68d82c4a39fa0b4472b7b71/get-cluster-bootstrap-preview.png" loop>
-	<source src="https://videos.ctfassets.net/gt6dp23g0g38/n9l0LvX4FmVZSCGUuHZh3/b53a03f62bb92c2ce71a7c4a23953292/get-cluster-bootstrap.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+```plaintext
+brew install confluentinc/tap/cli
+```
+
+If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
+
+Log in to Confluent Cloud:
+
+```plaintext
+confluent login
+```
+
+Install the `confluent-quickstart` CLI plugin, then use it to provision the environment and cluster:
+
+```plaintext
+confluent plugin install confluent-quickstart
+
+confluent quickstart \
+  --environment-name kafka-getting-started-env \
+  --kafka-cluster-name kafka-getting-started-cluster \
+  --cloud aws \
+  --region us-east-1
+```
+
+The example above provisions the cluster in AWS's `us-east-1` region. To use a different cloud provider (`gcp` or `azure`) or region, pass different values for `--cloud` and `--region`. You can find the regions supported by a given cloud provider by running:
+
+```plaintext
+confluent kafka region list --cloud <CLOUD>
+```
+
+Next, note your Confluent Cloud Kafka cluster's bootstrap server endpoint, as you will need it to configure the producer and consumer clients in upcoming steps. Describe your cluster:
+
+```plaintext
+confluent kafka cluster describe
+```
+
+Note the `Endpoint` field, which will look something like `SASL_SSL://pkc-abcdef.us-east-1.aws.confluent.cloud:9092`. Only the `pkc-...` portion onward (everything after `SASL_SSL://`) is the bootstrap server endpoint. Save it for later.
 
 Next, choose the authentication mechanism that the producer and consumer client applications will use to access Confluent Cloud: either [basic authentication](https://docs.confluent.io/cloud/current/access-management/authenticate/api-keys/api-keys.html) or [OAuth](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/overview.html).
 
-Basic authentication is quicker to implement since you only need to create an API key in Confluent Cloud, whereas OAuth requires that you have an OAuth provider, as well as an OAuth application created within it for use with Confluent Cloud, in order to proceed.
+Basic authentication is quicker to implement — you only need to create an API key in Confluent Cloud. OAuth requires more setup: an OAuth provider and an OAuth application created within it for use with Confluent Cloud.
 
 Select your authentication mechanism:
 
@@ -96,25 +122,32 @@ Select your authentication mechanism:
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
 
-You can use the [Confluent Cloud Console](https://confluent.cloud/) to create a key for
-you by navigating to the `API Keys` section under `Cluster Overview`.
+Get the ID of your Kafka cluster:
 
-![](../media/cc-create-key.png)
+```plaintext
+confluent kafka cluster list
+```
 
-Note the API key and secret as we will use them when configuring the producer and consumer clients in upcoming steps.
+Then create an API key and secret for it, substituting your cluster ID for `<KAFKA_CLUSTER_ID>`:
+
+```plaintext
+confluent api-key create --resource <KAFKA_CLUSTER_ID>
+```
+
+Note the API key and secret as you will use them when configuring the producer and consumer clients in upcoming steps.
 
 </section> <!--- confluent-cloud.authentication = basic -->
 
 <section data-context-key="confluent-cloud.authentication" data-context-value="oauth">
 
 You can use the [Confluent Cloud Console](https://confluent.cloud/) to [add an OAuth/OIDC identity provider](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-providers.html)
-and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with your OAuth/OIDC identity provider.
+and [create an identity pool](https://docs.confluent.io/cloud/current/access-management/authenticate/oauth/identity-pools.html) with it.
 
-Note the following OAuth/OIDC-specific configuration values, which we will use to configure the producer and consumer clients in upcoming steps:
+Note the following OAuth/OIDC-specific configuration values, which you will use to configure the producer and consumer clients in upcoming steps:
 
 * `OAUTH2 CLIENT ID`: The public identifier for your client. In Okta, this is a 20-character alphanumeric string.
 * `OAUTH2 CLIENT SECRET`: The secret corresponding to the client ID. In Okta, this is a 64-character alphanumeric string.
-* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. E.g., Okta's token endpoint URL
+* `OAUTH2 TOKEN ENDPOINT URL`: The token-issuing URL that your OAuth/OIDC provider exposes. For example, Okta's token endpoint URL
   format is `https://<okta-domain>.okta.com/oauth2/default/v1/token`
 * `OAUTH2 SCOPE`: The name of the scope that you created in your OAuth/OIDC provider to restrict access privileges for issued tokens.
   In Okta, you or your Okta administrator provided the scope name when configuring your authorization server. In the navigation bar of your Okta Developer account,
@@ -142,7 +175,7 @@ brew install confluentinc/tap/cli
 
 If you don't use Homebrew, you can use a [different installation method](https://docs.confluent.io/confluent-cli/current/install.html).
 
-This guide requires version 3.34.1 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
+This guide requires version 4.0.0 or later of the Confluent CLI. If you have an older version, run `confluent update` to get the latest release (or `brew upgrade confluentinc/tap/cli` if you installed the CLI with Homebrew).
 
 Now start the Kafka broker:
 
@@ -156,23 +189,21 @@ Note the `Plaintext Ports` printed in your terminal, which you will need to conf
 
 <section data-context-key="kafka.broker" data-context-value="existing">
 
-Note your Kafka cluster bootstrap server URL as you will need it to configure the producer and consumer clients in upcoming steps.
+Note your Kafka cluster bootstrap server endpoint as you will need it to configure the producer and consumer clients in upcoming steps.
 
 </section>
 
 ## Create Topic
 
-A topic is an immutable, append-only log of events. Usually, a topic is comprised of the same kind of events, e.g., in this guide we create a topic for retail purchases.
+A topic is an immutable, append-only log of events. Usually, a topic is composed of the same kind of events, e.g., in this guide you create a topic for retail purchases.
 
 Create a new topic, `purchases`, which you will use to produce and consume events.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
 
-![](../media/cc-create-topic.png)
-
-When using Confluent Cloud, you can use the [Confluent Cloud
-Console](https://confluent.cloud/) to create a topic. Create a topic
-with 1 partition and defaults for the remaining settings.
+```plaintext
+confluent kafka topic create purchases --partitions 1
+```
 
 </section>
 
@@ -199,7 +230,7 @@ request the creation of a topic from your operations team.
 
 ## Build Producer
 
-Let's create the .NET producer application by pasting the following C# code into a file named `producer/producer.cs`.
+Next, create the .NET producer application by pasting the following C# code into a file named `producer/producer.cs`.
 
 <section data-context-key="kafka.broker" data-context-value="cloud" data-context-default>
 <section data-context-key="confluent-cloud.authentication" data-context-value="basic" data-context-default>
@@ -230,7 +261,7 @@ Let's create the .NET producer application by pasting the following C# code into
 
 Fill in the appropriate `BootstrapServers` endpoint and any additional security configuration needed inline where the `ProducerConfig` object is instantiated.
 
-You can test the syntax before preceding by compiling with:
+You can test the syntax before proceeding by compiling with:
 ```sh
 cd producer
 dotnet build producer.csproj
@@ -269,7 +300,7 @@ Next, create the .NET consumer application by pasting the following C# code into
 
 Fill in the appropriate `BootstrapServers` endpoint and any additional security configuration needed inline where the `ConsumerConfig` object is instantiated.
 
-You can test the syntax before preceding by compiling with:
+You can test the syntax before proceeding by compiling with:
 ```sh
 cd ../consumer
 dotnet build consumer.csproj
@@ -277,9 +308,9 @@ cd ..
 ```
 
 ## Produce Events
-The `dotnet` command line tool gives us a handy `run` command we can use to execute the programs we just built.
+The `dotnet` command line tool gives you a handy `run` command you can use to execute the programs you just built.
 
-In order to run the producer, use the `dotnet run` command:
+To run the producer, use the `dotnet run` command:
 
 ```sh
 cd producer
@@ -304,7 +335,7 @@ Produced event to topic purchases: key = htanaka    value = book
 
 ## Consume Events
 
-From another terminal, run the following command to run the consumer application which will 
+From another terminal, run the following command to start the consumer application, which will
 read the events from the `purchases` topic and write the information to the terminal.
 
 ```sh
@@ -313,7 +344,7 @@ dotnet run
 ```
 
 The consumer application will start and print any events it has not yet consumed and then wait 
-for more events to arrive. On startup of the consumer, you should see output resembling this:
+for more events to arrive. When the consumer starts, you should see output resembling this:
 
 ```sh
 Consumed event from topic purchases: key = jsmith     value = alarm clock
@@ -330,7 +361,25 @@ Consumed event from topic purchases: key = htanaka    value = book
 
 Rerun the producer to see more events, or feel free to modify the code as necessary to create more or different events.
 
-Once you are done with the consumer, enter `Ctrl-C` to terminate the consumer application.
+Enter `Ctrl-C` to terminate the consumer application.
+
+## Clean Up
+
+<section data-context-key="kafka.broker" data-context-value="cloud" data-context-default="true">
+
+When you are finished, delete the `kafka-getting-started-env` environment by first getting the environment ID of the form `env-123456` corresponding to it:
+
+```plaintext
+confluent environment list
+```
+
+Delete the environment, including all resources created for this language guide:
+
+```plaintext
+confluent environment delete <ENVIRONMENT ID>
+```
+
+</section>
 
 <section data-context-key="kafka.broker" data-context-value="local">
 
@@ -339,6 +388,12 @@ Shut down Kafka when you are done with it:
 ```plaintext
 confluent local kafka stop
 ```
+</section>
+
+<section data-context-key="kafka.broker" data-context-value="existing">
+
+If you created any temporary resources on your existing cluster for this guide, such as the `purchases` topic, clean them up now.
+
 </section>
 
 ## Where next?
