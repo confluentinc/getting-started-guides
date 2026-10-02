@@ -3,15 +3,15 @@ seo:
   title: Apache Kafka and .NET - Getting Started Tutorial 
   description: How to develop your first Kafka client application in .NET, which produces and consumes messages from a Kafka cluster, complete with configuration instructions. 
 hero:
-  title: Getting Started with Apache Kafka and .NET
+  title: Getting Started with Apache Kafka® and .NET
   description: Step-by-step guide to building a .NET client application for Kafka
 ---
 
-# Getting Started with Apache Kafka and .NET
+# Getting Started with Apache Kafka® and .NET
 
 ## Introduction
 
-In this tutorial, you will build C# client applications that produce and consume messages from an Apache Kafka® cluster. 
+In this tutorial, you will build C# client applications that produce and consume messages from an Apache Kafka cluster. 
 
 As you're learning how to run your first Kafka application, we recommend using [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree) so that you don't have to run your own Kafka cluster and can focus on client development. If you do not already have an account, be sure to [sign up](https://www.confluent.io/confluent-cloud/tryfree/). New signups [receive $400](https://www.confluent.io/confluent-cloud-faqs/#how-can-i-get-up-to-dollar400-in-free-confluent-cloud-usage) to spend within Confluent Cloud during their first 30 days. To avoid having to enter a credit card, navigate to [Billing & payment](https://confluent.cloud/settings/billing/payment), scroll to the bottom, and add the promo code `CONFLUENTDEV1`. With this promo code, you will not have to enter your credit card info for 30 days or until your credits run out.
 
