@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 use std::time::Duration;
 
+use confluent_kafka::common::config::SaslConfigs;
 use confluent_kafka::common::security::auth::SecurityProtocol;
 use confluent_kafka::common::serialization::StringDeserializer;
+use confluent_kafka::consumer::Consumer;
 use confluent_kafka::consumer::ConsumerConfig;
 use confluent_kafka::consumer::GroupProtocol;
 use confluent_kafka::consumer::KafkaConsumer;
@@ -16,20 +18,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // User-specific properties that you must set
         (ConsumerConfig::BOOTSTRAP_SERVERS_CONFIG.to_string(), "<BOOTSTRAP SERVERS>".to_string()),
         (
-            ConsumerConfig::SASL_JAAS_CONFIG.to_string(),
+            SaslConfigs::SASL_JAAS_CONFIG.to_string(),
             "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<CLUSTER API KEY>\" password=\"<CLUSTER API SECRET>\";"
                 .to_string(),
         ),
         // Fixed properties
-        (ConsumerConfig::SECURITY_PROTOCOL_CONFIG.to_string(), SecurityProtocol::SaslSsl.name().to_string()),
-        (ConsumerConfig::SASL_MECHANISM_CONFIG.to_string(), "PLAIN".to_string()),
+        ("security.protocol".to_string(), SecurityProtocol::SaslSsl.name().to_string()),
+        (SaslConfigs::SASL_MECHANISM.to_string(), "PLAIN".to_string()),
         (ConsumerConfig::GROUP_ID_CONFIG.to_string(), "kafka-rust-getting-started".to_string()),
         (ConsumerConfig::AUTO_OFFSET_RESET_CONFIG.to_string(), "earliest".to_string()),
         (ConsumerConfig::GROUP_PROTOCOL_CONFIG.to_string(), GroupProtocol::Consumer.to_string()),
     ]);
     let config = ConsumerConfig::new(&props)?;
     let mut consumer =
-        KafkaConsumer::new::<String, String>(config, Box::new(StringDeserializer::new()), Box::new(StringDeserializer::new()))?;
+        KafkaConsumer::<String, String>::new(config, StringDeserializer::new(), StringDeserializer::new())?;
 
     consumer.subscribe_with_topics(vec![TOPIC.to_string()]).await?;
 

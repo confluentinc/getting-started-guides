@@ -17,17 +17,11 @@ As you're learning how to run your first Kafka application, we recommend using [
 
 If you already have a Kafka cluster or prefer to set up a new one locally, the tutorial will walk you through those steps as well.
 
-<div class="alert-primary">
-<p>
-Note: The Rust client, available in the <a href="https://github.com/confluentinc/kafka-clients">confluentinc/kafka-clients</a> repository, is an early preview and is subject to change. If you run into an issue, please <a href="https://github.com/confluentinc/kafka-clients/issues">open a GitHub issue</a>. For general feedback, start a <a href="https://github.com/confluentinc/kafka-clients/discussions">GitHub discussion</a>.
-</p>
-</div>
-
 ## Prerequisites
 
 Using Windows? You'll need to download [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-This guide assumes that you already have [Rust and Cargo](https://www.rust-lang.org/tools/install) installed via `rustup`. The example was last tested against Rust 1.95.
+This guide assumes that you already have [Rust and Cargo](https://www.rust-lang.org/tools/install) installed via `rustup`. The `confluent-kafka` crate requires Rust 1.95 or later. Check your version with `rustc --version`, and if it is older, update the toolchain with `rustup update stable`. The example was last tested against Rust 1.98.
 
 ## Create Project
 
@@ -43,7 +37,7 @@ Add the Kafka client and its runtime dependencies to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-confluent-kafka = "0.1.0"
+confluent-kafka = "1.0.0"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal"] }
 rand = "0.9"
 ```

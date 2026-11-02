@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 
+use confluent_kafka::common::config::SaslConfigs;
 use confluent_kafka::common::security::auth::SecurityProtocol;
 use confluent_kafka::common::serialization::StringSerializer;
-use confluent_kafka::producer::Callback;
+use confluent_kafka::producer::callback;
 use confluent_kafka::producer::KafkaProducer;
 use confluent_kafka::producer::Producer;
 use confluent_kafka::producer::ProducerConfig;
@@ -19,18 +20,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // User-specific properties that you must set
         (ProducerConfig::BOOTSTRAP_SERVERS_CONFIG.to_string(), "<BOOTSTRAP SERVERS>".to_string()),
         (
-            ProducerConfig::SASL_JAAS_CONFIG.to_string(),
+            SaslConfigs::SASL_JAAS_CONFIG.to_string(),
             "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<CLUSTER API KEY>\" password=\"<CLUSTER API SECRET>\";"
                 .to_string(),
         ),
         // Fixed properties
-        (ProducerConfig::SECURITY_PROTOCOL_CONFIG.to_string(), SecurityProtocol::SaslSsl.name().to_string()),
-        (ProducerConfig::SASL_MECHANISM_CONFIG.to_string(), "PLAIN".to_string()),
+        ("security.protocol".to_string(), SecurityProtocol::SaslSsl.name().to_string()),
+        (SaslConfigs::SASL_MECHANISM.to_string(), "PLAIN".to_string()),
         (ProducerConfig::ACKS_CONFIG.to_string(), "all".to_string()),
     ]);
     let config = ProducerConfig::new(&props)?;
     let producer =
-        KafkaProducer::<String, String>::new(config, Box::new(StringSerializer::new()), Box::new(StringSerializer::new()))?;
+        KafkaProducer::<String, String>::new(config, StringSerializer::new(), StringSerializer::new())?;
 
     let mut rng = rand::rng();
     for _ in 0..10 {
@@ -40,7 +41,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // Delivery report callback, invoked once the broker acks the record
         // (or the send fails).
-        let callback: Callback = Box::new(move |metadata, error| {
+        let callback = callback::new(move |metadata, error| {
             if let Some(error) = error {
                 println!("Failed to deliver message: {error}");
             } else if let Some(metadata) = metadata {
@@ -48,7 +49,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         });
 
-        producer.send_with_callback(record, Some(callback)).await?;
+        producer.send_with_callback(record, Some(Box::new(callback))).await?;
     }
 
     // Wait for all messages to be delivered.
