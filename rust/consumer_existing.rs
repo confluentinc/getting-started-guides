@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::time::Duration;
 
 use confluent_kafka::common::serialization::StringDeserializer;
+use confluent_kafka::consumer::Consumer;
 use confluent_kafka::consumer::ConsumerConfig;
 use confluent_kafka::consumer::GroupProtocol;
 use confluent_kafka::consumer::KafkaConsumer;
@@ -21,7 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     ]);
     let config = ConsumerConfig::new(&props)?;
     let mut consumer =
-        KafkaConsumer::new::<String, String>(config, Box::new(StringDeserializer::new()), Box::new(StringDeserializer::new()))?;
+        KafkaConsumer::<String, String>::new(config, StringDeserializer::new(), StringDeserializer::new())?;
 
     consumer.subscribe_with_topics(vec![TOPIC.to_string()]).await?;
 
